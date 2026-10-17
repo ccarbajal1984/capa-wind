@@ -1,0 +1,37 @@
+/* Shared CAPA chrome. Sticky nav, sail mark, Dragon watermark. */
+:root{--amber:#f5c542;--head-h:92px}
+header.sitehead{display:block;margin:0;gap:0;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start}
+.sitehead{position:sticky;top:0;z-index:50;background:#0B1F3A;border-bottom:1px solid #2A4A70;overflow:hidden}
+.sitehead .dragon{position:absolute;right:-10px;top:0;width:min(250px,50vw);height:170%;object-fit:cover;object-position:62% 36%;opacity:.12;pointer-events:none;user-select:none}
+.sitehead.home{--head-h:104px}
+.sitehead.home .dragon{width:min(620px,86vw);height:230%;object-position:70% 34%;opacity:.18;right:-18px}
+.sitebar{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:8px 12px 0;display:flex;align-items:center;gap:10px;min-width:0}
+.brand{display:flex;align-items:center;gap:8px;min-width:0;text-decoration:none;color:inherit}
+.brand .mark{width:36px;height:36px;flex:0 0 36px;display:block}
+.word{display:flex;flex-direction:column;min-width:max-content;line-height:1.05}
+.word .capa{font-weight:800;letter-spacing:.06em;font-size:18px;color:#fff}
+.word .eye{font-size:11px;font-weight:600;color:#b7cbe2;letter-spacing:.01em;white-space:nowrap}
+.sitehead h1,.word,.headmeta{text-shadow:0 0 8px #0B1F3A,0 1px 0 #0B1F3A}
+.sitehead h1{position:relative;z-index:1;margin:0 0 0 auto;font-size:15px;font-weight:750;letter-spacing:.01em;color:#F4FBFF;white-space:nowrap}
+.sitenav{position:relative;z-index:1;max-width:1440px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:6px 8px 8px}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex:0 0 auto;text-decoration:none;color:#C5D4E6;font:600 13px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:7px 10px;border-radius:8px;white-space:nowrap}
+.sitenav a:hover{color:#fff;background:#13304F}
+.sitenav a[aria-current="page"]{color:#0B1F3A;background:var(--amber)}
+.headmeta{position:relative;z-index:1;margin-left:8px;text-align:right;font-size:11px;line-height:1.35;color:#8FA8C4;flex:0 1 auto}
+.headmeta b{color:#EAF2FB;font-weight:700}
+@media(max-width:520px){
+  :root{--head-h:132px}
+  .sitebar{flex-wrap:wrap;row-gap:2px}
+  .brand{flex:0 0 auto}
+  .sitehead h1{margin-left:8px;font-size:14px}
+  .headmeta{flex:1 0 100%;margin:0 0 2px 44px;text-align:left}
+  .brand .mark{width:32px;height:32px;flex-basis:32px}
+  .word .capa{font-size:16px}
+  .sitenav{padding:4px 6px 7px}
+  .sitenav a{font-size:13px;padding:7px 9px}
+  .sitehead .dragon,.sitehead.home .dragon{width:min(168px,44vw);opacity:.14;right:-36px}
+}
+@media(min-width:900px){
+  .sitehead.home .dragon{max-width:520px;height:190%}
+}

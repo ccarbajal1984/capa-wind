@@ -1,16 +1,15 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Capa · Race forecast</title><link rel="icon" href="favicon.svg">
+<title>Forecast · CAPA ESP 99</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#0B1F3A">
+<link rel="stylesheet" href="assets/brand.css">
 <style>
 :root{--navy:#0B1F3A;--panel:#13304F;--panel2:#183a5e;--line:#2A4A70;--text:#EAF2FB;--muted:#8FA8C4;--green:#4CAF7D;--red:#E57373;--amber:#F2C14E}
 *{box-sizing:border-box}html,body{margin:0;background:var(--navy);color:var(--text);font:13px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 .wrap{max-width:1100px;margin:0 auto;padding:10px 12px 28px}
-header{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-h1{font-size:16px;margin:0}h2{font-size:15px;margin:16px 0 8px}h3{font-size:13px;margin:0 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+h2{font-size:15px;margin:16px 0 8px}h3{font-size:13px;margin:0 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
 .muted{color:var(--muted)}.small{font-size:12px}
-.navlinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.playlink{display:inline-block;margin:0;font:600 12px/1 inherit;color:#2a2006;background:#FFD54F;text-decoration:none;border-radius:999px;padding:6px 10px}
-.playlink.ghost{background:var(--panel2);color:var(--text)}
 .tabs{display:flex;gap:6px;margin:6px 0 10px;flex-wrap:wrap}.tab{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:6px 12px;font:600 13px inherit}
 .tab.on{background:#FFD54F;color:#2a2006;border-color:#FFD54F}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -28,13 +27,19 @@ a{color:#9cc8ff}
 @media(max-width:420px){
   .wrap{padding:8px}
   .grid{grid-template-columns:1fr}
-  h1{font-size:15px}
 }
-</style></head><body><div class="wrap">
-<header><div><h1>Race forecast · strategist brief</h1>
-<div class="muted small">Capa ESP 99 · Puerto Portals race area · kt, ° true (wind FROM), Madrid time</div>
-<div class="navlinks"><a class="playlink" href="./">Live wind</a><a class="playlink" href="playbook.html">Wind playbook</a></div></div>
-<div class="muted small" id="gen" style="text-align:right"></div></header>
+</style></head><body>
+<header class="sitehead">
+  <img class="dragon" src="assets/dragon_capa_final_transparent.svg" alt="">
+  <div class="sitebar">
+    <a class="brand" href="./"><img class="mark" src="assets/capa-logo.svg" alt="" width="36" height="36"><span class="word"><span class="capa">CAPA</span><span class="eye">ESP 99 · Bay of Palma</span></span></a>
+    <h1>Forecast</h1>
+    <div class="headmeta" id="gen"></div>
+  </div>
+  <nav class="sitenav" aria-label="Site"><a href="./">Live wind</a><a href="forecast.html" aria-current="page">Forecast</a><a href="playbook.html">Wind playbook</a><a href="./#webcams">Webcams</a></nav>
+</header>
+<div class="wrap">
+<div class="muted small" style="margin:2px 0 6px">Puerto Portals race area · kt, ° true (wind FROM), Madrid time</div>
 <div class="tabs" id="tabs"></div><div id="day"></div>
 <div class="card small muted" id="src"></div>
 </div>

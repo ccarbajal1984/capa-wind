@@ -2,9 +2,12 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B1F3A">
-<title>Portals Wind Playbook · Capa ESP 99</title>
+<title>Wind playbook · CAPA ESP 99</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="assets/brand.css">
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:56px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:108px}
 body{margin:0;background:#0B1F3A;color:#EAF2FB;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
 a{color:#8fd0ff}b,strong{color:#fff}
 .hero{background:linear-gradient(160deg,#0E2A4F 0%,#0B1F3A 70%);border-bottom:1px solid #2A4A70;padding:22px 16px 18px}
@@ -14,7 +17,7 @@ h1{font-size:22px;line-height:1.2;margin:6px 0 6px}
 .sub{color:#8FA8C4;font-size:13px}
 .chips{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
 .chip{background:#13304F;border:1px solid #2A4A70;border-radius:20px;padding:3px 10px;font-size:12.5px;color:#CFE0F2}
-nav.toc{position:sticky;top:0;z-index:10;background:rgba(11,31,58,.96);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid #2A4A70}
+nav.toc{position:sticky;top:var(--head-h);z-index:10;background:rgba(11,31,58,.96);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid #2A4A70}
 nav.toc ol{list-style:none;margin:0;padding:8px 10px;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 nav.toc ol::-webkit-scrollbar{display:none}
 nav.toc a{display:block;text-decoration:none;color:#CFE0F2;font-size:13.5px;padding:5px 11px;border-radius:16px;background:#13304F;border:1px solid #2A4A70}
@@ -76,9 +79,9 @@ footer b{color:#EAF2FB}
  .figs2{grid-template-columns:1fr 1fr}
 }
 @media(min-width:1100px){
- html{scroll-padding-top:16px}
+ html{scroll-padding-top:88px}
  .layout{display:grid;grid-template-columns:220px 1fr;gap:28px}
- nav.toc{position:sticky;top:14px;align-self:start;background:transparent;border:0;backdrop-filter:none;margin-top:28px}
+ nav.toc{position:sticky;top:84px;align-self:start;background:transparent;border:0;backdrop-filter:none;margin-top:28px}
  nav.toc ol{flex-direction:column;overflow:visible;padding:0;white-space:normal;gap:4px}
  nav.toc a{background:transparent;border:0;border-left:2px solid #2A4A70;border-radius:0;padding:5px 10px}
  nav.toc a:hover{border-left-color:#4FC3F7}
@@ -97,7 +100,15 @@ table.wt td:first-child{min-width:120px}
 .badge{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:#FFD54F;color:#2a2006;margin-left:4px;vertical-align:middle}
 @media print{nav.toc{display:none}.layout{display:block}body{background:#fff;color:#000}}
 </style></head><body>
-<div class="topbar"><span><a class="back" href="./">&#8592; Live dashboard</a> <a class="back" href="forecast.html" style="margin-left:8px">Forecast</a></span><span class="muted units">kt · ° true (FROM) · Madrid time</span></div>
+<header class="sitehead">
+  <img class="dragon" src="assets/dragon_capa_final_transparent.svg" alt="">
+  <div class="sitebar">
+    <a class="brand" href="./"><img class="mark" src="assets/capa-logo.svg" alt="" width="36" height="36"><span class="word"><span class="capa">CAPA</span><span class="eye">ESP 99 · Bay of Palma</span></span></a>
+    <h1>Wind playbook</h1>
+    <div class="headmeta">kt · ° true (FROM) · Madrid</div>
+  </div>
+  <nav class="sitenav" aria-label="Site"><a href="./">Live wind</a><a href="forecast.html">Forecast</a><a href="playbook.html" aria-current="page">Wind playbook</a><a href="./#webcams">Webcams</a></nav>
+</header>
 <header class="hero"><div class="in">
 <div class="kicker">Dragon · Capa ESP 99 · Puerto Portals winter series 2026-27</div>
 <h1>Portals Wind Playbook</h1>
