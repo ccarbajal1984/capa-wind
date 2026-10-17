@@ -34,6 +34,47 @@ MADRID = ZoneInfo("Europe/Madrid")
 RETENTION_DAYS = 7
 CHART_HOURS = 24
 OPEN_METEO = "https://api.open-meteo.com/v1/forecast"
+WINDALYTICS = "https://meteo.windalytics.com/api/weather_display/{code}/data/latesthour"
+# Public token shipped in the Windalytics page bundle and sent for every anonymous visitor.
+WINDALYTICS_KEY = "1c1eafc81627047d68b8ecaa3e5996d562d95940544d74bd4a95961ef38e9fdf"
+WINDALYTICS_STATIONS = [
+    {
+        "id": "WA_RCNP",
+        "name": "Real Club Náutico de Palma (Windalytics)",
+        "short": "RCN Palma",
+        "lat": 39.566895,
+        "lon": 2.634551,
+        "code": "rcnp",
+        "link": "https://meteo.windalytics.com/station/rcnp",
+    },
+    {
+        "id": "WA_CNCG",
+        "name": "CN Cala Gamba (Windalytics)",
+        "short": "Cala Gamba",
+        "lat": 39.547514,
+        "lon": 2.694319,
+        "code": "cncg",
+        "link": "https://meteo.windalytics.com/station/cncg",
+    },
+    {
+        "id": "WA_CMSAP",
+        "name": "Can Pastilla CMSAP (Windalytics)",
+        "short": "Can Pastilla",
+        "lat": 39.532245,
+        "lon": 2.716469,
+        "code": "cmsap",
+        "link": "https://meteo.windalytics.com/station/cmsap",
+    },
+    {
+        "id": "WA_CNARENAL",
+        "name": "Club Náutico Arenal (Windalytics)",
+        "short": "S'Arenal",
+        "lat": 39.502427,
+        "lon": 2.746801,
+        "code": "cnarenal",
+        "link": "https://meteo.windalytics.com/station/cnarenal",
+    },
+]
 
 POINTS = [
     "N",
@@ -133,6 +174,88 @@ def fetch_forecast() -> dict:
     return payload
 
 
+def _num(value):
+    return value if isinstance(value, (int, float)) and not isinstance(value, bool) else None
+
+
+def fetch_windalytics(code: str) -> list[dict]:
+    """Public Windalytics station feed. Speeds are knots, direction is degrees true (wind from)."""
+    request = urllib.request.Request(
+        WINDALYTICS.format(code=code),
+        headers={
+            "X-API-Key": WINDALYTICS_KEY,
+            "User-Agent": "capa-wind/1.0 (ESP 99; Bahia de Palma)",
+        },
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        payload = json.load(response)
+    data = (payload or {}).get("data") or {}
+    tws = data.get("TWS") or {}
+    gusts = data.get("TWS_GUST") or {}
+    directions = data.get("TWD") or {}
+    temps = data.get("TEMPERATURE") or {}
+    pressures = data.get("PRESSURE") or {}
+    times = data.get("TIME") or {}
+    readings = []
+    for key, millis in times.items():
+        if not isinstance(millis, (int, float)) or isinstance(millis, bool):
+            continue
+        readings.append(
+            {
+                "t": int(millis / 1000),
+                "spd": one_decimal(tws[key]) if _num(tws.get(key)) is not None else None,
+                "gst": one_decimal(gusts[key]) if _num(gusts.get(key)) is not None else None,
+                "dir": _num(directions.get(key)),
+                "temp": _num(temps.get(key)),
+                "pres": _num(pressures.get(key)),
+                "qc": "raw",
+            }
+        )
+    latest = data.get("LATEST_DATA") or {}
+    latest_time = latest.get("TIME")
+    if isinstance(latest_time, (int, float)) and not isinstance(latest_time, bool):
+        precise = {
+            "t": int(latest_time / 1000),
+            "spd": one_decimal(latest["TWS"]) if _num(latest.get("TWS")) is not None else None,
+            "gst": one_decimal(latest["TWS_GUST"]) if _num(latest.get("TWS_GUST")) is not None else None,
+            "dir": _num(latest.get("TWD")),
+            "temp": _num(latest.get("TEMPERATURE")),
+            "pres": _num(latest.get("PRESSURE")),
+            "qc": "raw",
+        }
+        readings = [item for item in readings if item["t"] != precise["t"]] + [precise]
+    readings.sort(key=lambda item: item["t"])
+    return readings
+
+
+def fetch_windalytics_stations() -> list[dict]:
+    stations = []
+    for station in WINDALYTICS_STATIONS:
+        readings = fetch_windalytics(station["code"])
+        usable = [item for item in readings if item.get("spd") is not None]
+        if not usable:
+            raise RuntimeError(f"{station['id']} returned no wind readings")
+        latest = usable[-1]
+        stations.append(
+            {
+                "id": station["id"],
+                "name": station["name"],
+                "short": station["short"],
+                "lat": station["lat"],
+                "lon": station["lon"],
+                "link": station["link"],
+                "readings": len(readings),
+                "latest": latest,
+            }
+        )
+        print(
+            f"{station['id']} ok {station['short']} {latest['spd']} kt "
+            f"gust {latest['gst']} kt dir {latest['dir']} temp {latest['temp']} C "
+            f"({len(readings)} readings)"
+        )
+    return stations
+
+
 def load_history() -> list[dict]:
     if not HISTORY_PATH.exists():
         return []
@@ -161,6 +284,7 @@ def main() -> None:
     )
     if current is None:
         raise RuntimeError("Open-Meteo current wind reading is incomplete")
+    windalytics = fetch_windalytics_stations()
 
     by_time = {item["t"]: item for item in load_history() if isinstance(item, dict) and "t" in item}
     hourly = forecast["hourly"]
@@ -210,6 +334,7 @@ def main() -> None:
             "updated": stamp(now),
             "current": current,
             "history": recent,
+            "windalytics": windalytics,
         },
     )
     print(
