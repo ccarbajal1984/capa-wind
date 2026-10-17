@@ -865,16 +865,9 @@ function drawCharts(){
 }
 const CAM_GROUPS=[['near','Near Portals / west bay'],['palma','Palma & east bay (Can Pastilla)'],['wide','Wider views']];
 const CAMS=[
- {g:'near',km:0.5,approx:true,n:'Portals Nous · over the race area',face:'the race area',img:'https://livecam.conectabalear.tv/JSC-CAM1/preview.jpg',page:'https://visiona.conectabalear.com/camara-portals-nous/c/71/'},
  {g:'near',km:2.9,n:'Torrenova / Son Maties, Magaluf–Palmanova',yt:'SCXirfESCck'},
  {g:'near',km:4.7,n:'Cala Vinyes / Portals Vells',face:'Three Fingers Bay',yt:'zNyiX12NcrQ'},
- {g:'near',km:6.4,approx:true,n:'Badia de Palma (west side, from Calvià)',face:'the west side of the bay',img:'https://livecam.conectabalear.tv/CLV-CAM1/preview.jpg',page:'https://visiona.conectabalear.com/camara-badia-de-palma/c/11/'},
- {g:'near',km:7.7,n:'Santa Ponsa beach & bay',face:'the beach and bay',yt:'X0kNa7mAnnI'},
- {g:'near',km:8.4,approx:true,n:'El Toro · looking towards Palma',face:'Palma',img:'https://str2.eivotv.es/canal_aa/preview.jpg',page:'https://www.cansionpesca.com/webcams-mallorca-sur/'},
- {g:'near',km:8.6,approx:true,n:'Santa Ponça',img:'https://livecam.conectabalear.tv/SPN-CAM1/preview.jpg',page:'https://visiona.conectabalear.com/camara-santa-ponca/c/52/'},
  {g:'near',km:8.9,n:'Port Adriano, El Toro',yt:'AeFSWxScJ8c'},
- {g:'near',km:9.0,n:'Illes Malgrats',img:'https://str4.strei.es/canal_at/preview.jpg',page:'https://www.cansionpesca.com/webcams-mallorca-sur/'},
- {g:'near',km:9.6,approx:true,n:'Punta de El Toro',img:'https://livecam.conectabalear.tv/ETR-CAM1/preview.jpg',page:'https://visiona.conectabalear.com/camara-punta-de-el-toro/c/62/'},
  {g:'near',km:11.0,n:'El Toro · looking at Santa Ponsa',face:'Santa Ponsa',img:'https://str4.strei.es/canal_ab/preview.jpg',page:'https://www.cansionpesca.com/webcams-mallorca-sur/'},
  {g:'palma',km:5.6,kmText:'5.6–6.9',n:'Palma port, Club de Mar side',face:'the Club de Mar side of the port',yt:'hRw1_JQMQoE',poster:'https://imgproxy.windy.com/_/full/plain/current/1793912575/original.jpg'},
  {g:'palma',km:7,approx:true,n:'Palma Paseo Marítimo marina',face:'the marina',yt:'b_mKk1uL6ZI'},
@@ -882,10 +875,6 @@ const CAMS=[
  {g:'palma',km:13,n:'Pipeline · Can Pastilla beach',face:'the beach',type:'twitch',ch:'pipelinesurfshop',page:'https://www.mallorcapipeline.com/webcam/',alt:'https://www.twitch.tv/pipelinesurfshop'},
  {g:'palma',km:13,n:'Pipeline Can Pastilla',face:'the beach',img:'https://imgproxy.windy.com/_/full/plain/current/1722330380/original.jpg',page:'https://imgproxy.windy.com/_/full/plain/current/1722330380/original.jpg'},
  {g:'palma',km:13,n:'Can Pastilla, SkylineWebcams',face:'the beach',type:'link',page:'https://www.skylinewebcams.com/en/webcam/espana/islas-baleares/mallorca/can-pastilla-playa-de-palma.html'},
- {g:'wide',km:8.7,approx:true,n:'Palma city & bay',face:'Palma and the bay',img:'https://livecam.conectabalear.tv/BGS-CAM1/preview.jpg',page:'https://visiona.conectabalear.com/camara-palma/c/46/'},
- {g:'wide',km:8.8,approx:true,n:'Bahía de Palma (from Na Burguesa)',face:'the bay',img:'https://livecam.conectabalear.tv/BGS-CAM2/preview.jpg',page:'https://visiona.conectabalear.com/camara-bahia-de-palma/c/103/'},
- {g:'wide',km:16,approx:true,n:'Sa Dragonera',face:'Dragonera',img:'https://livecam.conectabalear.tv/ADX2-CAM1/preview.jpg',page:'https://visiona.conectabalear.com/camara-sa-dragonera/c/22/'},
- {g:'wide',km:26.6,n:'Cap Blanc',img:'https://str4.strei.es/canal_an/preview.jpg',page:'https://www.cansionpesca.com/webcams-mallorca-sur/'},
 ];
 function kmText(c){return `${c.kmText||((c.approx?'~':'')+c.km)} km from Portals${c.face?` · faces ${esc(c.face)}`:''}`;}
 function camCard(c){
@@ -940,6 +929,7 @@ function watchCams(){
 function drawCams(){
   document.getElementById('cams').innerHTML=CAM_GROUPS.map(([id,title])=>{
     const list=CAMS.filter(c=>c.g===id).sort((a,b)=>a.km-b.km);
+    if(!list.length) return '';
     return `<section class="camgroup"><h3>${title}</h3><div class="cams">${list.map(camCard).join('')}</div></section>`;
   }).join('');
   refreshSnaps();
