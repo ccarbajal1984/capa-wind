@@ -1,0 +1,4 @@
+{
+  "twitchChannel": "capa",
+  "parents": ["capa-wind.pages.dev", "localhost", "127.0.0.1"]
+}

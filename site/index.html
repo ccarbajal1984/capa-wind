@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CAPA · Bahía de Palma</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header class="top">
+      <div>
+        <p class="eyebrow">Dragon · ESP 99 · RCN Palma</p>
+        <h1>CAPA</h1>
+        <p class="place">Bahía de Palma</p>
+      </div>
+      <p class="updated">Updated <time id="updated" datetime="">—</time></p>
+    </header>
+
+    <section class="now" aria-label="Current wind">
+      <div class="compass" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="78" class="ring"></circle>
+          <circle cx="100" cy="100" r="4" class="hub"></circle>
+          <g id="ticks"></g>
+          <g id="marker">
+            <polygon points="100,28 106,48 100,44 94,48" class="needle"></polygon>
+          </g>
+          <text x="100" y="22" text-anchor="middle" class="cardinal">N</text>
+          <text x="184" y="104" text-anchor="middle" class="cardinal">E</text>
+          <text x="100" y="190" text-anchor="middle" class="cardinal">S</text>
+          <text x="16" y="104" text-anchor="middle" class="cardinal">W</text>
+        </svg>
+      </div>
+      <div class="readout">
+        <p id="direction" class="direction">—</p>
+        <p id="degrees" class="degrees"></p>
+        <div class="stats">
+          <article>
+            <h2>Wind</h2>
+            <p><span id="wind">—</span> <span class="unit">kt</span></p>
+          </article>
+          <article>
+            <h2>Gust</h2>
+            <p><span id="gust">—</span> <span class="unit">kt</span></p>
+          </article>
+          <article>
+            <h2>Temp</h2>
+            <p><span id="temp">—</span> <span class="unit">°C</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="live" aria-label="Twitch">
+      <div class="panel-head">
+        <h2>Twitch · <span id="channel-name">capa</span></h2>
+      </div>
+      <div class="frame">
+        <iframe
+          id="twitch"
+          title="CAPA on Twitch"
+          src="https://player.twitch.tv/?channel=capa&amp;parent=capa-wind.pages.dev&amp;parent=localhost&amp;parent=127.0.0.1&amp;muted=true"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <section class="chart" aria-labelledby="wind-title">
+      <div class="panel-head">
+        <h2 id="wind-title">24h wind</h2>
+        <p class="legend"><span class="swatch wind"></span>Wind <span class="swatch gust"></span>Gust</p>
+      </div>
+      <div id="wind-chart" class="plot"></div>
+    </section>
+
+    <section class="chart dir" aria-labelledby="dir-title">
+      <div class="panel-head">
+        <h2 id="dir-title">24h direction</h2>
+        <p class="legend">Coming from</p>
+      </div>
+      <div id="dir-chart" class="plot"></div>
+    </section>
+  </main>
+  <footer>
+    <p>Grid wind for the bay from Open-Meteo, sampled every 10 minutes. Not an onboard anemometer.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
