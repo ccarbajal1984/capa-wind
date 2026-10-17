@@ -88,9 +88,6 @@ svg text{fill:var(--muted);font-size:11px}
 .cam .media{aspect-ratio:16/9;background:#000;display:block;width:100%;position:relative}.cam img{width:100%;height:100%;object-fit:cover;display:block}
 .cam iframe{width:100%;height:100%;border:0;display:block}
 .cam .cap{padding:6px 10px;font-size:12px}.cam .cap a{color:#8fd0ff}
-.ytgo{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;background:#0B1F3A;cursor:pointer;color:#fff}
-.ytgo img{width:100%;height:100%;object-fit:cover}
-.ytbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:rgba(11,31,58,.85);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:16px}
 .skylink{display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#EAF2FB;text-decoration:none;font-size:13px;font-weight:600}
 a{color:#8fd0ff}
 table.rng{border-collapse:collapse;font-size:12px}table.rng td{padding:2px 6px}
@@ -716,17 +713,13 @@ const CAMS=[
 ];
 function kmText(c){return `${c.kmText||((c.approx?'~':'')+c.km)} km from Portals${c.face?` · faces ${esc(c.face)}`:''}`;}
 function camCard(c){
-  const host=location.hostname; const https=location.protocol==='https:'||host==='localhost';
   let media, links;
   if(c.yt){
     const poster=c.poster?`<img data-snap="${c.poster}" alt="">`:`<img src="https://i.ytimg.com/vi/${c.yt}/hqdefault.jpg" alt="" onerror="this.style.display='none'">`;
-    media=`<div class="media"><button type="button" class="ytgo" data-yt="${c.yt}" aria-label="Play ${esc(c.n)}">${poster}<span class="ytbtn" aria-hidden="true">▶</span></button></div>`;
+    media=`<div class="media camlive" data-live="yt" data-yt="${esc(c.yt)}" data-title="${esc(c.n)}">${poster}</div>`;
     links=`<a href="https://www.youtube.com/watch?v=${c.yt}" target="_blank" rel="noopener">open on YouTube ↗</a>`;
   }else if(c.type==='twitch'){
-    const parents=[...new Set([host,'capa-wind.pages.dev'].filter(Boolean))];
-    const parentQs=parents.map(p=>'parent='+encodeURIComponent(p)).join('&');
-    media= https&&host ? `<div class="media"><iframe src="https://player.twitch.tv/?channel=${c.ch}&${parentQs}&muted=true&autoplay=true" allowfullscreen loading="lazy" title="${esc(c.n)}"></iframe></div>`
-      : `<a class="media" href="${c.alt}" target="_blank" rel="noopener"><img data-snap="https://static-cdn.jtvnw.net/previews-ttv/live_user_${c.ch}-640x360.jpg" alt=""></a>`;
+    media=`<div class="media camlive" data-live="twitch" data-ch="${esc(c.ch)}" data-title="${esc(c.n)}"><img data-snap="https://static-cdn.jtvnw.net/previews-ttv/live_user_${c.ch}-640x360.jpg" alt=""></div>`;
     links=`<a href="${c.page}" target="_blank" rel="noopener">open live page ↗</a> · <a href="${c.alt}" target="_blank" rel="noopener">Twitch ↗</a>`;
   }else if(c.type==='link'){
     media=`<a class="media skylink" href="${c.page}" target="_blank" rel="noopener">SkylineWebcams<br>open live page ↗</a>`;
@@ -737,6 +730,37 @@ function camCard(c){
   }
   return `<div class="cam">${media}<div class="cap"><b>${esc(c.n)}</b><br><span class="muted">${kmText(c)}</span><br>${links}</div></div>`;
 }
+function liveSrc(el){
+  if(el.dataset.live==='yt'){
+    return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(el.dataset.yt)}?autoplay=1&mute=1&playsinline=1&rel=0`;
+  }
+  const parents=[...new Set(['capa-wind.pages.dev','localhost',location.hostname].filter(Boolean))];
+  const parentQs=parents.map(p=>'parent='+encodeURIComponent(p)).join('&');
+  return `https://player.twitch.tv/?channel=${encodeURIComponent(el.dataset.ch)}&${parentQs}&autoplay=true&muted=true`;
+}
+function startLive(el){
+  if(!el||el.dataset.started) return;
+  el.dataset.started='1';
+  const frame=document.createElement('iframe');
+  frame.src=liveSrc(el);
+  frame.title=el.dataset.title||'Live webcam';
+  frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
+  frame.referrerPolicy='strict-origin-when-cross-origin';
+  el.replaceChildren(frame);
+}
+function watchCams(){
+  const nodes=[...document.querySelectorAll('.camlive')];
+  if(!nodes.length) return;
+  if(!('IntersectionObserver' in window)){ nodes.forEach(startLive); return; }
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(!en.isIntersecting) return;
+      startLive(en.target);
+      io.unobserve(en.target);
+    });
+  },{rootMargin:'200px'});
+  nodes.forEach(n=>io.observe(n));
+}
 function drawCams(){
   document.getElementById('cams').innerHTML=CAM_GROUPS.map(([id,title])=>{
     const list=CAMS.filter(c=>c.g===id).sort((a,b)=>a.km-b.km);
@@ -744,8 +768,14 @@ function drawCams(){
   }).join('');
   refreshSnaps();
 }
+let camsArmed=false;
+function armCams(){
+  if(camsArmed) return;
+  camsArmed=true;
+  watchCams();
+}
 function refreshSnaps(){document.querySelectorAll('img[data-snap]').forEach(i=>{i.src=i.dataset.snap+(i.dataset.snap.includes('?')?'&':'?')+'t='+Math.floor(Date.now()/60000);});}
-async function load(){try{const r=await fetch('data/live.json?t='+Date.now(),{cache:'no-store'});DATA=await r.json();render();}catch(e){document.getElementById('age').textContent='data load failed – retrying';}}
+async function load(){try{const r=await fetch('data/live.json?t='+Date.now(),{cache:'no-store'});DATA=await r.json();render();}catch(e){document.getElementById('age').textContent='data load failed – retrying';}armCams();}
 document.getElementById('rngrow').innerHTML=RANGES.map(r=>`<td><span class="range" style="background:${r[2]}">${r[3]} kt</span></td>`).join('');
 drawCams(); load(); setInterval(load,120000); setInterval(refreshSnaps,60000); setInterval(tick,30000);
 let rz;
@@ -760,17 +790,6 @@ document.getElementById('smooth').addEventListener('click',()=>{
   b.classList.toggle('on',SMOOTH);
   b.setAttribute('aria-pressed',SMOOTH?'true':'false');
   if(DATA) drawCharts();
-});
-document.getElementById('cams').addEventListener('click',e=>{
-  const b=e.target.closest('.ytgo'); if(!b) return;
-  const frame=document.createElement('iframe');
-  frame.src=`https://www.youtube.com/embed/${b.dataset.yt}?autoplay=1&mute=1`;
-  frame.referrerPolicy='strict-origin-when-cross-origin';
-  frame.allow='autoplay; encrypted-media; picture-in-picture';
-  frame.allowFullscreen=true;
-  frame.title=b.getAttribute('aria-label')||'YouTube live';
-  frame.className='media';
-  b.parentElement.replaceWith(frame);
 });
 function onLegend(e){
   const b=e.target.closest('button[data-id]'); if(!b||!DATA) return;
