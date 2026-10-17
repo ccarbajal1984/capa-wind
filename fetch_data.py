@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Bay of Palma live wind: fetch real observations from public, keyless sources -> site/data/live.json.
-Run every ~10 min. Keeps a rolling 12 h history (history.json) so single-reading sources
+Run every ~5 min. Keeps a rolling 12 h history (history.json) so single-reading sources
 (Meteoclimatic) also get trends. Never fabricates values: missing/QC-failed -> null."""
 import json, re, os, sys, urllib.request, urllib.parse
 from datetime import datetime, timedelta, timezone

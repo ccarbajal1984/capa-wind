@@ -1,12 +1,26 @@
 # Samples Bay of Palma wind, commits live.json plus the rolling history.json,
 # then Direct Uploads site/ to Cloudflare Pages. Git integration is not used:
 # free-plan Pages builds from Git are limited, and this repo has no GitHub Pages deploy.
+# A Cloudflare Worker cron dispatches this workflow every 5 minutes. The GitHub
+# schedule below is only a backup. Data commits use [skip ci] and do not match
+# the push paths, so they do not start another run.
 name: Update wind data
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/15 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - "worker/**"
+      - ".github/workflows/update.yml"
   workflow_dispatch:
+    inputs:
+      deploy_worker:
+        description: Deploy capa-wind-ticker and set its GH_TOKEN secret
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -29,6 +43,19 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-wrangler-${{ runner.os }}
 
       - name: Pull latest history
         run: git pull --rebase origin main
@@ -45,10 +72,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- site/data/live.json history.json
           if git diff --cached --quiet; then
-            echo "No changes to wind history."
+            echo "No changes to wind history; not committing."
             exit 0
           fi
-          # [skip ci] plus no push trigger: this commit must not start another run.
+          # [skip ci] plus the push path filter: this commit must not start another run.
           git commit -m "Update wind history [skip ci]"
           for attempt in 1 2 3; do
             if git push origin main; then
@@ -113,3 +140,23 @@ jobs:
           echo "$SITE_USER" | npx --yes wrangler pages secret put SITE_USER --project-name capa-wind --env production
           echo "$SITE_PASS" | npx --yes wrangler pages secret put SITE_PASS --project-name capa-wind --env production
           deploy_pages
+
+      - name: Deploy ticker worker
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy_worker == true)
+        working-directory: worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GH_DISPATCH_TOKEN: ${{ secrets.GH_DISPATCH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            echo "::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is unset; skipping ticker deploy."
+            exit 0
+          fi
+          npx --yes wrangler deploy
+          if [ -z "${GH_DISPATCH_TOKEN}" ]; then
+            echo "::notice::GH_DISPATCH_TOKEN is unset. The ticker is deployed but cannot dispatch until that secret is stored as GH_TOKEN."
+            exit 0
+          fi
+          echo -n "$GH_DISPATCH_TOKEN" | npx --yes wrangler secret put GH_TOKEN

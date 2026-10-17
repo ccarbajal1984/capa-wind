@@ -1,6 +1,6 @@
 # CAPA wind
 
-Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 10 minutes, writes `site/data/live.json`, and keeps a rolling 12-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. The site asks for a shared username and password on every request.
+Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 5 minutes, writes `site/data/live.json`, and keeps a rolling 12-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. The site asks for a shared username and password on every request.
 
 The page is one file, `site/index.html`. It loads `data/live.json` with a relative URL. The Pipeline Twitch player is embedded with `parent=capa-wind.pages.dev` (plus the current hostname when that is different). Webcam snapshots are Conecta Balear Visiona and IB-red.
 
@@ -8,23 +8,26 @@ Stations: Weathercloud Puerto Portals, Windalytics (RCN Palma, CN Cala Gamba, Ca
 
 ## GitHub Actions secrets
 
-Add these four repository secrets (**Settings → Secrets and variables → Actions**):
+Add these repository secrets (**Settings → Secrets and variables → Actions**):
 
 | Secret | Value |
 | --- | --- |
-| `CLOUDFLARE_API_TOKEN` | API token with **Account → Cloudflare Pages → Edit** |
+| `CLOUDFLARE_API_TOKEN` | API token with **Account → Cloudflare Pages → Edit** and **Account → Workers Scripts → Edit** |
 | `CLOUDFLARE_ACCOUNT_ID` | Account ID from the Workers & Pages overview |
 | `SITE_USER` | Shared username for the site |
 | `SITE_PASS` | Shared password for the site |
+| `GH_DISPATCH_TOKEN` | GitHub token that can dispatch Actions (`workflow` scope, or fine-grained Actions read and write). The ticker stores it as the Worker secret `GH_TOKEN`. |
 
 `functions/_middleware.js` (repo root, not inside `site/`) reads `SITE_USER` and `SITE_PASS` from the Pages **production** environment. Wrangler only bundles `./functions` from the directory it is run in. If either secret is missing or empty, every request gets **503** and the files are not served. A wrong password gets **401**.
 
 ## What the Action does
 
-`.github/workflows/update.yml` runs every 10 minutes and on **Run workflow**. There is no `push` trigger. Data commits use `[skip ci]`.
+A Worker, `capa-wind-ticker` (`worker/`), runs `*/5 * * * *` and dispatches this workflow. `.github/workflows/update.yml` also has a backup schedule of every 15 minutes, plus **Run workflow**. One concurrency group queues runs and does not cancel the one already going. `fetch_data.py` uses the standard library; Actions caches pip from `requirements.txt` and caches npm so Wrangler is not downloaded from scratch each time.
+
+The ticker is deployed only when `main` is pushed with a change under `worker/` or in this workflow file, or when **Run workflow** is started with **deploy_worker** checked. A 5-minute dispatch does not redeploy the Worker. Data commits use `[skip ci]` and only touch the JSON files, so they do not match that push filter.
 
 1. Pull and rebase `main`, then run `python3 fetch_data.py`.
-2. Commit `site/data/live.json` and `history.json` when they changed.
+2. Commit `site/data/live.json` and `history.json` when they changed. An unchanged tree is not committed.
 3. If `CLOUDFLARE_API_TOKEN` or `CLOUDFLARE_ACCOUNT_ID` is absent, log a notice and skip the deploy. The job still succeeds.
 4. Otherwise create the Pages project if needed, then upload `site/`:
 
@@ -35,9 +38,10 @@ Add these four repository secrets (**Settings → Secrets and variables → Acti
 
    Do not connect this Git repository in Cloudflare. Free-plan Git builds are limited; this repo uses Direct Upload.
 
-5. On a manual run, or when `wrangler pages secret list --env production` shows `SITE_USER` or `SITE_PASS` is not on the production environment, upload those two with `--env production` and deploy once more so they take effect. A normal 10-minute run does not repeat that when both production secrets are already present. The deploy log must include `Uploading Functions bundle`.
+5. On a manual run, or when `wrangler pages secret list --env production` shows `SITE_USER` or `SITE_PASS` is not on the production environment, upload those two with `--env production` and deploy once more so they take effect. A normal 5-minute run does not repeat that when both production secrets are already present. The deploy log must include `Uploading Functions bundle`.
+6. On a worker-path push, or a manual run with **deploy_worker**, from `worker/`: `npx wrangler deploy`, then `echo -n "$GH_DISPATCH_TOKEN" | npx wrangler secret put GH_TOKEN`. The `-n` keeps a newline out of the bearer token.
 
-Create the API token under **My Profile → API Tokens → Create Custom Token**, permission **Account → Cloudflare Pages → Edit**, limited to the account that owns the project.
+Create the API token under **My Profile → API Tokens → Create Custom Token**, permissions **Account → Cloudflare Pages → Edit** and **Account → Workers Scripts → Edit**, limited to the account that owns the project.
 
 Open `https://capa-wind.pages.dev` and sign in with `SITE_USER` and `SITE_PASS`.
 

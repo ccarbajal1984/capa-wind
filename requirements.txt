@@ -1,0 +1,2 @@
+# fetch_data.py uses only the Python standard library.
+# This file exists so Actions can cache pip.

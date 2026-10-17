@@ -107,7 +107,7 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
 <div class="muted small" style="margin-top:6px">Ranges match Capa's tuning card. Trend = latest reading vs ~60 min earlier. “Veering” = clockwise shift, “Backing” = anticlockwise. Readings older than the station's normal cadence are greyed as stale; missing stations show n/a. Nothing on this page is estimated or filled in.</div>
 
 <footer>
-Sources: Weathercloud (Puerto Portals station 0773927031, public page) · SOCIB Bay of Palma buoy (OPeNDAP, QC flags 1–2 only, publishes with up to ~1 h delay) · Puertos del Estado PORTUS (Palma port tide gauge 3851, Dragonera buoy 2820) · Windalytics club stations (RCN Palma, CN Cala Gamba, Can Pastilla CMSAP, CN Arenal; public feed, speeds in knots) · METAR LEPA / LESB via aviationweather.gov · Meteoclimatic ESIBA0700000107007A · AROME HD forecast via Open-Meteo (arome_france_hd). Webcams © their owners (Conecta Balear Visiona, IB-red / IB3, Pipeline Surf Shop on Twitch). Data refresh every 10 min; page re-reads every 2 min.
+Sources: Weathercloud (Puerto Portals station 0773927031, public page) · SOCIB Bay of Palma buoy (OPeNDAP, QC flags 1–2 only, publishes with up to ~1 h delay) · Puertos del Estado PORTUS (Palma port tide gauge 3851, Dragonera buoy 2820) · Windalytics club stations (RCN Palma, CN Cala Gamba, Can Pastilla CMSAP, CN Arenal; public feed, speeds in knots) · METAR LEPA / LESB via aviationweather.gov · Meteoclimatic ESIBA0700000107007A · AROME HD forecast via Open-Meteo (arome_france_hd). Webcams © their owners (Conecta Balear Visiona, IB-red / IB3, Pipeline Surf Shop on Twitch). Data refresh every 5 min; page re-reads every 2 min.
 </footer>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -165,7 +165,7 @@ function render(){
   drawMap(st); drawCharts(); tick();
 }
 function tick(){ if(!DATA) return; const m=Math.round((Date.now()/1000-DATA.generated)/60);
-  document.getElementById('age').textContent=`${m<1?'just now':m+' min ago'} · auto-refresh 2 min`;
+  document.getElementById('age').textContent=`${m<1?'just now':m+' min ago'} · data refreshes every 5 min`;
   document.getElementById('dot').style.background=m>25?'#E57373':(m>12?'#F2C14E':'#4CAF7D');}
 const BAY=[[39.45,2.45],[39.60,2.80]];
 function declutterLabels(){
