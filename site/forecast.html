@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Forecast · Bay of Palma · Capa ESP 99</title>
+<meta name="theme-color" content="#0B1F3A">
+<style>
+:root{--navy:#0B1F3A;--panel:#13304F;--panel2:#183a5e;--line:#2A4A70;--text:#EAF2FB;--muted:#8FA8C4;--green:#4CAF7D;--red:#E57373;--amber:#F2C14E}
+*{box-sizing:border-box}html,body{margin:0;background:var(--navy);color:var(--text);font:13px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:10px 12px 28px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+h1{font-size:16px;margin:0}h2{font-size:15px;margin:14px 0 8px}h3{font-size:14px;margin:12px 0 4px}
+.muted{color:var(--muted)}.small{font-size:12px}
+.navlinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.playlink{display:inline-block;font:600 12px/1 inherit;color:#2a2006;background:#FFD54F;text-decoration:none;border-radius:999px;padding:6px 10px}
+.playlink:hover{filter:brightness(1.06)}
+a{color:#8fd0ff}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.placeholder{border:1px dashed var(--line);border-radius:12px;padding:16px 12px;color:var(--muted);background:#0E2744}
+.headline{font-size:18px;font-weight:750;line-height:1.25;margin:4px 0}
+.pills{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.pill{font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--panel2);color:var(--text)}
+.pill.high{background:var(--green);color:#06210f}.pill.medium{background:var(--amber);color:#2a2006}.pill.low{background:var(--red);color:#2a0606}
+.stale{background:#3a2410;border:1px solid #F2C14E;color:#F2C14E;border-radius:8px;padding:6px 8px;margin:8px 0;font-size:12px;font-weight:650}
+.md p{margin:6px 0}.md ul{margin:4px 0 8px;padding-left:18px}.md li{margin:2px 0}
+.tl{width:100%;border-collapse:collapse;font-size:12px;margin:6px 0}
+.tl th,.tl td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.tl th{color:var(--muted);font-weight:600}
+.rig{display:grid;grid-template-columns:1fr;gap:6px}
+@media(min-width:640px){.rig{grid-template-columns:1fr 1fr}}
+.rig div{background:var(--panel2);border-radius:8px;padding:6px 8px}
+.rig b{display:block}
+.watch{margin:4px 0 0;padding-left:18px}
+.fscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+table.fc{border-collapse:separate;border-spacing:0;width:100%;min-width:640px;font-size:12px}
+table.fc th,table.fc td{padding:5px 7px;text-align:left;white-space:nowrap;border-bottom:1px solid #1d3a5c}
+table.fc thead th{position:sticky;top:0;z-index:3;background:#183a5e;color:#E7F1FB;font-weight:700}
+table.fc td.when,table.fc th.when{position:sticky;left:0;z-index:2;background:#13304F}
+table.fc thead th.when{z-index:4;background:#183a5e}
+table.fc tr.day th{background:#0E2744;color:#FFD54F;font-size:13px;position:sticky;top:28px;z-index:2}
+table.fc tr.sum td{background:#102848;color:#E7F1FB;font-weight:650;white-space:normal}
+table.fc tr.race td{background:#1c3d28}
+table.fc tr.race td.when{background:#1c3d28}
+table.fc tr.night td{color:#8FA8C4;background:#0c1a2e}
+table.fc tr.night td.when{background:#0c1a2e}
+table.fc tr.night.race td,table.fc tr.night.race td.when{background:#163024}
+.spdcell{font-weight:750;color:#06121f;border-radius:6px;padding:1px 6px}
+.shift.veer{color:#7FD3A6;font-weight:700}.shift.back{color:#FFB74D;font-weight:700}
+.arrow{width:22px;height:22px;vertical-align:middle}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:12px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+footer{margin-top:18px;font-size:12px;color:var(--muted)}
+@media(max-width:420px){
+  .wrap{padding:8px 8px 24px}
+  h1{font-size:15px}
+  table.fc{min-width:560px;font-size:11px}
+  table.fc th,table.fc td{padding:4px 5px}
+  table.fc tr.day th{top:26px}
+}
+</style></head><body><div class="wrap">
+<header>
+  <div>
+    <h1>Forecast · Puerto Portals</h1>
+    <div class="muted small">Capa ESP 99 · knots · ° true, wind FROM · Europe/Madrid</div>
+    <div class="navlinks"><a class="playlink" href="./">Live wind</a><a class="playlink" href="playbook.html">Wind playbook</a></div>
+  </div>
+  <div class="muted small" id="built" style="text-align:right">loading…</div>
+</header>
+
+<h2>Strategist briefing</h2>
+<div id="briefing" class="card"><div class="muted">Loading briefing…</div></div>
+
+<h2>AROME forecast · Puerto Portals</h2>
+<div id="fcNote" class="muted small" style="margin:-4px 0 8px"></div>
+<div class="fscroll">
+<table class="fc">
+<thead><tr>
+  <th class="when">Madrid</th><th>Wind kt</th><th>Gust kt</th><th>Direction</th><th>Bft</th><th>Shift vs previous hour</th><th>Model</th>
+</tr></thead>
+<tbody id="fcBody"><tr><td colspan="7" class="muted">Loading forecast…</td></tr></tbody>
+</table>
+</div>
+<div class="legend" id="legend"></div>
+<div class="muted small" style="margin-top:6px">Race hours 11:00–16:00 are highlighted. Night rows (20:00–07:00) are dim. A shift is a change of 15° or more from the previous hour: veer is clockwise (right), back is anticlockwise (left). The arrow points where the wind blows to, as on the live page. The table is drawn from <span class="muted">data/live.json</span> each time this page loads.</div>
+<footer>AROME via Open-Meteo. AROME HD is used where that model returns an hour; AROME France fills only the hours HD does not. Nothing past the last returned hour is filled in.</footer>
+</div>
+<script>
+const RANGES=[[0,6,'#9EC9F0','0–6'],[6,10,'#7FD3A6','6–10'],[10,15,'#F2C14E','10–15'],[15,20,'#F39C5A','15–20'],[20,99,'#E57373','20+']];
+const C16=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+const compass=d=>C16[Math.round((((d%360)+360)%360)/22.5)%16];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const f1=v=>v==null||!isFinite(+v)?'–':(Math.round(+v*10)/10).toString();
+const pad=n=>String(Math.round(((n%360)+360)%360)).padStart(3,'0');
+function signedDelta(from,to){return ((((+to)-(+from))%360)+540)%360-180;}
+function circMean(vals){
+  let s=0,c=0,n=0;
+  vals.forEach(d=>{if(d==null||!isFinite(+d)) return; const r=+d*Math.PI/180; s+=Math.sin(r); c+=Math.cos(r); n++;});
+  if(!n) return null;
+  return (Math.atan2(s,c)*180/Math.PI+360)%360;
+}
+function madrid(ts){
+  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',hourCycle:'h23',weekday:'short',day:'2-digit',month:'short',year:'numeric'}).formatToParts(new Date(ts*1000));
+  const g=k=>{const p=parts.find(x=>x.type===k); return p?p.value:'';};
+  return {h:Number(g('hour')), min:Number(g('minute')), wd:g('weekday'), day:g('day'), mon:g('month'),
+    key:g('year')+'-'+g('month')+'-'+g('day'), label:g('weekday')+' '+g('day')+' '+g('month'),
+    hm:g('hour')+':'+g('minute')};
+}
+function modelLabel(id){
+  const s=String(id||'');
+  if(s.includes('hd')) return 'AROME HD';
+  if(s.includes('france')) return 'AROME France';
+  return s||'–';
+}
+function beaufort(kt){
+  if(kt==null||!isFinite(+kt)) return '–';
+  const cuts=[1,4,7,11,17,22,28,34,41,48,56,64];
+  let n=0;
+  cuts.forEach(c=>{ if(+kt>=c) n++; });
+  return String(n);
+}
+function rng(v){return RANGES.find(r=>v>=r[0]&&v<r[1])||RANGES[4];}
+function arrow(dir){
+  if(dir==null||!isFinite(+dir)) return '';
+  return `<svg class="arrow" viewBox="0 0 62 62" aria-hidden="true"><circle cx="31" cy="31" r="28" fill="#0B1F3A" stroke="#2A4A70" stroke-width="2"/><g transform="rotate(${(+dir)+180} 31 31)"><path d="M31 8 L40 28 L33 25 L33 52 L29 52 L29 25 L22 28 Z" fill="#8FD0FF"/></g></svg>`;
+}
+function inlineMd(s){
+  return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+}
+function renderMd(src){
+  const lines=String(src||'').replace(/\r\n/g,'\n').split('\n');
+  let html='', list=false;
+  const close=()=>{ if(list){ html+='</ul>'; list=false; } };
+  lines.forEach(raw=>{
+    const line=raw.trim();
+    if(!line){ close(); return; }
+    const bullet=line.match(/^[-*]\s+(.*)$/);
+    if(bullet){
+      if(!list){ html+='<ul>'; list=true; }
+      html+=`<li>${inlineMd(bullet[1])}</li>`;
+    } else {
+      close();
+      html+=`<p>${inlineMd(line)}</p>`;
+    }
+  });
+  close();
+  return `<div class="md">${html}</div>`;
+}
+function issuedLabel(iso){
+  const t=Date.parse(iso);
+  if(!isFinite(t)) return '';
+  return new Date(t).toLocaleString('en-GB',{timeZone:'Europe/Madrid',weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+' Madrid';
+}
+function renderBriefing(b){
+  const el=document.getElementById('briefing');
+  if(!b||b.valid_for==null||b.valid_for===''){
+    el.className='placeholder';
+    el.innerHTML='<b style="color:#EAF2FB">Briefing not issued yet</b><div class="small" style="margin-top:4px">The strategist note is written into data/briefing.json twice a day. This page will show it here when the next one is issued.</div>';
+    return;
+  }
+  el.className='card';
+  const conf=String(b.confidence||'').toLowerCase();
+  const confCls=conf==='high'||conf==='medium'||conf==='low'?conf:'';
+  const issued=issuedLabel(b.issued);
+  const ageH=isFinite(Date.parse(b.issued))?(Date.now()-Date.parse(b.issued))/36e5:null;
+  let html='';
+  if(ageH!=null&&ageH>18) html+=`<div class="stale">This briefing was issued ${esc(issued)} (${Math.round(ageH)} h ago), more than 18 h old.</div>`;
+  else if(issued) html+=`<div class="muted small">Issued ${esc(issued)}</div>`;
+  html+=`<div class="headline">${esc(b.headline||'Briefing')}</div>`;
+  html+=`<div class="pills"><span class="pill">Valid ${esc(b.valid_for)}</span>`;
+  if(b.wind_type) html+=`<span class="pill">${esc(b.wind_type)}</span>`;
+  if(conf) html+=`<span class="pill ${confCls}">Confidence ${esc(conf)}</span>`;
+  html+='</div>';
+  if(b.confidence_note) html+=`<p class="small">${esc(b.confidence_note)}</p>`;
+  const tl=Array.isArray(b.timeline)?b.timeline:[];
+  if(tl.length){
+    html+='<table class="tl"><tr><th>Time</th><th>kt</th><th>From</th><th>Note</th></tr>';
+    tl.forEach(row=>{
+      html+=`<tr><td>${esc(row.time)}</td><td>${esc(row.kt)}</td><td>${esc(row.dir)}</td><td>${esc(row.note||'')}</td></tr>`;
+    });
+    html+='</table>';
+  }
+  (Array.isArray(b.sections)?b.sections:[]).forEach(sec=>{
+    html+=`<h3>${esc(sec.title||'')}</h3>${renderMd(sec.body_md||'')}`;
+  });
+  const rig=Array.isArray(b.rig)?b.rig:[];
+  if(rig.length){
+    html+='<h3>Rig</h3><div class="rig">';
+    rig.forEach(r=>{ html+=`<div><b>${esc(r.phase||'')}</b><span class="small">${esc(r.setting||'')}</span></div>`; });
+    html+='</div>';
+  }
+  const watch=Array.isArray(b.watch_for)?b.watch_for.filter(Boolean):[];
+  if(watch.length){
+    html+='<h3>Watch for</h3><ul class="watch">'+watch.map(w=>`<li>${esc(w)}</li>`).join('')+'</ul>';
+  }
+  el.innerHTML=html;
+}
+function dirRange(dirs){
+  const vals=dirs.filter(d=>d!=null&&isFinite(+d));
+  if(!vals.length) return '–';
+  const mean=circMean(vals);
+  const u=vals.map(d=>mean+signedDelta(mean,d));
+  const lo=Math.round(mean+Math.min(...u.map((v,i)=>v-mean)));
+  const hi=Math.round(mean+Math.max(...u.map((v,i)=>v-mean)));
+  const a=pad(lo), b=pad(hi);
+  if(a===b) return `${a}° ${compass(lo)}`;
+  return `${a}–${b}°`;
+}
+function renderForecast(data){
+  const body=document.getElementById('fcBody');
+  const note=document.getElementById('fcNote');
+  const hours=((data&&data.arome&&data.arome.forecast&&data.arome.forecast.hours)||[]).slice().sort((a,b)=>a.t-b.t);
+  const cov=data&&data.arome&&data.arome.forecast&&data.arome.forecast.coverage;
+  const gen=data&&data.generated;
+  if(gen){
+    const when=new Date(gen*1000).toLocaleString('en-GB',{timeZone:'Europe/Madrid',weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    document.getElementById('built').textContent='Data built '+when+' Madrid';
+  }
+  if(!hours.length){
+    note.textContent='No AROME hours in this data file.';
+    body.innerHTML='<tr><td colspan="7">No forecast hours returned.</td></tr>';
+    return;
+  }
+  const hi=gen?gen+48*3600:hours[hours.length-1].t;
+  const rows=hours.filter(p=>p.t<=hi);
+  if(cov){
+    const end=madrid(cov.to||rows[rows.length-1].t);
+    note.textContent=`${cov.hours} hourly steps returned, ${cov.span_h} h ahead, through ${end.label} ${end.hm}. AROME HD ${cov.hd_hours||0} h, AROME France ${cov.france_hours||0} h.`;
+  } else note.textContent=`${rows.length} hourly steps.`;
+  const by=[];
+  rows.forEach(p=>{
+    const m=madrid(p.t);
+    let g=by.find(x=>x.key===m.key);
+    if(!g){ g={key:m.key,label:m.label,rows:[]}; by.push(g); }
+    g.rows.push({p,m});
+  });
+  let html='', prev=null;
+  by.forEach(g=>{
+    const race=g.rows.filter(r=>r.m.h>=11&&r.m.h<=16);
+    const sp=race.map(r=>r.p.spd).filter(v=>v!=null&&isFinite(+v));
+    const gs=race.map(r=>r.p.gst).filter(v=>v!=null&&isFinite(+v));
+    const dirs=race.map(r=>r.p.dir);
+    const maxS=sp.length?Math.max(...sp):null;
+    const maxG=gs.length?Math.max(...gs):null;
+    const sum=race.length
+      ?`Race hours 11:00–16:00 · max mean ${f1(maxS)} kt · max gust ${f1(maxG)} kt · direction ${dirRange(dirs)}`
+      :'No race hours (11:00–16:00) left in this run.';
+    html+=`<tr class="day"><th colspan="7">${esc(g.label)}</th></tr>`;
+    html+=`<tr class="sum"><td colspan="7">${esc(sum)}</td></tr>`;
+    g.rows.forEach(({p,m})=>{
+      const night=m.h>=20||m.h<7;
+      const raceH=m.h>=11&&m.h<=16;
+      let shift='';
+      if(prev&&prev.dir!=null&&p.dir!=null&&isFinite(+prev.dir)&&isFinite(+p.dir)&&p.t-prev.t<=5400){
+        const d=Math.round(signedDelta(prev.dir,p.dir));
+        if(Math.abs(d)>=15){
+          const sign=d>0?'+':'−';
+          shift=`<span class="shift ${d>0?'veer':'back'}">${d>0?'veer':'back'} ${sign}${Math.abs(d)}°</span>`;
+        }
+      }
+      const col=p.spd!=null&&isFinite(+p.spd)?rng(+p.spd):null;
+      const spd=col?`<span class="spdcell" style="background:${col[2]}">${f1(p.spd)}</span>`:f1(p.spd);
+      const dir=p.dir==null?'–':`${pad(p.dir)}° ${compass(p.dir)} ${arrow(p.dir)}`;
+      html+=`<tr class="${raceH?'race':''} ${night?'night':''}"><td class="when">${esc(m.hm)}</td><td>${spd}</td><td>${f1(p.gst)}</td><td>${dir}</td><td>${beaufort(p.spd)}</td><td>${shift}</td><td>${esc(modelLabel(p.model))}</td></tr>`;
+      prev=p;
+    });
+  });
+  body.innerHTML=html;
+}
+document.getElementById('legend').innerHTML=RANGES.map(r=>`<span><i style="background:${r[2]}"></i>${r[3]} kt</span>`).join('');
+async function load(){
+  let data=null, brief=null;
+  try{ data=await (await fetch('data/live.json?t='+Date.now(),{cache:'no-store'})).json(); }
+  catch(e){ document.getElementById('fcNote').textContent='Could not read data/live.json.'; document.getElementById('fcBody').innerHTML='<tr><td colspan="7">Forecast data failed to load.</td></tr>'; }
+  try{ brief=await (await fetch('data/briefing.json?t='+Date.now(),{cache:'no-store'})).json(); }
+  catch(e){ brief=null; }
+  renderBriefing(brief);
+  if(data) renderForecast(data);
+}
+load();
+setInterval(load,120000);
+</script></body></html>
