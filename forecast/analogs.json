@@ -1,0 +1,1688 @@
+{
+ "built_from": "model_portals/buoy_meteofrance_arome_france(_hd).csv (Open-Meteo historical-forecast), buoy_10min.csv (SOCIB), lepa_metar.csv (IEM)",
+ "period": "2022-11-14..2026-10-16",
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "window": "11:00-16:00 Europe/Madrid",
+ "definitions": {
+  "trend": "circular mean buoy dir 15h minus 11h, +veer/-back, only 10-min obs >=4 kt, >=3 obs each hour; steady = |trend|<=5",
+  "gust_factor": "median gust/mean for 10-min obs >=4 kt",
+  "buoy_over_arome": "buoy obs mean / AROME mean at the buoy grid point, same window",
+  "buoy_over_arome_portals": "buoy obs mean / AROME mean at the Portals point (what forecast_brief multiplies)"
+ },
+ "by_regime": {
+  "EMBAT": {
+   "days": 168,
+   "arome_spd": {
+    "n": 168,
+    "median": 6.15,
+    "q25": 5.26,
+    "q75": 7.69
+   },
+   "buoy_spd": {
+    "n": 38,
+    "median": 6.9,
+    "q25": 6.0,
+    "q75": 8.02
+   },
+   "buoy_max_hourly": {
+    "n": 38,
+    "median": 10.49,
+    "q25": 9.01,
+    "q75": 12.01
+   },
+   "buoy_gust_factor": {
+    "n": 38,
+    "median": 1.07,
+    "q25": 1.05,
+    "q75": 1.1
+   },
+   "buoy_over_arome_ratio": {
+    "n": 38,
+    "median": 1.13,
+    "q25": 1.0,
+    "q75": 1.29
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 38,
+    "median": 1.17,
+    "q25": 1.04,
+    "q75": 1.34
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 33,
+    "median": 22.5,
+    "q25": 1.5,
+    "q75": 58.6
+   },
+   "lepa_spd": {
+    "n": 168,
+    "median": 7.2,
+    "q25": 5.4,
+    "q75": 8.72
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 10,
+    "median": 7.6,
+    "q25": -5.7,
+    "q75": 114.62
+   },
+   "trend_split_pct": {
+    "veer": 60,
+    "back": 30,
+    "steady": 10
+   }
+  },
+  "LIGHT": {
+   "days": 64,
+   "arome_spd": {
+    "n": 64,
+    "median": 3.48,
+    "q25": 3.11,
+    "q75": 3.7
+   },
+   "buoy_spd": {
+    "n": 7,
+    "median": 4.52,
+    "q25": 4.3,
+    "q75": 4.87
+   },
+   "buoy_max_hourly": {
+    "n": 7,
+    "median": 7.03,
+    "q25": 6.4,
+    "q75": 7.95
+   },
+   "buoy_gust_factor": {
+    "n": 6,
+    "median": 1.12,
+    "q25": 1.1,
+    "q75": 1.13
+   },
+   "buoy_over_arome_ratio": {
+    "n": 7,
+    "median": 0.91,
+    "q25": 0.8,
+    "q75": 1.56
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 7,
+    "median": 1.21,
+    "q25": 1.13,
+    "q75": 1.48
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 6,
+    "median": 72.1,
+    "q25": 61.75,
+    "q75": 85.0
+   },
+   "lepa_spd": {
+    "n": 64,
+    "median": 4.05,
+    "q25": 3.08,
+    "q75": 4.9
+   },
+   "buoy_trend_15_minus_11": null
+  },
+  "NE_E": {
+   "days": 114,
+   "arome_spd": {
+    "n": 114,
+    "median": 7.7,
+    "q25": 6.16,
+    "q75": 10.05
+   },
+   "buoy_spd": {
+    "n": 17,
+    "median": 12.63,
+    "q25": 7.22,
+    "q75": 13.84
+   },
+   "buoy_max_hourly": {
+    "n": 17,
+    "median": 14.64,
+    "q25": 10.17,
+    "q75": 16.1
+   },
+   "buoy_gust_factor": {
+    "n": 17,
+    "median": 1.05,
+    "q25": 1.04,
+    "q75": 1.08
+   },
+   "buoy_over_arome_ratio": {
+    "n": 17,
+    "median": 1.23,
+    "q25": 1.09,
+    "q75": 1.34
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 17,
+    "median": 1.35,
+    "q25": 1.31,
+    "q75": 1.55
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 15,
+    "median": -24.4,
+    "q25": -38.4,
+    "q75": -7.95
+   },
+   "lepa_spd": {
+    "n": 114,
+    "median": 8.56,
+    "q25": 6.33,
+    "q75": 11.68
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 11,
+    "median": 16.7,
+    "q25": 5.45,
+    "q75": 100.75
+   },
+   "trend_split_pct": {
+    "veer": 73,
+    "back": 18,
+    "steady": 9
+   }
+  },
+  "NORTH": {
+   "days": 104,
+   "arome_spd": {
+    "n": 104,
+    "median": 8.05,
+    "q25": 6.69,
+    "q75": 10.31
+   },
+   "buoy_spd": {
+    "n": 20,
+    "median": 11.86,
+    "q25": 9.58,
+    "q75": 13.36
+   },
+   "buoy_max_hourly": {
+    "n": 20,
+    "median": 14.13,
+    "q25": 13.51,
+    "q75": 17.26
+   },
+   "buoy_gust_factor": {
+    "n": 20,
+    "median": 1.12,
+    "q25": 1.1,
+    "q75": 1.14
+   },
+   "buoy_over_arome_ratio": {
+    "n": 20,
+    "median": 0.95,
+    "q25": 0.89,
+    "q75": 1.2
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 20,
+    "median": 1.32,
+    "q25": 1.21,
+    "q75": 1.67
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 8,
+    "median": -1.5,
+    "q25": -11.83,
+    "q75": 6.85
+   },
+   "lepa_spd": {
+    "n": 104,
+    "median": 11.05,
+    "q25": 8.1,
+    "q75": 14.05
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 6,
+    "median": 6.4,
+    "q25": -26.5,
+    "q75": 46.28
+   },
+   "trend_split_pct": {
+    "veer": 50,
+    "back": 33,
+    "steady": 17
+   }
+  },
+  "SOUTH_SYN": {
+   "days": 112,
+   "arome_spd": {
+    "n": 112,
+    "median": 7.79,
+    "q25": 4.93,
+    "q75": 11.28
+   },
+   "buoy_spd": {
+    "n": 19,
+    "median": 10.23,
+    "q25": 5.55,
+    "q75": 13.97
+   },
+   "buoy_max_hourly": {
+    "n": 19,
+    "median": 11.53,
+    "q25": 8.37,
+    "q75": 15.88
+   },
+   "buoy_gust_factor": {
+    "n": 19,
+    "median": 1.1,
+    "q25": 1.07,
+    "q75": 1.11
+   },
+   "buoy_over_arome_ratio": {
+    "n": 19,
+    "median": 0.96,
+    "q25": 0.93,
+    "q75": 1.19
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 19,
+    "median": 1.19,
+    "q25": 1.02,
+    "q75": 1.34
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 15,
+    "median": 0.2,
+    "q25": -17.9,
+    "q75": 107.8
+   },
+   "lepa_spd": {
+    "n": 112,
+    "median": 9.22,
+    "q25": 4.88,
+    "q75": 12.3
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 10,
+    "median": 5.55,
+    "q25": -8.27,
+    "q75": 91.1
+   },
+   "trend_split_pct": {
+    "veer": 60,
+    "back": 30,
+    "steady": 10
+   }
+  },
+  "WEST": {
+   "days": 139,
+   "arome_spd": {
+    "n": 139,
+    "median": 10.52,
+    "q25": 8.11,
+    "q75": 13.75
+   },
+   "buoy_spd": {
+    "n": 22,
+    "median": 12.55,
+    "q25": 9.15,
+    "q75": 17.02
+   },
+   "buoy_max_hourly": {
+    "n": 22,
+    "median": 15.19,
+    "q25": 12.02,
+    "q75": 18.83
+   },
+   "buoy_gust_factor": {
+    "n": 22,
+    "median": 1.11,
+    "q25": 1.09,
+    "q75": 1.13
+   },
+   "buoy_over_arome_ratio": {
+    "n": 22,
+    "median": 0.91,
+    "q25": 0.84,
+    "q75": 0.98
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 22,
+    "median": 1.29,
+    "q25": 1.07,
+    "q75": 1.32
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 14,
+    "median": -0.15,
+    "q25": -4.92,
+    "q75": 9.02
+   },
+   "lepa_spd": {
+    "n": 139,
+    "median": 11.9,
+    "q25": 8.9,
+    "q75": 15.87
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 14,
+    "median": 7.25,
+    "q25": -14.25,
+    "q75": 11.22
+   },
+   "trend_split_pct": {
+    "veer": 57,
+    "back": 36,
+    "steady": 7
+   }
+  }
+ },
+ "by_regime_band": {
+  "EMBAT|0-6": {
+   "days": 77,
+   "arome_spd": {
+    "n": 77,
+    "median": 5.12,
+    "q25": 4.5,
+    "q75": 5.53
+   },
+   "buoy_spd": {
+    "n": 18,
+    "median": 6.07,
+    "q25": 5.67,
+    "q75": 6.95
+   },
+   "buoy_max_hourly": {
+    "n": 18,
+    "median": 9.44,
+    "q25": 8.59,
+    "q75": 10.35
+   },
+   "buoy_gust_factor": {
+    "n": 18,
+    "median": 1.05,
+    "q25": 1.05,
+    "q75": 1.09
+   },
+   "buoy_over_arome_ratio": {
+    "n": 18,
+    "median": 1.22,
+    "q25": 1.06,
+    "q75": 1.36
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 18,
+    "median": 1.29,
+    "q25": 1.07,
+    "q75": 1.34
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 17,
+    "median": 38.9,
+    "q25": 7.1,
+    "q75": 58.6
+   },
+   "lepa_spd": {
+    "n": 77,
+    "median": 5.5,
+    "q25": 4.54,
+    "q75": 6.6
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 2,
+    "median": 163.75,
+    "q25": 156.32,
+    "q75": 171.18
+   },
+   "trend_split_pct": {
+    "veer": 100,
+    "back": 0,
+    "steady": 0
+   }
+  },
+  "EMBAT|10-15": {
+   "days": 9,
+   "arome_spd": {
+    "n": 9,
+    "median": 10.93,
+    "q25": 10.72,
+    "q75": 12.5
+   },
+   "buoy_spd": {
+    "n": 1,
+    "median": 10.87,
+    "q25": 10.87,
+    "q75": 10.87
+   },
+   "buoy_max_hourly": {
+    "n": 1,
+    "median": 14.16,
+    "q25": 14.16,
+    "q75": 14.16
+   },
+   "buoy_gust_factor": {
+    "n": 1,
+    "median": 1.11,
+    "q25": 1.11,
+    "q75": 1.11
+   },
+   "buoy_over_arome_ratio": {
+    "n": 1,
+    "median": 1.03,
+    "q25": 1.03,
+    "q75": 1.03
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 1,
+    "median": 1.09,
+    "q25": 1.09,
+    "q75": 1.09
+   },
+   "dir_err_buoy_minus_arome": null,
+   "lepa_spd": {
+    "n": 9,
+    "median": 11.0,
+    "q25": 10.1,
+    "q75": 12.2
+   },
+   "buoy_trend_15_minus_11": null
+  },
+  "EMBAT|15-20": {
+   "days": 1,
+   "arome_spd": {
+    "n": 1,
+    "median": 15.62,
+    "q25": 15.62,
+    "q75": 15.62
+   },
+   "buoy_spd": null,
+   "buoy_max_hourly": null,
+   "buoy_gust_factor": null,
+   "buoy_over_arome_ratio": null,
+   "buoy_over_arome_portals_ratio": null,
+   "dir_err_buoy_minus_arome": null,
+   "lepa_spd": {
+    "n": 1,
+    "median": 16.4,
+    "q25": 16.4,
+    "q75": 16.4
+   },
+   "buoy_trend_15_minus_11": null
+  },
+  "EMBAT|6-10": {
+   "days": 81,
+   "arome_spd": {
+    "n": 81,
+    "median": 7.38,
+    "q25": 6.58,
+    "q75": 8.17
+   },
+   "buoy_spd": {
+    "n": 19,
+    "median": 7.79,
+    "q25": 6.43,
+    "q75": 10.49
+   },
+   "buoy_max_hourly": {
+    "n": 19,
+    "median": 11.5,
+    "q25": 10.03,
+    "q75": 12.87
+   },
+   "buoy_gust_factor": {
+    "n": 19,
+    "median": 1.1,
+    "q25": 1.06,
+    "q75": 1.11
+   },
+   "buoy_over_arome_ratio": {
+    "n": 19,
+    "median": 1.11,
+    "q25": 1.0,
+    "q75": 1.27
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 19,
+    "median": 1.13,
+    "q25": 0.94,
+    "q75": 1.35
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 16,
+    "median": 8.4,
+    "q25": -3.9,
+    "q75": 55.4
+   },
+   "lepa_spd": {
+    "n": 81,
+    "median": 8.2,
+    "q25": 7.0,
+    "q75": 9.5
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 8,
+    "median": 1.7,
+    "q25": -45.83,
+    "q75": 8.87
+   },
+   "trend_split_pct": {
+    "veer": 50,
+    "back": 38,
+    "steady": 12
+   }
+  },
+  "LIGHT|0-6": {
+   "days": 64,
+   "arome_spd": {
+    "n": 64,
+    "median": 3.48,
+    "q25": 3.11,
+    "q75": 3.7
+   },
+   "buoy_spd": {
+    "n": 7,
+    "median": 4.52,
+    "q25": 4.3,
+    "q75": 4.87
+   },
+   "buoy_max_hourly": {
+    "n": 7,
+    "median": 7.03,
+    "q25": 6.4,
+    "q75": 7.95
+   },
+   "buoy_gust_factor": {
+    "n": 6,
+    "median": 1.12,
+    "q25": 1.1,
+    "q75": 1.13
+   },
+   "buoy_over_arome_ratio": {
+    "n": 7,
+    "median": 0.91,
+    "q25": 0.8,
+    "q75": 1.56
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 7,
+    "median": 1.21,
+    "q25": 1.13,
+    "q75": 1.48
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 6,
+    "median": 72.1,
+    "q25": 61.75,
+    "q75": 85.0
+   },
+   "lepa_spd": {
+    "n": 64,
+    "median": 4.05,
+    "q25": 3.08,
+    "q75": 4.9
+   },
+   "buoy_trend_15_minus_11": null
+  },
+  "NE_E|0-6": {
+   "days": 26,
+   "arome_spd": {
+    "n": 26,
+    "median": 4.7,
+    "q25": 4.3,
+    "q75": 5.55
+   },
+   "buoy_spd": {
+    "n": 4,
+    "median": 6.52,
+    "q25": 6.49,
+    "q75": 6.69
+   },
+   "buoy_max_hourly": {
+    "n": 4,
+    "median": 9.92,
+    "q25": 9.37,
+    "q75": 10.76
+   },
+   "buoy_gust_factor": {
+    "n": 4,
+    "median": 1.06,
+    "q25": 1.05,
+    "q75": 1.08
+   },
+   "buoy_over_arome_ratio": {
+    "n": 4,
+    "median": 1.1,
+    "q25": 1.06,
+    "q75": 1.17
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 4,
+    "median": 1.33,
+    "q25": 1.27,
+    "q75": 1.39
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 4,
+    "median": -29.6,
+    "q25": -46.1,
+    "q75": -10.0
+   },
+   "lepa_spd": {
+    "n": 26,
+    "median": 5.42,
+    "q25": 4.25,
+    "q75": 7.39
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 2,
+    "median": 100.75,
+    "q25": 90.62,
+    "q75": 110.88
+   },
+   "trend_split_pct": {
+    "veer": 100,
+    "back": 0,
+    "steady": 0
+   }
+  },
+  "NE_E|10-15": {
+   "days": 22,
+   "arome_spd": {
+    "n": 22,
+    "median": 11.73,
+    "q25": 11.08,
+    "q75": 12.59
+   },
+   "buoy_spd": {
+    "n": 2,
+    "median": 16.53,
+    "q25": 16.11,
+    "q75": 16.94
+   },
+   "buoy_max_hourly": {
+    "n": 2,
+    "median": 18.23,
+    "q25": 17.6,
+    "q75": 18.87
+   },
+   "buoy_gust_factor": {
+    "n": 2,
+    "median": 1.05,
+    "q25": 1.05,
+    "q75": 1.05
+   },
+   "buoy_over_arome_ratio": {
+    "n": 2,
+    "median": 1.19,
+    "q25": 1.14,
+    "q75": 1.24
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 2,
+    "median": 1.47,
+    "q25": 1.44,
+    "q75": 1.49
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 2,
+    "median": -15.35,
+    "q25": -19.63,
+    "q75": -11.08
+   },
+   "lepa_spd": {
+    "n": 22,
+    "median": 11.15,
+    "q25": 10.22,
+    "q75": 14.36
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 2,
+    "median": 5.45,
+    "q25": 5.02,
+    "q75": 5.88
+   },
+   "trend_split_pct": {
+    "veer": 50,
+    "back": 0,
+    "steady": 50
+   }
+  },
+  "NE_E|15-20": {
+   "days": 8,
+   "arome_spd": {
+    "n": 8,
+    "median": 16.25,
+    "q25": 15.84,
+    "q75": 16.49
+   },
+   "buoy_spd": {
+    "n": 1,
+    "median": 21.84,
+    "q25": 21.84,
+    "q75": 21.84
+   },
+   "buoy_max_hourly": {
+    "n": 1,
+    "median": 23.79,
+    "q25": 23.79,
+    "q75": 23.79
+   },
+   "buoy_gust_factor": {
+    "n": 1,
+    "median": 1.04,
+    "q25": 1.04,
+    "q75": 1.04
+   },
+   "buoy_over_arome_ratio": {
+    "n": 1,
+    "median": 1.13,
+    "q25": 1.13,
+    "q75": 1.13
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 1,
+    "median": 1.35,
+    "q25": 1.35,
+    "q75": 1.35
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 1,
+    "median": -9.1,
+    "q25": -9.1,
+    "q75": -9.1
+   },
+   "lepa_spd": {
+    "n": 8,
+    "median": 14.6,
+    "q25": 13.12,
+    "q75": 17.15
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 1,
+    "median": -15.2,
+    "q25": -15.2,
+    "q75": -15.2
+   },
+   "trend_split_pct": {
+    "veer": 0,
+    "back": 100,
+    "steady": 0
+   }
+  },
+  "NE_E|6-10": {
+   "days": 58,
+   "arome_spd": {
+    "n": 58,
+    "median": 7.49,
+    "q25": 6.83,
+    "q75": 8.42
+   },
+   "buoy_spd": {
+    "n": 10,
+    "median": 12.79,
+    "q25": 10.03,
+    "q75": 13.55
+   },
+   "buoy_max_hourly": {
+    "n": 10,
+    "median": 14.75,
+    "q25": 12.35,
+    "q75": 15.7
+   },
+   "buoy_gust_factor": {
+    "n": 10,
+    "median": 1.04,
+    "q25": 1.04,
+    "q75": 1.1
+   },
+   "buoy_over_arome_ratio": {
+    "n": 10,
+    "median": 1.28,
+    "q25": 1.06,
+    "q75": 1.48
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 10,
+    "median": 1.43,
+    "q25": 1.23,
+    "q75": 1.62
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 8,
+    "median": -31.2,
+    "q25": -49.45,
+    "q75": -12.7
+   },
+   "lepa_spd": {
+    "n": 58,
+    "median": 7.9,
+    "q25": 6.93,
+    "q75": 10.55
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 6,
+    "median": 42.95,
+    "q25": 15.73,
+    "q75": 119.45
+   },
+   "trend_split_pct": {
+    "veer": 83,
+    "back": 17,
+    "steady": 0
+   }
+  },
+  "NORTH|0-6": {
+   "days": 16,
+   "arome_spd": {
+    "n": 16,
+    "median": 5.63,
+    "q25": 5.12,
+    "q75": 5.84
+   },
+   "buoy_spd": {
+    "n": 3,
+    "median": 9.59,
+    "q25": 8.98,
+    "q75": 9.9
+   },
+   "buoy_max_hourly": {
+    "n": 3,
+    "median": 13.51,
+    "q25": 12.04,
+    "q75": 15.71
+   },
+   "buoy_gust_factor": {
+    "n": 3,
+    "median": 1.13,
+    "q25": 1.13,
+    "q75": 1.13
+   },
+   "buoy_over_arome_ratio": {
+    "n": 3,
+    "median": 1.43,
+    "q25": 1.15,
+    "q75": 1.53
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 3,
+    "median": 1.92,
+    "q25": 1.82,
+    "q75": 1.95
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 1,
+    "median": -29.3,
+    "q25": -29.3,
+    "q75": -29.3
+   },
+   "lepa_spd": {
+    "n": 16,
+    "median": 6.7,
+    "q25": 5.03,
+    "q75": 8.03
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 1,
+    "median": -33.7,
+    "q25": -33.7,
+    "q75": -33.7
+   },
+   "trend_split_pct": {
+    "veer": 0,
+    "back": 100,
+    "steady": 0
+   }
+  },
+  "NORTH|10-15": {
+   "days": 29,
+   "arome_spd": {
+    "n": 29,
+    "median": 11.5,
+    "q25": 11.05,
+    "q75": 11.88
+   },
+   "buoy_spd": {
+    "n": 5,
+    "median": 13.46,
+    "q25": 13.32,
+    "q75": 13.85
+   },
+   "buoy_max_hourly": {
+    "n": 5,
+    "median": 16.85,
+    "q25": 14.58,
+    "q75": 18.3
+   },
+   "buoy_gust_factor": {
+    "n": 5,
+    "median": 1.13,
+    "q25": 1.12,
+    "q75": 1.14
+   },
+   "buoy_over_arome_ratio": {
+    "n": 5,
+    "median": 0.9,
+    "q25": 0.87,
+    "q75": 1.05
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 5,
+    "median": 1.17,
+    "q25": 1.12,
+    "q75": 1.28
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 1,
+    "median": -6.0,
+    "q25": -6.0,
+    "q75": -6.0
+   },
+   "lepa_spd": {
+    "n": 29,
+    "median": 15.6,
+    "q25": 13.1,
+    "q75": 17.3
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 1,
+    "median": 55.8,
+    "q25": 55.8,
+    "q75": 55.8
+   },
+   "trend_split_pct": {
+    "veer": 100,
+    "back": 0,
+    "steady": 0
+   }
+  },
+  "NORTH|15-20": {
+   "days": 1,
+   "arome_spd": {
+    "n": 1,
+    "median": 16.5,
+    "q25": 16.5,
+    "q75": 16.5
+   },
+   "buoy_spd": null,
+   "buoy_max_hourly": null,
+   "buoy_gust_factor": null,
+   "buoy_over_arome_ratio": null,
+   "buoy_over_arome_portals_ratio": null,
+   "dir_err_buoy_minus_arome": null,
+   "lepa_spd": {
+    "n": 1,
+    "median": 11.4,
+    "q25": 11.4,
+    "q75": 11.4
+   },
+   "buoy_trend_15_minus_11": null
+  },
+  "NORTH|6-10": {
+   "days": 58,
+   "arome_spd": {
+    "n": 58,
+    "median": 7.72,
+    "q25": 7.03,
+    "q75": 8.26
+   },
+   "buoy_spd": {
+    "n": 12,
+    "median": 11.23,
+    "q25": 9.51,
+    "q75": 12.29
+   },
+   "buoy_max_hourly": {
+    "n": 12,
+    "median": 14.08,
+    "q25": 13.53,
+    "q75": 15.87
+   },
+   "buoy_gust_factor": {
+    "n": 12,
+    "median": 1.11,
+    "q25": 1.08,
+    "q75": 1.13
+   },
+   "buoy_over_arome_ratio": {
+    "n": 12,
+    "median": 0.95,
+    "q25": 0.91,
+    "q75": 1.07
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 12,
+    "median": 1.37,
+    "q25": 1.23,
+    "q75": 1.57
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 6,
+    "median": 2.45,
+    "q25": -2.85,
+    "q75": 13.15
+   },
+   "lepa_spd": {
+    "n": 58,
+    "median": 10.35,
+    "q25": 8.31,
+    "q75": 12.0
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 4,
+    "median": 6.4,
+    "q25": -16.53,
+    "q75": 28.7
+   },
+   "trend_split_pct": {
+    "veer": 50,
+    "back": 25,
+    "steady": 25
+   }
+  },
+  "SOUTH_SYN|0-6": {
+   "days": 41,
+   "arome_spd": {
+    "n": 41,
+    "median": 4.6,
+    "q25": 4.23,
+    "q75": 5.15
+   },
+   "buoy_spd": {
+    "n": 7,
+    "median": 5.37,
+    "q25": 4.97,
+    "q75": 5.55
+   },
+   "buoy_max_hourly": {
+    "n": 7,
+    "median": 7.81,
+    "q25": 7.42,
+    "q75": 8.37
+   },
+   "buoy_gust_factor": {
+    "n": 7,
+    "median": 1.1,
+    "q25": 1.06,
+    "q75": 1.11
+   },
+   "buoy_over_arome_ratio": {
+    "n": 7,
+    "median": 1.27,
+    "q25": 0.96,
+    "q75": 1.32
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 7,
+    "median": 1.15,
+    "q25": 1.02,
+    "q75": 1.26
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 6,
+    "median": 114.65,
+    "q25": 95.5,
+    "q75": 119.55
+   },
+   "lepa_spd": {
+    "n": 41,
+    "median": 4.7,
+    "q25": 3.7,
+    "q75": 5.6
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 3,
+    "median": 113.0,
+    "q25": -19.75,
+    "q75": 145.1
+   },
+   "trend_split_pct": {
+    "veer": 67,
+    "back": 33,
+    "steady": 0
+   }
+  },
+  "SOUTH_SYN|10-15": {
+   "days": 25,
+   "arome_spd": {
+    "n": 25,
+    "median": 12.1,
+    "q25": 10.98,
+    "q75": 13.88
+   },
+   "buoy_spd": {
+    "n": 5,
+    "median": 15.44,
+    "q25": 11.98,
+    "q75": 16.28
+   },
+   "buoy_max_hourly": {
+    "n": 5,
+    "median": 16.68,
+    "q25": 14.16,
+    "q75": 17.18
+   },
+   "buoy_gust_factor": {
+    "n": 5,
+    "median": 1.1,
+    "q25": 1.1,
+    "q75": 1.11
+   },
+   "buoy_over_arome_ratio": {
+    "n": 5,
+    "median": 0.93,
+    "q25": 0.9,
+    "q75": 0.96
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 5,
+    "median": 1.17,
+    "q25": 0.94,
+    "q75": 1.36
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 4,
+    "median": -15.65,
+    "q25": -19.23,
+    "q75": -9.17
+   },
+   "lepa_spd": {
+    "n": 25,
+    "median": 12.3,
+    "q25": 11.1,
+    "q75": 15.1
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 4,
+    "median": 4.45,
+    "q25": -1.62,
+    "q75": 10.4
+   },
+   "trend_split_pct": {
+    "veer": 50,
+    "back": 25,
+    "steady": 25
+   }
+  },
+  "SOUTH_SYN|15-20": {
+   "days": 11,
+   "arome_spd": {
+    "n": 11,
+    "median": 16.17,
+    "q25": 15.62,
+    "q75": 17.69
+   },
+   "buoy_spd": {
+    "n": 2,
+    "median": 21.4,
+    "q25": 21.31,
+    "q75": 21.48
+   },
+   "buoy_max_hourly": {
+    "n": 2,
+    "median": 23.94,
+    "q25": 23.75,
+    "q75": 24.14
+   },
+   "buoy_gust_factor": {
+    "n": 2,
+    "median": 1.13,
+    "q25": 1.13,
+    "q75": 1.14
+   },
+   "buoy_over_arome_ratio": {
+    "n": 2,
+    "median": 0.9,
+    "q25": 0.89,
+    "q75": 0.92
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 2,
+    "median": 1.21,
+    "q25": 1.18,
+    "q75": 1.23
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 1,
+    "median": -9.9,
+    "q25": -9.9,
+    "q75": -9.9
+   },
+   "lepa_spd": {
+    "n": 11,
+    "median": 17.3,
+    "q25": 16.43,
+    "q75": 18.6
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 1,
+    "median": 5.7,
+    "q25": 5.7,
+    "q75": 5.7
+   },
+   "trend_split_pct": {
+    "veer": 100,
+    "back": 0,
+    "steady": 0
+   }
+  },
+  "SOUTH_SYN|20+": {
+   "days": 2,
+   "arome_spd": {
+    "n": 2,
+    "median": 21.54,
+    "q25": 21.53,
+    "q75": 21.55
+   },
+   "buoy_spd": null,
+   "buoy_max_hourly": null,
+   "buoy_gust_factor": null,
+   "buoy_over_arome_ratio": null,
+   "buoy_over_arome_portals_ratio": null,
+   "dir_err_buoy_minus_arome": null,
+   "lepa_spd": {
+    "n": 2,
+    "median": 20.8,
+    "q25": 20.4,
+    "q75": 21.2
+   },
+   "buoy_trend_15_minus_11": null
+  },
+  "SOUTH_SYN|6-10": {
+   "days": 33,
+   "arome_spd": {
+    "n": 33,
+    "median": 8.07,
+    "q25": 6.98,
+    "q75": 8.85
+   },
+   "buoy_spd": {
+    "n": 5,
+    "median": 9.34,
+    "q25": 8.51,
+    "q75": 10.63
+   },
+   "buoy_max_hourly": {
+    "n": 5,
+    "median": 11.24,
+    "q25": 10.21,
+    "q75": 11.53
+   },
+   "buoy_gust_factor": {
+    "n": 5,
+    "median": 1.08,
+    "q25": 1.07,
+    "q75": 1.09
+   },
+   "buoy_over_arome_ratio": {
+    "n": 5,
+    "median": 1.1,
+    "q25": 0.93,
+    "q75": 1.12
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 5,
+    "median": 1.27,
+    "q25": 1.19,
+    "q75": 1.34
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 4,
+    "median": 7.8,
+    "q25": -20.05,
+    "q75": 50.27
+   },
+   "lepa_spd": {
+    "n": 33,
+    "median": 8.3,
+    "q25": 6.83,
+    "q75": 10.3
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 2,
+    "median": 59.4,
+    "q25": 23.6,
+    "q75": 95.2
+   },
+   "trend_split_pct": {
+    "veer": 50,
+    "back": 50,
+    "steady": 0
+   }
+  },
+  "WEST|0-6": {
+   "days": 7,
+   "arome_spd": {
+    "n": 7,
+    "median": 5.13,
+    "q25": 4.82,
+    "q75": 5.42
+   },
+   "buoy_spd": {
+    "n": 2,
+    "median": 5.96,
+    "q25": 5.81,
+    "q75": 6.11
+   },
+   "buoy_max_hourly": {
+    "n": 2,
+    "median": 8.2,
+    "q25": 7.98,
+    "q75": 8.43
+   },
+   "buoy_gust_factor": {
+    "n": 2,
+    "median": 1.08,
+    "q25": 1.06,
+    "q75": 1.11
+   },
+   "buoy_over_arome_ratio": {
+    "n": 2,
+    "median": 1.13,
+    "q25": 1.01,
+    "q75": 1.26
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 2,
+    "median": 1.19,
+    "q25": 1.12,
+    "q75": 1.26
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 1,
+    "median": -32.0,
+    "q25": -32.0,
+    "q75": -32.0
+   },
+   "lepa_spd": {
+    "n": 7,
+    "median": 5.7,
+    "q25": 4.95,
+    "q75": 6.1
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 1,
+    "median": -82.2,
+    "q25": -82.2,
+    "q75": -82.2
+   },
+   "trend_split_pct": {
+    "veer": 0,
+    "back": 100,
+    "steady": 0
+   }
+  },
+  "WEST|10-15": {
+   "days": 60,
+   "arome_spd": {
+    "n": 60,
+    "median": 12.34,
+    "q25": 10.92,
+    "q75": 13.71
+   },
+   "buoy_spd": {
+    "n": 7,
+    "median": 16.53,
+    "q25": 15.4,
+    "q75": 17.21
+   },
+   "buoy_max_hourly": {
+    "n": 7,
+    "median": 17.85,
+    "q25": 16.97,
+    "q75": 19.92
+   },
+   "buoy_gust_factor": {
+    "n": 7,
+    "median": 1.11,
+    "q25": 1.11,
+    "q75": 1.11
+   },
+   "buoy_over_arome_ratio": {
+    "n": 7,
+    "median": 0.92,
+    "q25": 0.83,
+    "q75": 0.98
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 7,
+    "median": 1.29,
+    "q25": 1.27,
+    "q75": 1.32
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 4,
+    "median": 0.45,
+    "q25": -1.95,
+    "q75": 1.6
+   },
+   "lepa_spd": {
+    "n": 60,
+    "median": 14.34,
+    "q25": 11.97,
+    "q75": 16.23
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 4,
+    "median": 18.3,
+    "q25": 2.87,
+    "q75": 29.08
+   },
+   "trend_split_pct": {
+    "veer": 75,
+    "back": 25,
+    "steady": 0
+   }
+  },
+  "WEST|15-20": {
+   "days": 16,
+   "arome_spd": {
+    "n": 16,
+    "median": 16.77,
+    "q25": 16.1,
+    "q75": 17.34
+   },
+   "buoy_spd": {
+    "n": 4,
+    "median": 20.44,
+    "q25": 17.88,
+    "q75": 22.56
+   },
+   "buoy_max_hourly": {
+    "n": 4,
+    "median": 21.8,
+    "q25": 19.73,
+    "q75": 23.9
+   },
+   "buoy_gust_factor": {
+    "n": 4,
+    "median": 1.12,
+    "q25": 1.1,
+    "q75": 1.12
+   },
+   "buoy_over_arome_ratio": {
+    "n": 4,
+    "median": 0.9,
+    "q25": 0.87,
+    "q75": 0.93
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 4,
+    "median": 1.21,
+    "q25": 1.08,
+    "q75": 1.31
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 4,
+    "median": -2.6,
+    "q25": -4.55,
+    "q75": 2.08
+   },
+   "lepa_spd": {
+    "n": 16,
+    "median": 17.95,
+    "q25": 16.48,
+    "q75": 20.68
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 4,
+    "median": 8.25,
+    "q25": 4.32,
+    "q75": 10.28
+   },
+   "trend_split_pct": {
+    "veer": 75,
+    "back": 0,
+    "steady": 25
+   }
+  },
+  "WEST|20+": {
+   "days": 4,
+   "arome_spd": {
+    "n": 4,
+    "median": 21.76,
+    "q25": 21.4,
+    "q75": 22.16
+   },
+   "buoy_spd": null,
+   "buoy_max_hourly": null,
+   "buoy_gust_factor": null,
+   "buoy_over_arome_ratio": null,
+   "buoy_over_arome_portals_ratio": null,
+   "dir_err_buoy_minus_arome": null,
+   "lepa_spd": {
+    "n": 4,
+    "median": 24.75,
+    "q25": 23.95,
+    "q75": 25.47
+   },
+   "buoy_trend_15_minus_11": null
+  },
+  "WEST|6-10": {
+   "days": 52,
+   "arome_spd": {
+    "n": 52,
+    "median": 7.8,
+    "q25": 7.11,
+    "q75": 8.98
+   },
+   "buoy_spd": {
+    "n": 9,
+    "median": 9.85,
+    "q25": 8.95,
+    "q75": 12.42
+   },
+   "buoy_max_hourly": {
+    "n": 9,
+    "median": 13.32,
+    "q25": 11.6,
+    "q75": 14.48
+   },
+   "buoy_gust_factor": {
+    "n": 9,
+    "median": 1.11,
+    "q25": 1.09,
+    "q75": 1.13
+   },
+   "buoy_over_arome_ratio": {
+    "n": 9,
+    "median": 0.91,
+    "q25": 0.75,
+    "q75": 1.02
+   },
+   "buoy_over_arome_portals_ratio": {
+    "n": 9,
+    "median": 1.31,
+    "q25": 1.02,
+    "q75": 1.32
+   },
+   "dir_err_buoy_minus_arome": {
+    "n": 5,
+    "median": 16.8,
+    "q25": -5.0,
+    "q75": 18.5
+   },
+   "lepa_spd": {
+    "n": 52,
+    "median": 8.79,
+    "q25": 7.59,
+    "q75": 10.6
+   },
+   "buoy_trend_15_minus_11": {
+    "n": 5,
+    "median": -12.3,
+    "q25": -18.3,
+    "q75": 7.8
+   },
+   "trend_split_pct": {
+    "veer": 40,
+    "back": 60,
+    "steady": 0
+   }
+  }
+ },
+ "all": {
+  "days": 701,
+  "arome_spd": {
+   "n": 701,
+   "median": 7.37,
+   "q25": 5.37,
+   "q75": 10.25
+  },
+  "buoy_spd": {
+   "n": 123,
+   "median": 9.34,
+   "q25": 6.25,
+   "q75": 12.7
+  },
+  "buoy_max_hourly": {
+   "n": 123,
+   "median": 12.47,
+   "q25": 9.61,
+   "q75": 15.19
+  },
+  "buoy_gust_factor": {
+   "n": 122,
+   "median": 1.1,
+   "q25": 1.05,
+   "q75": 1.12
+  },
+  "buoy_over_arome_ratio": {
+   "n": 123,
+   "median": 1.03,
+   "q25": 0.91,
+   "q75": 1.26
+  },
+  "buoy_over_arome_portals_ratio": {
+   "n": 123,
+   "median": 1.29,
+   "q25": 1.09,
+   "q75": 1.4
+  },
+  "dir_err_buoy_minus_arome": {
+   "n": 91,
+   "median": 4.1,
+   "q25": -11.1,
+   "q75": 51.3
+  },
+  "lepa_spd": {
+   "n": 701,
+   "median": 8.5,
+   "q25": 5.6,
+   "q75": 11.91
+  },
+  "buoy_trend_15_minus_11": {
+   "n": 51,
+   "median": 7.8,
+   "q25": -12.25,
+   "q75": 58.75
+  },
+  "trend_split_pct": {
+   "veer": 61,
+   "back": 29,
+   "steady": 10
+  }
+ }
+}

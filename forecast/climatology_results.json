@@ -1,0 +1,1101 @@
+{
+ "buoy_coverage": {
+  "dep0001_buoy-bahiadepalma_scb-met010_L1_latest.nc": "2013-04-23..2013-05-27 n=969",
+  "dep0001_buoy-bahiadepalma_scb-met029_L1_latest.nc": "2025-10-01..2025-11-04 n=4643",
+  "dep0002_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2017-12-01..2018-01-19 n=7110",
+  "dep0002_buoy-bahiadepalma_scb-met029_L1_latest.nc": "2026-09-01..2026-10-17 n=6421",
+  "dep0003_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2018-12-01..2019-01-13 n=5893",
+  "dep0004_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2019-10-01..2019-11-08 n=5396",
+  "dep0005_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2020-01-01..2020-02-17 n=6792",
+  "dep0006_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2021-10-01..2021-11-23 n=7726",
+  "dep0006_buoy-bahiadepalma_scb-met010_L1_latest.nc": "2020-11-01..2021-01-01 n=8667",
+  "dep0007_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2022-11-01..2022-12-01 n=4345",
+  "dep0008_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2023-06-01..2023-07-12 n=4023",
+  "dep0009_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2023-10-01..2023-11-15 n=5708",
+  "dep0010_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2023-11-17..2023-12-24 n=4803",
+  "dep0011_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2024-06-01..2024-07-10 n=5673",
+  "dep0012_buoy-bahiadepalma_scb-met008_L1_latest.nc": "2024-09-01..2024-10-06 n=4010"
+ },
+ "buoy_winter_window_n10min": 8883,
+ "buoy_winter_days": 312,
+ "buoy_regime_freq_winter": {
+  "Sea breeze (Embat, S-SW)": 24.4,
+  "W-WNW (Ponent)": 21.5,
+  "Northerly (NW-N-NNE, Tramuntana/Mestral)": 20.7,
+  "NE-E (Gregal/Llevant)": 15.9,
+  "Light/variable (<4 kt)": 10.4,
+  "Synoptic S-SE-SW (Xaloc/Migjorn)": 7.0
+ },
+ "buoy_regime_days_winter": {
+  "Sea breeze (Embat, S-SW)": 66,
+  "W-WNW (Ponent)": 58,
+  "Northerly (NW-N-NNE, Tramuntana/Mestral)": 56,
+  "NE-E (Gregal/Llevant)": 43,
+  "Light/variable (<4 kt)": 28,
+  "Synoptic S-SE-SW (Xaloc/Migjorn)": 19
+ },
+ "buoy_speed_ranges_pct": {
+  "0-6": 27.7,
+  "6-10": 23.8,
+  "10-15": 26.8,
+  "15-20": 14.9,
+  "20+": 6.9
+ },
+ "buoy_mean_kt_window": 10.3,
+ "buoy_p90_kt": 18.5,
+ "gust_factor_by_regime": {
+  "Light/variable (<4 kt)": {
+   "median": 1.11,
+   "count": 99
+  },
+  "NE-E (Gregal/Llevant)": {
+   "median": 1.15,
+   "count": 1134
+  },
+  "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+   "median": 1.14,
+   "count": 1407
+  },
+  "Sea breeze (Embat, S-SW)": {
+   "median": 1.12,
+   "count": 1278
+  },
+  "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+   "median": 1.11,
+   "count": 521
+  },
+  "W-WNW (Ponent)": {
+   "median": 1.13,
+   "count": 1553
+  }
+ },
+ "gust_factor_overall": 1.13,
+ "shift_by_regime": {
+  "NE-E (Gregal/Llevant)": {
+   "std": 8.5,
+   "p2p": 19.2,
+   "period": 48.3,
+   "trend": 5.3
+  },
+  "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+   "std": 10.1,
+   "p2p": 22.6,
+   "period": 58.0,
+   "trend": -7.3
+  },
+  "Sea breeze (Embat, S-SW)": {
+   "std": 7.4,
+   "p2p": 16.5,
+   "period": 51.4,
+   "trend": 8.2
+  },
+  "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+   "std": 5.9,
+   "p2p": 13.4,
+   "period": 46.5,
+   "trend": 2.1
+  },
+  "W-WNW (Ponent)": {
+   "std": 7.3,
+   "p2p": 15.9,
+   "period": 52.7,
+   "trend": 2.1
+  }
+ },
+ "shift_overall": {
+  "std": 8.1,
+  "p2p": 18.0,
+  "period": 52.2,
+  "trend": 3.1
+ },
+ "shift_days": 214,
+ "diurnal_by_regime": {
+  "Light/variable (<4 kt)": {
+   "8": [
+    4.7,
+    33.0
+   ],
+   "9": [
+    4.8,
+    46.0
+   ],
+   "10": [
+    3.9,
+    48.0
+   ],
+   "11": [
+    2.8,
+    52.0
+   ],
+   "12": [
+    2.5,
+    305.0
+   ],
+   "13": [
+    2.6,
+    230.0
+   ],
+   "14": [
+    3.1,
+    218.0
+   ],
+   "15": [
+    4.0,
+    234.0
+   ],
+   "16": [
+    5.3,
+    233.0
+   ],
+   "17": [
+    5.5,
+    220.0
+   ],
+   "18": [
+    5.5,
+    252.0
+   ]
+  },
+  "NE-E (Gregal/Llevant)": {
+   "8": [
+    10.3,
+    52.0
+   ],
+   "9": [
+    10.7,
+    50.0
+   ],
+   "10": [
+    10.7,
+    54.0
+   ],
+   "11": [
+    11.5,
+    59.0
+   ],
+   "12": [
+    11.5,
+    67.0
+   ],
+   "13": [
+    11.2,
+    71.0
+   ],
+   "14": [
+    11.4,
+    73.0
+   ],
+   "15": [
+    11.4,
+    77.0
+   ],
+   "16": [
+    11.1,
+    76.0
+   ],
+   "17": [
+    10.7,
+    72.0
+   ],
+   "18": [
+    10.1,
+    67.0
+   ]
+  },
+  "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+   "8": [
+    11.0,
+    355.0
+   ],
+   "9": [
+    10.5,
+    356.0
+   ],
+   "10": [
+    10.3,
+    354.0
+   ],
+   "11": [
+    11.2,
+    337.0
+   ],
+   "12": [
+    11.9,
+    339.0
+   ],
+   "13": [
+    12.3,
+    334.0
+   ],
+   "14": [
+    12.6,
+    335.0
+   ],
+   "15": [
+    12.4,
+    331.0
+   ],
+   "16": [
+    12.0,
+    324.0
+   ],
+   "17": [
+    11.1,
+    334.0
+   ],
+   "18": [
+    11.2,
+    346.0
+   ]
+  },
+  "Sea breeze (Embat, S-SW)": {
+   "8": [
+    5.4,
+    41.0
+   ],
+   "9": [
+    5.2,
+    44.0
+   ],
+   "10": [
+    4.1,
+    40.0
+   ],
+   "11": [
+    3.7,
+    323.0
+   ],
+   "12": [
+    5.4,
+    215.0
+   ],
+   "13": [
+    7.6,
+    215.0
+   ],
+   "14": [
+    8.5,
+    216.0
+   ],
+   "15": [
+    8.4,
+    218.0
+   ],
+   "16": [
+    8.0,
+    218.0
+   ],
+   "17": [
+    7.6,
+    216.0
+   ],
+   "18": [
+    7.5,
+    210.0
+   ]
+  },
+  "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+   "8": [
+    11.1,
+    237.0
+   ],
+   "9": [
+    11.5,
+    230.0
+   ],
+   "10": [
+    11.3,
+    227.0
+   ],
+   "11": [
+    12.7,
+    224.0
+   ],
+   "12": [
+    14.2,
+    222.0
+   ],
+   "13": [
+    13.5,
+    228.0
+   ],
+   "14": [
+    13.8,
+    225.0
+   ],
+   "15": [
+    13.0,
+    223.0
+   ],
+   "16": [
+    13.5,
+    221.0
+   ],
+   "17": [
+    13.4,
+    225.0
+   ],
+   "18": [
+    13.0,
+    228.0
+   ]
+  },
+  "W-WNW (Ponent)": {
+   "8": [
+    12.7,
+    282.0
+   ],
+   "9": [
+    12.5,
+    283.0
+   ],
+   "10": [
+    12.0,
+    272.0
+   ],
+   "11": [
+    12.7,
+    268.0
+   ],
+   "12": [
+    13.9,
+    263.0
+   ],
+   "13": [
+    14.2,
+    263.0
+   ],
+   "14": [
+    14.6,
+    266.0
+   ],
+   "15": [
+    14.6,
+    267.0
+   ],
+   "16": [
+    13.8,
+    267.0
+   ],
+   "17": [
+    13.0,
+    270.0
+   ],
+   "18": [
+    11.6,
+    269.0
+   ]
+  }
+ },
+ "lepa_coverage": "2010-01-01..2026-10-17, winter window obs=19640",
+ "lepa_speed_ranges_pct": {
+  "0-6": 31.3,
+  "6-10": 29.0,
+  "10-15": 25.9,
+  "15-20": 10.0,
+  "20+": 3.8
+ },
+ "lepa_dir_pct": {
+  "SW": 32.9,
+  "W": 17.7,
+  "NW": 15.9,
+  "NE": 15.5,
+  "E": 9.3,
+  "N": 4.2,
+  "S": 3.1,
+  "SE": 1.4
+ },
+ "lepa_calm_lt3kt_pct": 15.2,
+ "lepa_regime_freq_winter_2010_2026": {
+  "Northerly (NW-N-NNE, Tramuntana/Mestral)": 22.1,
+  "Sea breeze (Embat, S-SW)": 18.9,
+  "NE-E (Gregal/Llevant)": 17.2,
+  "Light/variable (<4 kt)": 15.9,
+  "W-WNW (Ponent)": 14.4,
+  "Synoptic S-SE-SW (Xaloc/Migjorn)": 11.5
+ },
+ "lepa_days": 1966,
+ "buoy_vs_lepa": {
+  "n": 4530,
+  "ratio_buoy_over_lepa_median": 1.09,
+  "mean_diff_kt": 1.1,
+  "dir_diff_median_deg(buoy-lepa)": -5.0,
+  "by_regime": {
+   "Light/variable (<4 kt)": {
+    "r": -0.1,
+    "dd": -7.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "r": 0.8,
+    "dd": -4.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "r": 1.6,
+    "dd": -7.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "r": 0.5,
+    "dd": -9.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "r": 1.6,
+    "dd": -3.7
+   },
+   "W-WNW (Ponent)": {
+    "r": 1.6,
+    "dd": -1.3
+   }
+  }
+ },
+ "model_skill_OctMar_window": {
+  "ecmwf_aifs025_single": {
+   "all": {
+    "n": 298,
+    "bias_kt": -3.4,
+    "mae_kt": 3.9,
+    "dir_bias": 8.0,
+    "dir_mae": 29.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 12,
+    "bias_kt": -3.5,
+    "mae_kt": 3.5,
+    "dir_bias": -31.0,
+    "dir_mae": 59.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 48,
+    "bias_kt": -4.5,
+    "mae_kt": 4.6,
+    "dir_bias": -3.0,
+    "dir_mae": 23.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 54,
+    "bias_kt": -2.9,
+    "mae_kt": 4.4,
+    "dir_bias": 11.0,
+    "dir_mae": 27.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 136,
+    "bias_kt": -3.3,
+    "mae_kt": 3.5,
+    "dir_bias": 13.0,
+    "dir_mae": 35.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 24,
+    "bias_kt": -2.7,
+    "mae_kt": 3.2,
+    "dir_bias": 5.0,
+    "dir_mae": 14.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 24,
+    "bias_kt": -3.7,
+    "mae_kt": 4.1,
+    "dir_bias": 13.0,
+    "dir_mae": 26.0
+   },
+   "period": "2025-10..2026-10"
+  },
+  "ecmwf_ifs": {
+   "all": {
+    "n": 1232,
+    "bias_kt": -1.6,
+    "mae_kt": 2.7,
+    "dir_bias": 1.0,
+    "dir_mae": 22.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 48,
+    "bias_kt": -0.0,
+    "mae_kt": 2.4,
+    "dir_bias": 11.0,
+    "dir_mae": 42.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 144,
+    "bias_kt": -2.9,
+    "mae_kt": 3.3,
+    "dir_bias": -4.0,
+    "dir_mae": 21.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 221,
+    "bias_kt": -1.9,
+    "mae_kt": 3.4,
+    "dir_bias": -6.0,
+    "dir_mae": 29.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 352,
+    "bias_kt": -1.6,
+    "mae_kt": 2.3,
+    "dir_bias": 8.0,
+    "dir_mae": 22.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 100,
+    "bias_kt": -1.4,
+    "mae_kt": 2.6,
+    "dir_bias": -4.0,
+    "dir_mae": 16.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 137,
+    "bias_kt": -2.0,
+    "mae_kt": 2.6,
+    "dir_bias": 3.0,
+    "dir_mae": 18.0
+   },
+   "period": "2021-10..2026-10"
+  },
+  "ecmwf_ifs025": {
+   "all": {
+    "n": 316,
+    "bias_kt": -2.9,
+    "mae_kt": 3.4,
+    "dir_bias": 8.0,
+    "dir_mae": 23.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 12,
+    "bias_kt": -2.2,
+    "mae_kt": 2.2,
+    "dir_bias": 15.0,
+    "dir_mae": 26.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 48,
+    "bias_kt": -4.4,
+    "mae_kt": 4.4,
+    "dir_bias": 9.0,
+    "dir_mae": 27.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 54,
+    "bias_kt": -2.7,
+    "mae_kt": 4.2,
+    "dir_bias": 9.0,
+    "dir_mae": 27.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 148,
+    "bias_kt": -2.6,
+    "mae_kt": 3.0,
+    "dir_bias": 6.0,
+    "dir_mae": 23.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 30,
+    "bias_kt": -2.1,
+    "mae_kt": 2.4,
+    "dir_bias": 6.0,
+    "dir_mae": 10.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 24,
+    "bias_kt": -3.7,
+    "mae_kt": 4.1,
+    "dir_bias": 14.0,
+    "dir_mae": 22.0
+   },
+   "period": "2024-10..2026-10"
+  },
+  "gfs_graphcast025": {
+   "all": {
+    "n": 220,
+    "bias_kt": -4.5,
+    "mae_kt": 4.9,
+    "dir_bias": 16.0,
+    "dir_mae": 26.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 30,
+    "bias_kt": -6.3,
+    "mae_kt": 6.7,
+    "dir_bias": 9.0,
+    "dir_mae": 18.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 42,
+    "bias_kt": -4.7,
+    "mae_kt": 5.3,
+    "dir_bias": 32.0,
+    "dir_mae": 39.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 88,
+    "bias_kt": -4.2,
+    "mae_kt": 4.4,
+    "dir_bias": 18.0,
+    "dir_mae": 24.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 30,
+    "bias_kt": -4.0,
+    "mae_kt": 4.5,
+    "dir_bias": 13.0,
+    "dir_mae": 15.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 24,
+    "bias_kt": -4.6,
+    "mae_kt": 5.0,
+    "dir_bias": 7.0,
+    "dir_mae": 33.0
+   },
+   "period": "2024-10..2025-11"
+  },
+  "gfs_seamless": {
+   "all": {
+    "n": 1232,
+    "bias_kt": -0.8,
+    "mae_kt": 2.7,
+    "dir_bias": -0.0,
+    "dir_mae": 26.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 48,
+    "bias_kt": 1.7,
+    "mae_kt": 2.5,
+    "dir_bias": -3.0,
+    "dir_mae": 29.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 144,
+    "bias_kt": -2.3,
+    "mae_kt": 3.0,
+    "dir_bias": 2.0,
+    "dir_mae": 29.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 221,
+    "bias_kt": -2.0,
+    "mae_kt": 3.8,
+    "dir_bias": -2.0,
+    "dir_mae": 36.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 352,
+    "bias_kt": 0.1,
+    "mae_kt": 2.0,
+    "dir_bias": -1.0,
+    "dir_mae": 20.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 100,
+    "bias_kt": -0.6,
+    "mae_kt": 2.1,
+    "dir_bias": 2.0,
+    "dir_mae": 21.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 137,
+    "bias_kt": -0.9,
+    "mae_kt": 2.4,
+    "dir_bias": -0.0,
+    "dir_mae": 25.0
+   },
+   "period": "2021-10..2026-10"
+  },
+  "icon_eu": {
+   "all": {
+    "n": 776,
+    "bias_kt": -2.7,
+    "mae_kt": 3.3,
+    "dir_bias": 3.0,
+    "dir_mae": 26.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 24,
+    "bias_kt": 0.0,
+    "mae_kt": 2.6,
+    "dir_bias": 4.0,
+    "dir_mae": 18.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 66,
+    "bias_kt": -3.3,
+    "mae_kt": 3.5,
+    "dir_bias": -6.0,
+    "dir_mae": 29.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 89,
+    "bias_kt": -2.0,
+    "mae_kt": 3.6,
+    "dir_bias": 10.0,
+    "dir_mae": 29.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 220,
+    "bias_kt": -2.4,
+    "mae_kt": 2.8,
+    "dir_bias": 8.0,
+    "dir_mae": 29.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 52,
+    "bias_kt": -3.1,
+    "mae_kt": 3.3,
+    "dir_bias": 4.0,
+    "dir_mae": 10.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 95,
+    "bias_kt": -3.8,
+    "mae_kt": 3.9,
+    "dir_bias": -5.0,
+    "dir_mae": 26.0
+   },
+   "period": "2022-11..2026-10"
+  },
+  "icon_global": {
+   "all": {
+    "n": 818,
+    "bias_kt": -3.1,
+    "mae_kt": 3.6,
+    "dir_bias": 0.0,
+    "dir_mae": 28.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 24,
+    "bias_kt": -0.3,
+    "mae_kt": 2.6,
+    "dir_bias": -14.0,
+    "dir_mae": 36.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 66,
+    "bias_kt": -3.8,
+    "mae_kt": 3.9,
+    "dir_bias": -4.0,
+    "dir_mae": 31.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 107,
+    "bias_kt": -2.5,
+    "mae_kt": 3.5,
+    "dir_bias": 10.0,
+    "dir_mae": 29.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 220,
+    "bias_kt": -3.0,
+    "mae_kt": 3.2,
+    "dir_bias": 2.0,
+    "dir_mae": 31.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 58,
+    "bias_kt": -3.5,
+    "mae_kt": 3.7,
+    "dir_bias": 5.0,
+    "dir_mae": 9.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 113,
+    "bias_kt": -4.0,
+    "mae_kt": 4.2,
+    "dir_bias": -10.0,
+    "dir_mae": 31.0
+   },
+   "period": "2022-11..2026-10"
+  },
+  "meteofrance_arome_france": {
+   "all": {
+    "n": 316,
+    "bias_kt": -1.0,
+    "mae_kt": 2.3,
+    "dir_bias": 7.0,
+    "dir_mae": 20.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 12,
+    "bias_kt": -0.5,
+    "mae_kt": 1.3,
+    "dir_bias": 1.0,
+    "dir_mae": 19.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 48,
+    "bias_kt": -2.2,
+    "mae_kt": 3.1,
+    "dir_bias": 21.0,
+    "dir_mae": 29.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 54,
+    "bias_kt": -1.2,
+    "mae_kt": 3.3,
+    "dir_bias": 4.0,
+    "dir_mae": 18.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 148,
+    "bias_kt": -1.0,
+    "mae_kt": 1.9,
+    "dir_bias": 2.0,
+    "dir_mae": 20.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 30,
+    "bias_kt": 0.3,
+    "mae_kt": 1.9,
+    "dir_bias": 5.0,
+    "dir_mae": 10.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 24,
+    "bias_kt": -0.3,
+    "mae_kt": 2.2,
+    "dir_bias": 16.0,
+    "dir_mae": 17.0
+   },
+   "period": "2024-10..2026-10"
+  },
+  "meteofrance_arome_france_hd": {
+   "all": {
+    "n": 834,
+    "bias_kt": 0.2,
+    "mae_kt": 2.5,
+    "dir_bias": 3.0,
+    "dir_mae": 19.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 24,
+    "bias_kt": 0.8,
+    "mae_kt": 1.8,
+    "dir_bias": 1.0,
+    "dir_mae": 19.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 66,
+    "bias_kt": -2.1,
+    "mae_kt": 2.9,
+    "dir_bias": 15.0,
+    "dir_mae": 33.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 107,
+    "bias_kt": -0.1,
+    "mae_kt": 2.7,
+    "dir_bias": 0.0,
+    "dir_mae": 20.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 230,
+    "bias_kt": -0.7,
+    "mae_kt": 2.1,
+    "dir_bias": 2.0,
+    "dir_mae": 20.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 64,
+    "bias_kt": 2.0,
+    "mae_kt": 2.9,
+    "dir_bias": 2.0,
+    "dir_mae": 8.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 113,
+    "bias_kt": 0.9,
+    "mae_kt": 2.3,
+    "dir_bias": 3.0,
+    "dir_mae": 18.0
+   },
+   "period": "2022-11..2026-10"
+  },
+  "meteofrance_arpege_europe": {
+   "all": {
+    "n": 860,
+    "bias_kt": -2.0,
+    "mae_kt": 3.0,
+    "dir_bias": -3.0,
+    "dir_mae": 29.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 24,
+    "bias_kt": 0.2,
+    "mae_kt": 1.8,
+    "dir_bias": 10.0,
+    "dir_mae": 31.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 84,
+    "bias_kt": -3.3,
+    "mae_kt": 3.7,
+    "dir_bias": 10.0,
+    "dir_mae": 33.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 107,
+    "bias_kt": -1.6,
+    "mae_kt": 3.1,
+    "dir_bias": 16.0,
+    "dir_mae": 36.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 232,
+    "bias_kt": -1.7,
+    "mae_kt": 2.5,
+    "dir_bias": -17.0,
+    "dir_mae": 33.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 64,
+    "bias_kt": -1.8,
+    "mae_kt": 2.6,
+    "dir_bias": -9.0,
+    "dir_mae": 12.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 119,
+    "bias_kt": -2.7,
+    "mae_kt": 3.8,
+    "dir_bias": -5.0,
+    "dir_mae": 25.0
+   },
+   "period": "2022-11..2026-10"
+  },
+  "ukmo_global_deterministic_10km": {
+   "all": {
+    "n": 908,
+    "bias_kt": -3.2,
+    "mae_kt": 3.6,
+    "dir_bias": -1.0,
+    "dir_mae": 21.0
+   },
+   "Light/variable (<4 kt)": {
+    "n": 24,
+    "bias_kt": -1.2,
+    "mae_kt": 2.6,
+    "dir_bias": -23.0,
+    "dir_mae": 48.0
+   },
+   "NE-E (Gregal/Llevant)": {
+    "n": 84,
+    "bias_kt": -4.4,
+    "mae_kt": 4.5,
+    "dir_bias": 1.0,
+    "dir_mae": 23.0
+   },
+   "Northerly (NW-N-NNE, Tramuntana/Mestral)": {
+    "n": 119,
+    "bias_kt": -3.2,
+    "mae_kt": 3.7,
+    "dir_bias": -2.0,
+    "dir_mae": 24.0
+   },
+   "Sea breeze (Embat, S-SW)": {
+    "n": 262,
+    "bias_kt": -3.0,
+    "mae_kt": 3.2,
+    "dir_bias": 1.0,
+    "dir_mae": 21.0
+   },
+   "Synoptic S-SE-SW (Xaloc/Migjorn)": {
+    "n": 70,
+    "bias_kt": -3.1,
+    "mae_kt": 3.3,
+    "dir_bias": 0.0,
+    "dir_mae": 10.0
+   },
+   "W-WNW (Ponent)": {
+    "n": 119,
+    "bias_kt": -3.8,
+    "mae_kt": 4.1,
+    "dir_bias": -3.0,
+    "dir_mae": 24.0
+   },
+   "period": "2022-11..2026-10"
+  }
+ },
+ "model_skill_common_period": {
+  "period": "2025-10-01..2025-11-03",
+  "stats": {
+   "meteofrance_arome_france_hd": {
+    "n": 201,
+    "bias": -1.0,
+    "mae": 2.5,
+    "dir_mae": 16.0
+   },
+   "icon_eu": {
+    "n": 201,
+    "bias": -3.2,
+    "mae": 3.8,
+    "dir_mae": 22.0
+   },
+   "ecmwf_ifs025": {
+    "n": 201,
+    "bias": -3.3,
+    "mae": 3.8,
+    "dir_mae": 20.0
+   },
+   "ecmwf_aifs025_single": {
+    "n": 201,
+    "bias": -3.4,
+    "mae": 3.9,
+    "dir_mae": 21.0
+   },
+   "gfs_graphcast025": {
+    "n": 201,
+    "bias": -4.7,
+    "mae": 5.1,
+    "dir_mae": 26.0
+   },
+   "gfs_seamless": {
+    "n": 201,
+    "bias": -1.7,
+    "mae": 2.7,
+    "dir_mae": 24.0
+   },
+   "ukmo_global_deterministic_10km": {
+    "n": 201,
+    "bias": -4.3,
+    "mae": 4.6,
+    "dir_mae": 20.0
+   },
+   "meteofrance_arpege_europe": {
+    "n": 201,
+    "bias": -2.9,
+    "mae": 3.6,
+    "dir_mae": 31.0
+   },
+   "icon_global": {
+    "n": 201,
+    "bias": -3.6,
+    "mae": 4.0,
+    "dir_mae": 25.0
+   },
+   "ecmwf_ifs": {
+    "n": 201,
+    "bias": -2.6,
+    "mae": 3.3,
+    "dir_mae": 22.0
+   }
+  }
+ },
+ "arome_portals_vs_buoy_point": {
+  "n": 2146,
+  "speed_ratio_median": 0.74,
+  "dir_diff_median": 3.0,
+  "by_buoy_point_sector": {
+   "N-NE": 0.71,
+   "NE-E": 0.88,
+   "SE-SW": 0.76,
+   "W": 0.7,
+   "NW-N": 0.63
+  }
+ },
+ "arome_portals_speed_ranges_pct_2022_2026": {
+  "0-6": 33.3,
+  "6-10": 39.2,
+  "10-15": 21.4,
+  "15-20": 5.1,
+  "20+": 1.0
+ }
+}

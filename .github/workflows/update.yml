@@ -1,5 +1,5 @@
-# Samples Bay of Palma wind, commits live.json plus the rolling history.json,
-# then Direct Uploads site/ to Cloudflare Pages. Git integration is not used:
+# Samples Bay of Palma wind, commits live.json, forecast.json, and the rolling
+# history.json, then Direct Uploads site/ to Cloudflare Pages. Git integration is not used:
 # free-plan Pages builds from Git are limited, and this repo has no GitHub Pages deploy.
 # A Cloudflare Worker cron dispatches this workflow every 5 minutes. The GitHub
 # schedule below is only a backup. Data commits use [skip ci] and do not match
@@ -65,12 +65,75 @@ jobs:
           OBS_ARCHIVE_DIR: /nonexistent
         run: python3 fetch_data.py
 
+      - name: Forecast brief
+        run: |
+          python3 - << 'PY'
+          import json, os, subprocess, sys
+          from datetime import datetime, timezone
+          out = "site/data/forecast.json"
+          live = "site/data/live.json"
+          try:
+              def signature():
+                  try:
+                      fc = (json.load(open(live)).get("arome") or {}).get("forecast") or {}
+                  except Exception:
+                      return ""
+                  hours = fc.get("hours") or []
+                  if not isinstance(hours, list):
+                      hours = []
+                  last = hours[-1] if hours else {}
+                  cov = fc.get("coverage") or {}
+                  return "|".join(str(x) for x in (
+                      len(hours), cov.get("to"), last.get("t"), last.get("spd"), last.get("dir")))
+              sig = signature()
+              fresh = False
+              age = None
+              if os.path.exists(out):
+                  try:
+                      cur = json.load(open(out))
+                      gen = datetime.fromisoformat(cur["generated_utc"])
+                      if gen.tzinfo is None:
+                          gen = gen.replace(tzinfo=timezone.utc)
+                      age = (datetime.now(timezone.utc) - gen).total_seconds()
+                      fresh = age < 3600 and cur.get("arome_sig") == sig and sig != ""
+                  except Exception as e:
+                      print("forecast.json unreadable, will regenerate:", e)
+              if fresh:
+                  print(f"forecast.json is {int(age)}s old and AROME signature unchanged; skipping")
+                  sys.exit(0)
+              print("regenerating forecast.json")
+              rc = subprocess.call([
+                  sys.executable, "forecast/forecast_brief.py",
+                  "--out", out,
+                  "--analogs", "forecast/analogs.json",
+                  "--clim", "forecast/climatology_results.json",
+              ])
+              if rc != 0:
+                  print("::warning::forecast brief failed; keeping the previous file")
+                  sys.exit(0)
+              try:
+                  doc = json.load(open(out))
+                  doc["arome_sig"] = sig
+                  tmp = out + ".tmp"
+                  with open(tmp, "w") as f:
+                      json.dump(doc, f, indent=1, ensure_ascii=False)
+                  os.replace(tmp, out)
+              except Exception as e:
+                  print("::warning::could not stamp arome_sig:", e)
+          except Exception as e:
+              print("::warning::forecast brief step failed; keeping the previous file:", e)
+              sys.exit(0)
+          PY
+
       - name: Commit rolling history
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- site/data/live.json history.json
+          if [ -f site/data/forecast.json ]; then
+            git add -- site/data/forecast.json
+          fi
           if git diff --cached --quiet; then
             echo "No changes to wind history; not committing."
             exit 0
