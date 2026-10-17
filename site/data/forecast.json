@@ -254,7 +254,8 @@
      "temp": 22.4,
      "cloud": 100,
      "pmsl": 1018.5,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 29
     },
     {
      "time": "09:00",
@@ -265,7 +266,8 @@
      "temp": 22.2,
      "cloud": 100,
      "pmsl": 1018.7,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 22
     },
     {
      "time": "10:00",
@@ -276,7 +278,8 @@
      "temp": 22.0,
      "cloud": 100,
      "pmsl": 1019.0,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 57
     },
     {
      "time": "11:00",
@@ -287,7 +290,8 @@
      "temp": 22.0,
      "cloud": 99,
      "pmsl": 1019.1,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 73
     },
     {
      "time": "12:00",
@@ -298,7 +302,8 @@
      "temp": 21.9,
      "cloud": 100,
      "pmsl": 1018.9,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 119
     },
     {
      "time": "13:00",
@@ -309,7 +314,8 @@
      "temp": 22.4,
      "cloud": 100,
      "pmsl": 1018.5,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 180
     },
     {
      "time": "14:00",
@@ -320,7 +326,8 @@
      "temp": 24.1,
      "cloud": 100,
      "pmsl": 1017.5,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 91
     },
     {
      "time": "15:00",
@@ -331,7 +338,8 @@
      "temp": 24.3,
      "cloud": 100,
      "pmsl": 1016.8,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 82
     },
     {
      "time": "16:00",
@@ -342,7 +350,8 @@
      "temp": 24.4,
      "cloud": 100,
      "pmsl": 1016.5,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 77
     },
     {
      "time": "17:00",
@@ -353,7 +362,8 @@
      "temp": 24.2,
      "cloud": 100,
      "pmsl": 1016.2,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 70
     },
     {
      "time": "18:00",
@@ -364,7 +374,8 @@
      "temp": 23.8,
      "cloud": 99,
      "pmsl": 1016.1,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 68
     },
     {
      "time": "19:00",
@@ -375,7 +386,8 @@
      "temp": 23.2,
      "cloud": 100,
      "pmsl": 1016.2,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 65
     },
     {
      "time": "20:00",
@@ -386,7 +398,8 @@
      "temp": 22.6,
      "cloud": 100,
      "pmsl": 1016.4,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 62
     }
    ]
   },
@@ -622,7 +635,8 @@
      "temp": 21.3,
      "cloud": 100,
      "pmsl": 1014.8,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 57
     },
     {
      "time": "09:00",
@@ -633,7 +647,8 @@
      "temp": 20.9,
      "cloud": 100,
      "pmsl": 1015.1,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 45
     },
     {
      "time": "10:00",
@@ -644,7 +659,8 @@
      "temp": 21.5,
      "cloud": 100,
      "pmsl": 1015.4,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 60
     },
     {
      "time": "11:00",
@@ -655,7 +671,8 @@
      "temp": 21.8,
      "cloud": 100,
      "pmsl": 1015.1,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 57
     },
     {
      "time": "12:00",
@@ -666,7 +683,8 @@
      "temp": 22.0,
      "cloud": 100,
      "pmsl": 1015.4,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 59
     },
     {
      "time": "13:00",
@@ -677,7 +695,8 @@
      "temp": 22.3,
      "cloud": 100,
      "pmsl": 1015.2,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 65
     },
     {
      "time": "14:00",
@@ -688,7 +707,8 @@
      "temp": 22.6,
      "cloud": 100,
      "pmsl": 1014.6,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 69
     },
     {
      "time": "15:00",
@@ -699,7 +719,8 @@
      "temp": 22.6,
      "cloud": 100,
      "pmsl": 1013.7,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 62
     },
     {
      "time": "16:00",
@@ -710,7 +731,8 @@
      "temp": 22.5,
      "cloud": 100,
      "pmsl": 1013.5,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 63
     },
     {
      "time": "17:00",
@@ -721,7 +743,8 @@
      "temp": 22.1,
      "cloud": 100,
      "pmsl": 1013.3,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 56
     },
     {
      "time": "18:00",
@@ -732,7 +755,8 @@
      "temp": 21.9,
      "cloud": 100,
      "pmsl": 1013.2,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 54
     },
     {
      "time": "19:00",
@@ -743,7 +767,8 @@
      "temp": 21.6,
      "cloud": 100,
      "pmsl": 1013.2,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 39
     },
     {
      "time": "20:00",
@@ -754,7 +779,8 @@
      "temp": 21.6,
      "cloud": 100,
      "pmsl": 1014.0,
-     "src": "AROME HD"
+     "src": "AROME HD",
+     "fr_dir": 43
     }
    ]
   }

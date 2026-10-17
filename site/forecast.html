@@ -22,7 +22,13 @@ table{width:100%;min-width:680px;border-collapse:collapse;font-variant-numeric:t
 th{color:var(--muted);font-weight:600}td:first-child,th:first-child{text-align:left}tr.race td{background:rgba(255,213,79,.07)}
 .arr{display:inline-block;width:14px;text-align:center}
 ul{margin:4px 0 0;padding-left:18px}li{margin:3px 0}
-.chart{width:100%;height:auto;display:block}svg text{fill:var(--muted);font-size:12px}
+.spdchart{width:100%;height:220px;display:block;margin-top:4px}
+.dirchart{width:100%;height:280px;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 4px}
+.legend i{display:inline-block;width:16px;height:0;border-top:3px solid;vertical-align:middle;margin-right:4px}
+.shiftbox{background:#0e2946;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:8px}
+.shiftbox p{margin:0 0 6px}.shiftbox p:last-child{margin:0}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 a{color:#9cc8ff}
 @media(max-width:420px){
   .wrap{padding:8px}
@@ -47,28 +53,185 @@ const RULES='https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE
 const KT=v=>v==null?'–':v.toFixed(0), esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const spdCol=s=>s==null?'#555':s<6?'#7FB3D5':s<10?'#4CAF7D':s<15?'#F2C14E':s<20?'#F39C5A':'#E57373';
 const arrow=d=>d==null?'':`<span class="arr" style="transform:rotate(${d+180}deg)">↑</span>`;
-function chart(h){
-  const W=900,H=200,L=34,R=40,T=10,B=24,n=h.length;
-  const x=i=>L+(n<2?0:i*(W-L-R)/(n-1));
-  const mx=Math.max(10,...h.map(r=>r.gst||r.spd||0))*1.1;
-  const y=v=>T+(H-T-B)*(1-v/mx), yd=d=>T+(H-T-B)*(d/360);
-  let s=`<svg class="chart" viewBox="0 0 ${W} ${H}">`;
-  let iStart=-1, iEnd=-1;
-  h.forEach((r,i)=>{ if(r.time>='11:00' && r.time<='16:00'){ if(iStart<0) iStart=i; iEnd=i; } });
-  if(iStart>=0 && iEnd>iStart) s+=`<rect id="racewin" x="${x(iStart)}" y="${T}" width="${x(iEnd)-x(iStart)}" height="${H-T-B}" fill="rgba(255,213,79,.07)"/>`;
-  for(let v=0;v<=mx;v+=5)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#2A4A70"/><text x="${L-4}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
-  ['N','E','S','W','N'].forEach((c,k)=>s+=`<text x="${W-R+6}" y="${yd(k*90)+4}">${c}</text>`);
-  const pl=(k,f)=>h.map((r,i)=>r[k]==null?'':`${x(i)},${f(r[k])}`).filter(Boolean).join(' ');
-  s+=`<polyline points="${pl('gst',y)}" fill="none" stroke="#E57373" stroke-width="2" stroke-dasharray="4 3"/>`;
-  s+=`<polyline points="${pl('spd',y)}" fill="none" stroke="#FFD54F" stroke-width="3"/>`;
-  h.forEach((r,i)=>{if(r.dir!=null)s+=`<circle cx="${x(i)}" cy="${yd(r.dir)}" r="4" fill="#64B5F6"/>`;s+=`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${r.time.slice(0,2)}</text>`});
-  return s+`<text x="${L}" y="${T+10}" style="fill:#FFD54F">speed</text><text x="${L+44}" y="${T+10}" style="fill:#E57373">gust</text><text x="${L+80}" y="${T+10}" style="fill:#64B5F6">direction (right axis)</text></svg>`;
+const NS='http://www.w3.org/2000/svg';
+const COMPASS=[[0,'N'],[22.5,'NNE'],[45,'NE'],[67.5,'ENE'],[90,'E'],[112.5,'ESE'],[135,'SE'],[157.5,'SSE'],[180,'S'],[202.5,'SSW'],[225,'SW'],[247.5,'WSW'],[270,'W'],[292.5,'WNW'],[315,'NW'],[337.5,'NNW']];
+const angDiff=(a,b)=>((a-b+180)%360+360)%360-180; // + = a is clockwise of b
+function circMean(ds){let s=0,c=0,n=0;for(const d of ds){if(d==null)continue;const r=d*Math.PI/180;s+=Math.sin(r);c+=Math.cos(r);n++;}if(!n)return null;return (Math.atan2(s,c)*180/Math.PI+360)%360;}
+function circStd(ds){let s=0,c=0,n=0;for(const d of ds){if(d==null)continue;const r=d*Math.PI/180;s+=Math.sin(r);c+=Math.cos(r);n++;}if(n<2)return null;const R=Math.min(1,Math.hypot(s,c)/n);return R<=1e-6?180:Math.sqrt(-2*Math.log(R))*180/Math.PI;}
+const norm=d=>(d%360+360)%360;
+function svgEl(tag,attrs,parent){const n=document.createElementNS(NS,tag);for(const k in attrs)n.setAttribute(k,String(attrs[k]));if(parent)parent.appendChild(n);return n;}
+function svgText(parent,x,y,str,attrs){const t=svgEl('text',Object.assign({x,y},attrs||{}),parent);t.textContent=str;return t;}
+function raceIdx(h){let a=-1,b=-1;h.forEach((r,i)=>{if(r.time>='11:00'&&r.time<='16:00'){if(a<0)a=i;b=i;}});return [a,b];}
+function segs(h,x,y,key){const out=[];let cur=[];h.forEach((r,i)=>{const v=r[key];if(v==null||!Number.isFinite(+v)){if(cur.length)out.push(cur);cur=[];}else cur.push([x(i),y(+v)]);});if(cur.length)out.push(cur);return out;}
+function drawSpeed(svg,h){
+  const W=svg.clientWidth||360,H=220,L=36,R=10,T=16,B=22;
+  svg.replaceChildren();svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const n=h.length;if(n<2)return;
+  const x=i=>L+(i*(W-L-R))/(n-1);
+  const peak=Math.max(10,...h.map(r=>Math.max(r.gst||0,r.spd||0)));
+  const mx=Math.ceil(peak/5)*5;
+  const y=v=>T+(H-T-B)*(1-v/mx);
+  const [i0,i1]=raceIdx(h);
+  if(i0>=0&&i1>i0)svgEl('rect',{id:'racewin',x:x(i0),y:T,width:x(i1)-x(i0),height:H-T-B,fill:'rgba(255,213,79,.10)'},svg);
+  for(let v=0;v<=mx;v+=5){svgEl('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:'#2A4A70'},svg);svgText(svg,L-4,y(v)+3,String(v),{'text-anchor':'end',fill:'#8FA8C4','font-size':11});}
+  svgText(svg,L-4,T+10,'kt',{'text-anchor':'end',fill:'#8FA8C4','font-size':10});
+  const band=[];h.forEach((r,i)=>{if(r.spd!=null&&r.gst!=null)band.push([x(i),y(r.spd),y(r.gst)]);});
+  if(band.length>1){const pts=band.map(p=>p[0]+','+p[2]).concat(band.slice().reverse().map(p=>p[0]+','+p[1])).join(' ');svgEl('polygon',{points:pts,fill:'rgba(229,115,115,.22)'},svg);}
+  for(const s of segs(h,x,y,'gst'))svgEl('polyline',{points:s.map(p=>p.join(',')).join(' '),fill:'none',stroke:'#E57373','stroke-width':1.5,'stroke-dasharray':'4 3'},svg);
+  for(const s of segs(h,x,y,'spd'))svgEl('polyline',{points:s.map(p=>p.join(',')).join(' '),fill:'none',stroke:'#FFD54F','stroke-width':2.5},svg);
+  h.forEach((r,i)=>{
+    svgText(svg,x(i),H-6,r.time.slice(0,2),{'text-anchor':'middle',fill:'#8FA8C4','font-size':11});
+    if(r.spd==null)return;
+    const yy=y(r.spd),above=yy-14>T;
+    svgText(svg,x(i),above?yy-7:yy+13,String(Math.round(r.spd)),{'text-anchor':'middle',fill:'#FFD54F','font-size':11,'font-weight':700,stroke:'#13304F','stroke-width':3,'paint-order':'stroke'});
+  });
+}
+function biasStats(d){const e=d.analogs&&d.analogs.stats&&d.analogs.stats.dir_err_buoy_minus_arome;if(!e||e.n==null||e.median==null)return null;return e;}
+function drawDir(svg,d){
+  const h=d.hourly,W=svg.clientWidth||360,H=280,L=54,R=8,T=20,B=40;
+  svg.replaceChildren();svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const n=h.length;if(n<2)return;
+  const x=i=>L+(i*(W-L-R))/(n-1);
+  const race=h.filter(r=>r.time>='11:00'&&r.time<='16:00'&&r.dir!=null);
+  const mean=circMean(race.map(r=>r.dir));
+  if(mean==null){svgText(svg,L,30,'No race-window direction',{fill:'#8FA8C4','font-size':12});return;}
+  const rel=dir=>angDiff(dir,mean);
+  const err=biasStats(d);
+  const showBias=!!(err&&err.q25!=null&&err.q75!=null);
+  let half=45;
+  const rels=[];
+  h.forEach(r=>{
+    if(r.src!=='AROME France'&&r.dir!=null)rels.push(rel(r.dir));
+    if(r.fr_dir!=null)rels.push(rel(r.fr_dir));
+    else if(r.src==='AROME France'&&r.dir!=null)rels.push(rel(r.dir));
+  });
+  if(rels.some(v=>Math.abs(v)>45))half=90;
+  const plotH=H-T-B,y=v=>T+(half-v)/(2*half)*plotH;
+  const clip=svgEl('clipPath',{id:'dirclip'},svgEl('defs',{},svg));
+  svgEl('rect',{x:L,y:T,width:W-L-R,height:plotH},clip);
+  svgEl('rect',{x:L,y:T,width:W-L-R,height:(y(0)-T),fill:'rgba(76,175,125,.14)'},svg);
+  svgEl('rect',{x:L,y:y(0),width:W-L-R,height:T+plotH-y(0),fill:'rgba(242,193,78,.13)'},svg);
+  const [i0,i1]=raceIdx(h);
+  if(i0>=0&&i1>i0)svgEl('rect',{id:'racewin-dir',x:x(i0),y:T,width:x(i1)-x(i0),height:plotH,fill:'rgba(255,213,79,.08)'},svg);
+  svgText(svg,L+(W-L-R)/2,T+13,'VEER / right shift',{'text-anchor':'middle',fill:'#8ddeaf','font-size':11,'font-weight':700});
+  svgText(svg,L+(W-L-R)/2,T+plotH-5,'BACK / left shift',{'text-anchor':'middle',fill:'#F2C14E','font-size':11,'font-weight':700});
+  const labels=[];
+  for(let deg=Math.ceil((mean-half)/10)*10;deg<=mean+half+1e-6;deg+=10){
+    const a=norm(deg),rv=angDiff(a,mean);if(Math.abs(rv)>half+0.1)continue;
+    svgEl('line',{x1:L,x2:W-R,y1:y(rv),y2:y(rv),stroke:'#2A4A70'},svg);
+    labels.push({y:y(rv),text:Math.round(a)+'°',deg:Math.round(a),compass:false});
+  }
+  COMPASS.forEach(([deg,name])=>{
+    const rv=angDiff(deg,mean);
+    if(Math.abs(rv)>half+0.1)return;
+    let best=null,bd=1e9;
+    labels.forEach(lb=>{if(lb.compassOnly)return;const dy=Math.abs(lb.y-y(rv));if(dy<bd){bd=dy;best=lb;}});
+    if(best&&bd<8){if(!best.compass||bd<(best._bd??99)){best.text=best.deg+'° '+name;best.compass=true;best._bd=bd;}}
+    else labels.push({y:y(rv),text:name,compass:true,compassOnly:true});
+  });
+  labels.sort((a,b)=>a.y-b.y);
+  let last=-999;
+  labels.forEach(lb=>{if(lb.y-last<11&&!lb.compass)return;last=lb.y;svgText(svg,L-4,lb.y+3,lb.text,{'text-anchor':'end',fill:lb.compass?'#d5e6f5':'#8FA8C4','font-size':10});});
+  svgEl('line',{x1:L,x2:W-R,y1:y(0),y2:y(0),stroke:'#F4FBFF','stroke-width':1.25,'stroke-dasharray':'5 4'},svg);
+  svgText(svg,W-R-2,y(0)-4,Math.round(mean)+'° mean',{'text-anchor':'end',fill:'#F4FBFF','font-size':11,'font-weight':700});
+  const g=svgEl('g',{'clip-path':'url(#dirclip)'},svg);
+  if(showBias){
+    const low=err.n<5,col=low?'#8FA8C4':'#c5e4fb';
+    const pts=[];
+    h.forEach((r,i)=>{if(r.dir==null||r.src==='AROME France')return;pts.push([x(i),rel(r.dir)]);});
+    if(pts.length>1){
+      const up=pts.map(p=>p[0]+','+y(p[1]+err.q75)),dn=pts.slice().reverse().map(p=>p[0]+','+y(p[1]+err.q25));
+      svgEl('polygon',{points:up.concat(dn).join(' '),fill:low?'rgba(143,168,196,.16)':'rgba(127,216,255,.16)'},g);
+      svgEl('polyline',{points:pts.map(p=>p[0]+','+y(p[1]+err.median)).join(' '),fill:'none',stroke:col,'stroke-width':1.6,'stroke-dasharray':'2 3'},g);
+      svgText(svg,L+4,y(0)+14,(low?'historical buoy bias · low sample':'historical buoy bias'),{fill:col,'font-size':10});
+    }
+  }
+  const fr=[];
+  h.forEach((r,i)=>{const v=r.fr_dir!=null?r.fr_dir:(r.src==='AROME France'?r.dir:null);if(v!=null)fr.push([x(i),y(rel(v))]);});
+  if(fr.length>1)svgEl('polyline',{points:fr.map(p=>p.join(',')).join(' '),fill:'none',stroke:'#9fb4c8','stroke-width':1.35},g);
+  const hd=[];
+  h.forEach((r,i)=>{if(r.dir!=null&&r.src!=='AROME France')hd.push([i,x(i),y(rel(r.dir)),Math.round(norm(r.dir))]);});
+  if(hd.length>1)svgEl('polyline',{points:hd.map(p=>p[1]+','+p[2]).join(' '),fill:'none',stroke:'#7ecbff','stroke-width':2.6},g);
+  hd.forEach(p=>{
+    svgEl('circle',{cx:p[1],cy:p[2],r:3.2,fill:'#EAF2FB',stroke:'#7ecbff','stroke-width':1.4},g);
+    const above=p[0]%2===0;
+    let ly=above?p[2]-9:p[2]+13;
+    if(ly<T+14)ly=p[2]+13;
+    if(ly>T+plotH-2)ly=p[2]-9;
+    svgText(g,p[1],ly,String(p[3]),{'text-anchor':'middle',fill:'#EAF2FB','font-size':10,'font-weight':700,stroke:'#13304F','stroke-width':3,'paint-order':'stroke'});
+  });
+  h.forEach((r,i)=>{
+    const cx=x(i),cy=H-B+16;
+    if(r.dir!=null){
+      const ang=(r.dir+180)*Math.PI/180,sx=Math.sin(ang),sy=-Math.cos(ang);
+      svgEl('line',{x1:cx-sx*3,y1:cy-sy*3,x2:cx+sx*5,y2:cy+sy*5,stroke:'#d5e6f5','stroke-width':1.4,'stroke-linecap':'round'},svg);
+      svgEl('polygon',{points:`${cx+sx*9},${cy+sy*9} ${cx+sx*3-sy*3},${cy+sy*3+sx*3} ${cx+sx*3+sy*3},${cy+sy*3-sx*3}`,fill:'#d5e6f5'},svg);
+    }
+    svgText(svg,cx,H-6,r.time.slice(0,2),{'text-anchor':'middle',fill:'#8FA8C4','font-size':10});
+  });
+  const leg=document.getElementById('dlegend');
+  if(leg){
+    let s='<span><i style="border-color:#7ecbff"></i>AROME HD</span>';
+    if(fr.length>1)s+='<span><i style="border-color:#9fb4c8;border-top-width:1.5px"></i>AROME France</span>';
+    if(showBias)s+=`<span><i style="border-color:${err.n<5?'#8FA8C4':'#c5e4fb'};border-top-style:dotted"></i>historical buoy bias${err.n<5?' · low sample':''} (n=${err.n})</span>`;
+    s+='<span class="muted">Arrows point where the wind is going</span>';
+    leg.innerHTML=s;
+  }
+}
+function shiftLines(d){
+  const h=d.hourly,race=h.filter(r=>r.time>='11:00'&&r.time<='16:00'&&r.dir!=null);
+  const lines=[];
+  const r11=race.find(r=>r.time==='11:00')||race[0],r16=[...race].reverse().find(r=>r.time==='16:00')||race[race.length-1];
+  let delta=null;
+  if(r11&&r16&&r11!==r16){
+    delta=angDiff(r16.dir,r11.dir);
+    const ad=Math.abs(Math.round(delta)),word=delta>=0?'veers':'backs',side=delta>=0?'right':'left';
+    if(ad<8)lines.push(`AROME changes ${ad}° from ${r11.time} to ${r16.time} → no persistent shift.`);
+    else if(ad>=15)lines.push(`AROME ${word} ${ad}° from ${r11.time} to ${r16.time} → persistent ${side} shift; favour ${side} later.`);
+    else lines.push(`AROME ${word} ${ad}° from ${r11.time} to ${r16.time} → a modest ${side} shift, not a one-way trend.`);
+  }
+  let best=null;
+  for(let i=1;i<race.length;i++){
+    if(race[i].dir==null||race[i-1].dir==null)continue;
+    const step=Math.abs(angDiff(race[i].dir,race[i-1].dir));
+    if(!best||step>best.step)best={step,a:race[i-1],b:race[i]};
+  }
+  if(best){
+    const lull=[best.a,best.b].filter(r=>r.spd!=null&&r.spd<4).map(r=>`${r.time} is only ${r.spd.toFixed(1)} kt`);
+    lines.push(`Largest hourly step: ${Math.round(best.step)}° between ${best.a.time} and ${best.b.time}`+(lull.length?` (${lull.join('; ')}).`:'.'));
+  }
+  const sd=circStd(race.map(r=>r.dir));
+  if(sd!=null)lines.push(`Oscillation: directions scatter ${Math.round(sd)}° around the race-window mean (hourly std dev).`);
+  const st=d.analogs&&d.analogs.stats;
+  const tr=st&&st.buoy_trend_15_minus_11;
+  if(tr&&tr.n>0&&tr.median!=null){
+    const m=Math.round(tr.median),word=m>0?'veered':m<0?'backed':'held steady';
+    lines.push(m===0?`On similar days the buoy held its direction from 11:00 to 15:00 (n=${tr.n}).${tr.n<5?' Low sample.':''}`
+      :`On similar days the buoy ${word} ~${Math.abs(m)}° from 11:00 to 15:00 (n=${tr.n}).${tr.n<5?' Low sample.':''}`);
+  }
+  const er=st&&st.dir_err_buoy_minus_arome;
+  if(er&&er.n>0&&er.median!=null){
+    const m=Math.round(er.median);
+    lines.push(m===0?`Historically the buoy matched AROME's direction (median, n=${er.n}).${er.n<5?' Low sample.':''}`
+      :`Historically the buoy sat ~${Math.abs(m)}° ${m<0?'left':'right'} of AROME's direction (median, n=${er.n}).${er.n<5?' Low sample.':''}`);
+  }
+  const sideOf=(v,min)=>v==null||Math.abs(v)<min?null:(v>0?'right':'left');
+  const aSide=sideOf(delta,15),hSide=tr&&tr.n>=5?sideOf(tr.median,10):null;
+  let fav=null,conf='low',why='Neither AROME nor the analog trend shows a persistent side.';
+  if(aSide&&hSide&&aSide===hSide){fav=aSide;conf=(Math.abs(delta)>=20&&tr.n>=8)?'high':(tr.n>=8?'medium':'low');why=`AROME and the historical buoy trend both point ${fav}.`;}
+  else if(aSide&&hSide){fav=aSide;conf='low';why=`AROME points ${aSide}, but similar days at the buoy leaned ${hSide}. Trust today's forecast first.`;}
+  else if(aSide){fav=aSide;conf=Math.abs(delta)>=25?'medium':'low';why=`Based on AROME's ${aSide==='right'?'veer':'back'} through the race window.`;}
+  else if(hSide){fav=hSide;why='AROME has no persistent shift today; the lean comes from similar days at the buoy.';}
+  lines.push(`Favoured side: ${fav||'no clear side'}, confidence ${conf}. ${why}`);
+  return lines;
 }
 function render(d){
-  const g=d.regime,c=d.confidence,s=d.strategy,e=d.expected_observed,a=d.analogs;
+  const g=d.regime,c=d.confidence,s=d.strategy,e=d.expected_observed;
   let h=`<div class="card hero"><span class="badge" style="background:${g.color}">${esc(g.name)}</span><span class="badge c-${c.level}">Confidence ${c.level}</span><span class="pill">${esc(s.pattern)}</span><span class="pill">Favoured: ${esc(s.favoured_side)}</span>
   <div class="headline" style="margin-top:8px">${esc(d.headline)}</div><div class="small muted" style="margin-top:4px">Regime basis: ${esc(g.why)}</div></div>`;
-  h+=`<div class="card"><h3>AROME timeline 08–20 h (race window shaded)</h3>${chart(d.hourly)}</div>`;
+  h+=`<div class="card" id="windchart"><h3>Speed · 08:00–20:00</h3><svg class="spdchart" role="img" aria-label="Wind speed"></svg>
+  <h3 style="margin-top:12px">Direction and shift</h3><div class="legend small" id="dlegend"></div><svg class="dirchart" role="img" aria-label="Wind direction"></svg>
+  <div class="shiftbox"><h3>Shift bias</h3>${shiftLines(d).map(t=>`<p>${esc(t)}</p>`).join('')}</div></div>`;
   h+=`<div class="card"><h3>AROME hourly · Portals</h3><table><tr><th>Time</th><th>Speed kt</th><th>Gust kt</th><th>Dir °</th><th></th><th>Temp °C</th><th>Cloud %</th><th>MSLP hPa</th><th>Model</th></tr>`+
   d.hourly.map(r=>`<tr class="${r.time>='11:00'&&r.time<='16:00'?'race':''}"><td>${r.time}</td><td style="color:${spdCol(r.spd)};font-weight:700">${KT(r.spd)}</td><td>${KT(r.gst)}</td><td>${r.dir==null?'–':r.dir.toFixed(0)}</td><td style="text-align:left">${arrow(r.dir)} ${r.compass||''}</td><td>${r.temp==null?'–':r.temp.toFixed(1)}</td><td>${r.cloud==null?'–':r.cloud.toFixed(0)}</td><td>${r.pmsl==null?'–':r.pmsl.toFixed(1)}</td><td class="muted small">${r.src||''}</td></tr>`).join('')+`</table></div>`;
   h+=`<div class="grid"><div class="card"><h3>What the wind will do</h3><ul>${d.interpretation.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>
@@ -77,14 +240,17 @@ function render(d){
   <div class="card"><h3>Strategy</h3><ul><li><b>Shifts:</b> ${esc(s.text)}</li>${s.history_bias?`<li>${esc(s.history_bias)}</li>`:''}<li>${esc(s.side_text)}</li><li><b>Start:</b> ${esc(s.start)}</li><li><b>Windward mark:</b> ${esc(s.windward_mark)}</li></ul></div></div>`;
   h+=`<div class="grid"><div class="card"><h3>Confidence · ${c.level}</h3><ul>${c.why.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>
   <div class="card"><h3>Rig · Capa tuning table</h3><table><tr><th>TWS kt</th><th>Rake</th><th>V</th><th>D</th><th>Genoa</th></tr>${d.rig.settings.map(r=>`<tr><td>${r.band}</td><td>${r.rake_cm}</td><td>${r.uppers_V}</td><td>${r.lowers_D}</td><td>${r.genoa}</td></tr>`).join('')}</table><ul class="small">${d.rig.notes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><div class="small muted">${esc(d.rig.source)}</div><div class="small" style="margin-top:6px"><a href="tuning.html">Tuning &amp; sails</a></div></div></div>`;
-  if(a&&a.stats){const st=a.stats,q=o=>o?`${o.median} (q25 ${o.q25}–q75 ${o.q75}, n=${o.n})`:'–';
-  h+=`<div class="card"><h3>Historical analogs · ${esc(a.label)}</h3><table><tr><th>Measure</th><th>Value</th></tr>
-  <tr><td>AROME Portals 11–16 h mean, kt</td><td>${q(st.arome_spd)}</td></tr><tr><td>SOCIB buoy observed mean, kt</td><td>${q(st.buoy_spd)}</td></tr>
-  <tr><td>Buoy strongest hour, kt</td><td>${q(st.buoy_max_hourly)}</td></tr><tr><td>Buoy gust factor</td><td>${q(st.buoy_gust_factor)}</td></tr>
-  <tr><td>LEPA airport mean, kt</td><td>${q(st.lepa_spd)}</td></tr><tr><td>Buoy dir 15 h − 11 h, ° (+veer)</td><td>${q(st.buoy_trend_15_minus_11)}</td></tr>
-  <tr><td>Buoy dir − AROME dir, °</td><td>${q(st.dir_err_buoy_minus_arome)}</td></tr></table></div>`}
   document.getElementById('day').innerHTML=h;
+  requestAnimationFrame(()=>drawCharts(d));
 }
+let currentDay=null;
+function drawCharts(d){
+  currentDay=d;
+  const spd=document.querySelector('.spdchart'),dir=document.querySelector('.dirchart');
+  if(spd&&spd.clientWidth)drawSpeed(spd,d.hourly);
+  if(dir&&dir.clientWidth)drawDir(dir,d);
+}
+window.addEventListener('resize',()=>{if(currentDay)drawCharts(currentDay);});
 fetch('data/forecast.json',{cache:'no-store'}).then(r=>r.json()).then(F=>{
   document.getElementById('gen').innerHTML='Brief built<br><b>'+new Date(F.generated_utc).toLocaleString('en-GB',{timeZone:'Europe/Madrid',dateStyle:'medium',timeStyle:'short'})+'</b> Madrid';
   const t=document.getElementById('tabs');F.days.forEach((d,i)=>{const b=document.createElement('button');b.className='tab'+(i?'':' on');

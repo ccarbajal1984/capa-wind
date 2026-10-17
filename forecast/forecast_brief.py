@@ -266,7 +266,7 @@ def day_brief(date, rows, analogs, clim):
             "expected_observed": exp, "analogs": {"label": a_label, "stats": a} if a else None,
             "climatology": {"shift": shift_clim, "arome_hd_skill": skill,
                             "diurnal_buoy": (clim or {}).get("diurnal_by_regime", {}).get(meta["clim_key"])},
-            "rig": rig(lo, hi), "hourly": [{k: r[k] for k in ("time","spd","gst","dir","compass","temp","cloud","pmsl","src")} for r in rows if 8 <= r["h"] <= 20]}
+            "rig": rig(lo, hi), "hourly": [{k: r[k] for k in ("time","spd","gst","dir","compass","temp","cloud","pmsl","src","fr_dir")} for r in rows if 8 <= r["h"] <= 20]}
 
 def main(argv):
     args = dict(zip(argv[1::2], argv[2::2]))
