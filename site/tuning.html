@@ -1,0 +1,311 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tuning &amp; sails · CAPA ESP 99</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="stylesheet" href="assets/brand.css">
+<style>
+:root{--navy:#0B1F3A;--panel:#13304F;--panel2:#183a5e;--line:#2A4A70;--text:#EAF2FB;--muted:#8FA8C4;--amber:#f5c542}
+*{box-sizing:border-box}html,body{margin:0;background:var(--navy);color:var(--text);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:12px 12px 36px}
+h2{font-size:16px;margin:18px 0 8px;color:#fff}h3{font-size:14px;margin:0 0 6px}
+.muted{color:var(--muted)}.src{color:var(--muted);font-size:12px;margin:6px 0 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px}
+.ours{border:2px solid var(--amber)}
+.badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:var(--amber);color:#0B1F3A;border-radius:999px;padding:3px 8px;margin-bottom:8px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:#d5e4f5;font-size:12px;font-weight:700;background:#183a5e;position:sticky;top:0}
+td.num,th.num{text-align:right;white-space:nowrap}
+tr.hl td{background:rgba(245,197,66,.08)}
+.sails{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:720px){.sails{grid-template-columns:1fr 1fr}}
+.sail{background:#0E2744;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sail b{display:block;font-size:15px}
+.flag{border-left:4px solid var(--amber);background:#1a3354}
+ol,ul{margin:6px 0;padding-left:18px}li{margin:4px 0}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 8px}
+summary{cursor:pointer;font-weight:750;padding:12px 14px}
+details .inner{padding:0 12px 12px}
+a{color:#9cc8ff}
+</style></head><body>
+<header class="sitehead">
+  <img class="dragon" src="assets/dragon_capa_final_transparent.svg" alt="">
+  <div class="sitebar">
+    <a class="brand" href="./"><img class="mark" src="assets/capa-logo.svg" alt="" width="36" height="36"><span class="word"><span class="capa">CAPA</span><span class="eye">ESP 99 · Bay of Palma</span></span></a>
+    <h1>Tuning &amp; sails</h1>
+  </div>
+  <nav class="sitenav" aria-label="Site"><a href="./">Live wind</a><a href="forecast.html">Forecast</a><a href="playbook.html">Wind playbook</a><a href="tuning.html" aria-current="page">Tuning</a><a href="./#webcams">Webcams</a><a href="/logout">Log out</a></nav>
+</header>
+<div class="wrap">
+
+<h2>Our numbers</h2>
+<div class="card ours">
+  <span class="badge">Our numbers</span>
+  <div class="scroll">
+  <table>
+    <tr><th>TWS (kn)</th><th class="num">Rake</th><th>V mm/turn</th><th class="num">V tension</th><th>D mm/turn</th><th class="num">D tension</th></tr>
+    <tr><td>0-6</td><td class="num">123</td><td>0 (63,1/55,6)</td><td class="num">14</td><td>-2 (61,5/62,2)</td><td class="num">loose (89,5)</td></tr>
+    <tr><td>6-10</td><td class="num">123</td><td>0 (63,1/55,6)</td><td class="num">16</td><td>0 (60,4/56,8)</td><td class="num">9</td></tr>
+    <tr><td>10-15</td><td class="num">122,5</td><td>+1,5 (+1,5)</td><td class="num">18</td><td>+0,5 (+0,5)</td><td class="num">10</td></tr>
+    <tr><td>15-20</td><td class="num">122</td><td>+2,5 (+1)</td><td class="num">20</td><td>+1 (+0,5)</td><td class="num">12</td></tr>
+    <tr class="hl"><td>+20</td><td class="num">121,5</td><td>+3,5 (+1)</td><td class="num">24</td><td>+2 (+1)</td><td class="num">14</td></tr>
+  </table>
+  </div>
+  <p>Rake scale 121,5-123. Butt at 2750mm from X mark at station #10; forestay at max runner -35 (PT2). Rake -5,5deg = 7,487 m (spi halyard) = 122cm swing; 1deg=3cm. V's at 80,5 from station #4.</p>
+  <p class="src">Source: PLIS_PLAY_TUNING_TABLE.md — North tuning table (Dec 2024), corrected by Carlos 2026-10-16 (0-6 V tension 14, not 16). D tension at +20 kn is 14. DRAGON_COACH.md §0.1 notes that cell was corrected from 22 on the same date. Turns column = total turns, with the step from the previous row in brackets. No gauge model is named on the V/D tension columns except “PT2” on the forestay.</p>
+</div>
+
+<h2>Sail inventory</h2>
+<div class="card">
+  <div class="sails">
+    <div class="sail"><b>A-14 mainsail</b><span class="muted">North Sails</span></div>
+    <div class="sail"><b>V-6M genoa</b><span class="muted">When to use: medium</span></div>
+    <div class="sail"><b>V-6H genoa</b><span class="muted">When to use: heavy</span></div>
+    <div class="sail"><b>R-5 spinnaker</b><span class="muted">Dk Blue</span></div>
+  </div>
+  <p class="src">Source: GOLD_CUP_NANO_NEGRIN_NOTES.md — Capa (ESP 99) sail inventory, North Sails, invoiced 26/03/2026. “Medium” and “heavy” are the labels in that list. No wind range is stated for the mainsail or the spinnaker.</p>
+</div>
+
+<h2>Gold Cup notes</h2>
+<div class="card">
+  <ul>
+    <li>Forestay (stay): 122,5 max loose; 122,0 last day; 121,5 Thursday &amp; Friday.</li>
+    <li>Base: moved bow point (punto de proa) on Wednesday. Sailed with settings below.</li>
+    <li>Max hiking/tight (tricados): 20 verticals, 12 diagonals.</li>
+    <li>Max loose: 14-15 verticals, 7-8 diagonals.</li>
+    <li>Runner (burda) sailed a lot around 45-60%.</li>
+    <li>Jumpers: played a lot with central and laterals, black mark. Base of central 5-10 cm max past the mark. Original: “Los jumper jugaba mucho con el central y los laterales marca negra. Mi base del central 5 a 10 cm Max que la marca”.</li>
+    <li>Genoa leads outside the cabin.</li>
+    <li>Traveler almost always at max. Twist with mainsheet; use mainsheet reference marks, then fine tune.</li>
+    <li>Runners direct on white mark, play fine tune; if dangerous crossing, release leeward direct runner.</li>
+    <li>Starts: backstay at start mark during sequence until boat is luffed on starboard before going, then add runner. No need to release backstay until windward mark.</li>
+  </ul>
+  <p class="src">Source: GOLD_CUP_NANO_NEGRIN_NOTES.md — from Carlos, sailed with Nano Negrín. Corrected 2026-10-17: burda = runner, not backstay. Shown here as Runner (burda).</p>
+</div>
+
+<h2>Comparison with published numbers</h2>
+<div class="card">
+  <div class="scroll">
+  <table>
+    <tr><th>Item</th><th>Your figures</th><th>North</th><th>Petticrows 2026</th><th>Fritz</th><th>Verdict</th></tr>
+    <tr><td>Rake light</td><td>123</td><td>123,5 (Petticrow mast) / 120,0 (BB)</td><td>123</td><td>1215 mm all boats</td><td>Agrees with Petticrows exactly</td></tr>
+    <tr><td>Rake medium</td><td>122,5–123</td><td>122,5 (Petti)</td><td>122</td><td>1215</td><td>Matches North Petti; Petticrows 0,5 lower</td></tr>
+    <tr><td>Rake heavy</td><td>121,5–122</td><td>122,5 (Petti)</td><td>121</td><td>1215</td><td>Yours rakes back more than North, less than Petticrows</td></tr>
+    <tr><td>Uppers light</td><td>14</td><td>“14 for std Petti/BB, 12 stiff Petti, minus 1 turn”</td><td>mMast 12 / iMast 10 / eMast 14</td><td>9-11 (0-1 Bft)</td><td>Matches North base &amp; Petticrows eMast</td></tr>
+    <tr><td>Uppers medium</td><td>16–18</td><td>14 +1-2 turns</td><td>mMast 15, iMast 14-15, eMast 18</td><td>11-18 depending</td><td>Within range</td></tr>
+    <tr><td>Uppers heavy</td><td>20–24 (GC max 20)</td><td>14 +3 turns; set-up “strong wind position 20”</td><td>mMast 20-25, eMast 20-25</td><td>17-27 (4,5-8 Bft)</td><td>Within range</td></tr>
+    <tr><td>Lowers light</td><td>loose</td><td>bend 1 cm to leeward</td><td>0</td><td>no tension</td><td>Agrees</td></tr>
+    <tr><td>Lowers medium</td><td>9–10 (GC loose 7-8)</td><td>mast straight</td><td>5-10</td><td>5-7</td><td>Agrees</td></tr>
+    <tr><td>Lowers heavy</td><td>12 (15-20 kn), 22 (+20 kn); GC max 12</td><td>straight +1-1½ turn; set-up 8</td><td>15 (mMast/eMast)</td><td>7-12</td><td>22 is far above every published figure – verify</td></tr>
+    <tr><td>Shroud position (V)</td><td>80,5 from Stn 4</td><td>83 cm (80 cm light crew)</td><td>front of upper 82 cm</td><td>790-810 mm</td><td>Yours = North “light crew” range; check reference face (front vs centre)</td></tr>
+    <tr><td>Max runner/forestay</td><td>“-35 (PT2)”</td><td>runner mark so forestay reads 30</td><td>max 32</td><td>forestay 33-35 with runners 16</td><td>Unclear notation – verify</td></tr>
+    <tr><td>Mast ram</td><td>not in your notes</td><td>+1,5 cm fwd light / neutral / 2,5 cm fwd heavy</td><td>1-1,5 cm fwd light &amp; strong, max aft medium</td><td>10-15 mm fwd 0-1 Bft; max back 1,5-4 Bft; 10-15 mm fwd 4+</td><td>Add ram to your table</td></tr>
+  </table>
+  </div>
+  <p class="src">Source: DRAGON_COACH.md §0.3, copied as written, including the lowers-heavy “22 (+20 kn)” cell. The Our numbers table above is the later correction: D tension at +20 kn is 14. North column cites north_tuning_guide.txt; Petticrows cites petticrows_setup_factsheet_2026.txt; Fritz cites fritz_tuning_manual.txt.</p>
+</div>
+
+<h2>Reference tables</h2>
+
+<details>
+  <summary>North on-the-water — Light 0-5 / Medium 6-16 / Heavy 17+ kn</summary>
+  <div class="inner scroll">
+  <table>
+    <tr><th>Control</th><th>Light</th><th>Medium</th><th>Heavy</th></tr>
+    <tr><td>Sails</td><td>A-7+ (std Petti &amp; BB) / LM-2 stiff Petti; MG-15/MJ-8; CD-5 or R-5</td><td>same</td><td>A-7+ / A-10 stiff Petti; HG-15/MJ-8H</td></tr>
+    <tr><td>Rake</td><td>123,5 Petti / 120,0 BB</td><td>122,5 / 120,0</td><td>122,5 / 120,0</td></tr>
+    <tr><td>Mast ram</td><td>1,5 cm fwd</td><td>neutral</td><td>2,5 cm fwd</td></tr>
+    <tr><td>Mast position</td><td>83,0 Petti / 81,5 BB from Stn 4</td><td>same</td><td>same</td></tr>
+    <tr><td>Jumpers</td><td>adj: loose; fixed 6</td><td>straight; 6</td><td>straight; 6</td></tr>
+    <tr><td>Uppers</td><td>base 14 (12 stiff) −1 turn</td><td>+1-2 turns</td><td>+3 turns</td></tr>
+    <tr><td>Lowers</td><td>1 cm leeward bend at spreaders</td><td>straight</td><td>straight +1-1½ turn (windward)</td></tr>
+    <tr><td>Backstay</td><td>little tension (pre-bend)</td><td>just tight vs waves</td><td>just tight</td></tr>
+    <tr><td>Runners</td><td>slack to 15-16 cm above deck (#4)</td><td>15-5 cm (#3-#2)</td><td>5-0 cm (#1 max = forestay 30)</td></tr>
+    <tr><td>Main</td><td>light sheet, top tell-tales straight</td><td>top batten parallel boom, top tell-tales 20 % leeward</td><td>top batten 2° twisted off</td></tr>
+    <tr><td>Traveller</td><td>windward, boom centre</td><td>windward, boom centre</td><td>centre to 10 cm leeward</td></tr>
+    <tr><td>Outhaul</td><td>2,0 cm from black band</td><td>1 cm</td><td>at band</td></tr>
+    <tr><td>Cunningham</td><td>loose</td><td>remove wrinkles</td><td>remove wrinkles; very heavy pull hard</td></tr>
+    <tr><td>Vang</td><td>loose upwind, cleated for run</td><td></td><td>reach/run: top batten parallel</td></tr>
+    <tr><td>Genoa sheet</td><td>foot touches shroud at deck</td><td>foot touches 10 cm up</td><td>25 cm up</td></tr>
+    <tr><td>Barberhauler</td><td>#4 / 15 cm out of cuddy / 15-18 cm from spreader</td><td>#2 / 9-10 cm / 5 cm</td><td>#3 / 10-12 cm / 8 cm</td></tr>
+    <tr><td>Genoa halyard</td><td>small wrinkles</td><td>just remove</td><td>just remove; never overstretch</td></tr>
+  </table>
+  <p class="src">Source: north_tuning_guide.txt, via DRAGON_COACH.md §3.1. These sail codes are North’s published call, not the Capa inventory above. The 2012 North PDF appears in search snippets with rake 121,5 Petti / 119,0 BB — older figures, not text-verified.</p>
+  </div>
+</details>
+
+<details>
+  <summary>Petticrows 2026 — Loos on wire, boats post-2008</summary>
+  <div class="inner scroll">
+  <table>
+    <tr><th>Mast</th><th>Light U/L</th><th>Medium U/L</th><th>Strong U/L</th></tr>
+    <tr><td>mMast</td><td>12 / 0</td><td>15 / 5-10</td><td>20-25 / 15</td></tr>
+    <tr><td>iMast</td><td>10 / 0</td><td>14-15 / 5-8</td><td>16-20 / 10-12</td></tr>
+    <tr><td>eMast</td><td>14 / 0</td><td>18 / 5-10</td><td>20-25 / 15</td></tr>
+    <tr><td>Rake (all)</td><td>123</td><td>122</td><td>121</td></tr>
+    <tr><td>Ram from max aft</td><td>1-1,5 cm fwd</td><td>max aft</td><td>1-1,5 cm fwd</td></tr>
+  </table>
+  <p>Jumper avg 8; max runner 32 on forestay. Lowers are a guide: sight mast straight sideways upwind.</p>
+  <p class="src">Source: petticrows_setup_factsheet_2026.txt, via DRAGON_COACH.md §3.2.</p>
+  </div>
+</details>
+
+<details>
+  <summary>Fritz — by Beaufort, Loos ~1450 mm above deck</summary>
+  <div class="inner scroll">
+  <table>
+    <tr><th></th><th>0-1 Bft</th><th>1,5-2,5</th><th>3-4</th><th>4,5-8</th></tr>
+    <tr><td>Uppers wave/flat</td><td>9-10 / 11</td><td>11-13 / 12-14</td><td>14-16 / 13-18</td><td>17-26 / 19-27</td></tr>
+    <tr><td>Lowers wave/flat</td><td>0 / 0</td><td>0 / 0</td><td>5-6 / 5-7</td><td>7-11 / 8-12</td></tr>
+  </table>
+  <p>Runners (distance of tape mark above deck): 0-1 Bft loose-200 mm; 1-2: 160-130; 2-3: 130-100; 3-4: 90-50; 4-5: 40-30; 5-6: 20-0. Reach: LW 310, MW 280-200, HW 180-100 mm, mast 20-40 mm fwd. Downwind: ease 680 mm, ram 50 mm fwd. Ram upwind: 0-1 Bft 10-15 mm fwd + backstay; 1,5-4 max back; 4+ 10-15 mm fwd.</p>
+  <p>Genoa leech off spreader tip: LW 60-80 mm, MW 30-60 mm (flat water down to 30), HW 80-120 mm. Genoa foot touches uppers at: LW 30 mm, MW 70-250, HW 250-450 mm. Lead innermost (~360 mm in from deck edge) except reaching. Outhaul range 20-40 mm, 1:12 purchase; ease 80-100 mm offwind. Backstay: below 3 kn use backstay instead of runners; on runs tie stopper on backstay control to prevent mast bending forward in a gybe.</p>
+  <p class="src">Source: fritz_tuning_manual.txt, via DRAGON_COACH.md §3.3.</p>
+  </div>
+</details>
+
+<h2>Rig set-up sequence (dock)</h2>
+<div class="card">
+  <h3>Petticrows</h3>
+  <ol>
+    <li>Jumpers – fixed avg 8 Loos; adjustable mark rope at 6/8/10.</li>
+    <li>Mast vertical, fully fwd, mark 81 cm up, mark forestay.</li>
+    <li>Rake = forestay mark to deck, average 122 (121 heavy, 123 light).</li>
+    <li>Tape Stn 4 line.</li>
+    <li>Upper front face 82 cm, lower 85 cm (aft = less bend).</li>
+    <li>Forestay plate front 104 cm.</li>
+    <li>Mast plate aft end 82 cm.</li>
+    <li>J ≤186 cm.</li>
+    <li>Pre-bend 0–10 mm.</li>
+    <li>Uppers 15, lowers next hole aft 10, ram lever max aft = mast level with aft of plate.</li>
+    <li>Set tension for conditions.</li>
+    <li>Runner: forestay 32 Loos = absolute max, tape the wire.</li>
+  </ol>
+  <p class="src">Source: petticrows_setup_full_2026, via DRAGON_COACH.md §2.</p>
+</div>
+<div class="card">
+  <h3>North</h3>
+  <p>Mark wires at black band 80 cm; forestay 186 cm from front of mast; lowers ~3 cm behind uppers; light crews (220-240 kg) shrouds one hole fwd; runner max: rig at 20 V / 8 D, pull runners to forestay 30, tape → eased “just tight” mark ≈15 cm above deck; lowers keep mast straight up to 20-22 kn, then tighten until mast drops 5-10 cm to leeward at hounds.</p>
+  <p class="src">Source: north_tuning_guide, via DRAGON_COACH.md §2.</p>
+</div>
+<div class="card">
+  <h3>Fritz</h3>
+  <p>Rake 1215 mm all boats; runners each 16 Loos at heavy-wind mark → forestay 33-35.</p>
+  <p class="src">Source: fritz_tuning_manual, via DRAGON_COACH.md §2.</p>
+</div>
+
+<h2>Pre-race checklist</h2>
+<div class="card">
+  <h3>Dock (each event)</h3>
+  <ul>
+    <li>Rake mark vs forestay (your table).</li>
+    <li>V/D Loos per forecast.</li>
+    <li>Port/stbd thread marks equal.</li>
+    <li>Jumper rope marks.</li>
+    <li>Runner max tape (forestay 30 North / 32 Petticrows max).</li>
+    <li>Ram lever stops (50 mm class max).</li>
+    <li>Backstay stopper knot for runs (Fritz).</li>
+    <li>Bilge pumps working, manual pump + 2 buckets, hatches (north_speed_guide).</li>
+    <li>Crew weigh ≤285 kg.</li>
+    <li>RFEV licences, certificate.</li>
+  </ul>
+  <h3>Pre-start</h3>
+  <ul>
+    <li>Wind range → pick row of your table.</li>
+    <li>Check shifts both ends.</li>
+    <li>Genoa furled approach.</li>
+    <li>Backstay start mark routine.</li>
+  </ul>
+  <p class="src">Source: DRAGON_COACH.md §11.</p>
+</div>
+<div class="card">
+  <h3>Also from that checklist</h3>
+  <ul>
+    <li><b>Upwind:</b> runner = gear; mast straight sideways (sight groove); genoa leech-spreader distance (Fritz); top batten parallel.</li>
+    <li><b>Windward mark:</b> sneak guy out; ram/runners release plan; genoa furl.</li>
+    <li><b>Downwind:</b> ram fwd, runners eased, kite flown off pole ≥8 kn, gybe on lifts.</li>
+    <li><b>Leeward mark:</b> port-side drop; ram back, runners on, traveller set.</li>
+  </ul>
+  <p class="src">Source: DRAGON_COACH.md §11.</p>
+</div>
+
+<h2>Flags to verify on the dock</h2>
+<div class="card flag">
+  <p>Do not convert units by guesswork. The Our numbers table uses the 2026-10-16 correction (D tension at +20 kn is 14). Item 1 below is copied as written and still names the earlier 22.</p>
+  <ol>
+    <li><b>D 22 at +20 kn</b> vs GC max-tight 12 D, Petticrows 15, Fritz ≤12, North set-up 8. Possibly a typo or a different gauge/scale.</li>
+    <li><b>V tensions:</b> your table is Loos-style numbers (14-24) but no gauge model is named except “PT2” on the forestay. Confirm all are Loos PT-2M on bare wire (North and Fritz say measure without plastic; Fritz at ~1450 mm above deck).</li>
+    <li><b>“mm/turn” columns</b> (63,1/55,6 etc.) look like turnbuckle/thread exposure port/stbd – port/stbd asymmetry (e.g. 63,1 vs 55,6) needs checking that the mast is centred (North step 6).</li>
+    <li><b>Rake reference:</b> North measures from mark 80 cm up mast along forestay; Petticrows marks 81 cm up (class 79–81). A 1 cm difference in reference height shifts your rake numbers vs published ones.</li>
+    <li><b>Which mast?</b> Published figures differ by mast (Petticrow std/stiff, BB/Börresen; Petticrows mMast/iMast/eMast). Identify yours to pick the right column.</li>
+    <li>“-35 (PT2)”, (7,487 m spi halyard confirmed by Carlos; turns column = total turns with step from previous row in brackets, confirmed), “X mark at station #10” – meaning unclear; record what each refers to.</li>
+    <li>Runner (burda) “45-60 %” – percentage of what (scale on control line?) – record the reference.</li>
+    <li>Hull age: Petticrows says figures are for boats built after 2008; older hulls up to 30 % more tension.</li>
+  </ol>
+  <p class="src">Source: DRAGON_COACH.md §0.4.</p>
+</div>
+
+<h2>Gear shifting</h2>
+<div class="card">
+  <ul>
+    <li>Runner tension is the gear-shift control: light = less runner → forestay sag → power. Building = more runner + ram max aft so the mast doesn’t over-bend. Windier still = lots of runner + ease ram to bend mast, but keep headstay tension.</li>
+    <li>Waves: twistier set-up, softer sheet, open leech; balance the boat – big keel-hung rudder = drag if over-steered.</li>
+    <li>Barberhauler up = lead aft = sheet harder/flatter; &gt;20 kn second barberhauler pulls lead ~200 mm outboard.</li>
+    <li>Main: boom near centreline, ease traveller as sheet comes on; no vang-sheeting.</li>
+    <li>Genoa first, helm second: in a lift ease genoa, helm comes up slowly, genoa back in.</li>
+  </ul>
+  <p class="src">Source: north_speed_guide.txt, via DRAGON_COACH.md §4.</p>
+</div>
+
+<h2>Crew roles</h2>
+<div class="card">
+  <ul>
+    <li><b>Forward (genoa trimmer/often tactician):</b> to leeward in light air, sheet, halyard, barberhauler, fine-tunes; calls puffs; hikes when breeze comes. Downwind: bow/mast, holds pole at shrouds, calls wind and traffic; comes back to cockpit when breezy.</li>
+    <li><b>Middle (main):</b> always to windward; mainsheet, runners, ram, jumpers, traveller, tack, outhaul, vang. Puff: ease sheet/drop traveller so helm can bear off. Spinnaker trimmer downwind at front of cockpit, windward.</li>
+    <li><b>Helm:</b> sits to leeward in light air, windward 10-12 kn+; pumps main downwind when legal.</li>
+    <li>Crew 285 kg max; most sail 3 (~95 kg avg), some 4.</li>
+  </ul>
+  <p class="src">Source: north_speed_guide.txt, via DRAGON_COACH.md §5.</p>
+</div>
+
+<h2>Manoeuvres</h2>
+<div class="card">
+  <ul>
+    <li><b>Tack:</b> #1 error = releasing genoa too early. Ease slightly, release only when it backs against the rig; &lt;6 kn option: furl genoa. Coarse sheet first, then fine-tune; cleat fast when windy. Flat water: steer slowly; waves: turn quickly. Centre tiller as boat straightens and main tacks. Better over-steer than under – genoa must blow outside leeward shroud. Middle: light = traveller to new windward side first; heavy = runners first.</li>
+    <li><b>Spinnaker set:</b> (cockpit launch) sneak guy out as far as possible before the set.</li>
+    <li><b>Downwind:</b> furl genoa, release ram fully, ease runners/backstay so rig goes forward; ease adjustable main tack. From ~8 kn “fly” the kite off the short pole: pole squared to shrouds, clews level, guy up to ~6 ft off the pole. Main top batten parallel to boom; vang tighter if rolling, looser to sail lower. Bow down/stern up in light-moderate.</li>
+    <li><b>Gybe:</b> time it while surfing / rolling to windward. Trim main in a little; as main crosses haul new runner, ease old ASAP; backstay holds only briefly. Light air: both runners off, backstay holds, keep kite rotating. 7-8 kn guy at pole; 8-10+ exit with tack at pole then ease away. Fritz: gybe with runners open and backstay pulled a little; re-tension windward runner after in heavy air.</li>
+    <li><b>Takedown:</b> into cockpit, always on port side for next set: release stbd sheet, pull around bow, drop halyard, pull fast.</li>
+    <li><b>Safety:</b> automatic bilge pumps + manual pumps + 2 buckets; hard rolling can broach to windward and swamp; keep hatches in place.</li>
+  </ul>
+  <p class="src">Source: north_speed_guide.txt unless noted, via DRAGON_COACH.md §6.</p>
+</div>
+
+<h2>Starting</h2>
+<div class="card">
+  <ol>
+    <li>Approach with genoa furled under main; unroll when time/distance right; earlier in light air.</li>
+    <li>Keep flow over rudder; when genoa comes out aim low enough not to backwind.</li>
+    <li>Windy: sail as high/slow as possible, bow down at the end; don’t over-ease main or bow blows off.</li>
+    <li>Gold Cup routine (Nano Negrín): backstay on start mark during sequence until luffed on starboard, then add runner.</li>
+  </ol>
+  <p class="src">Source: north_speed_guide.txt plus the Gold Cup notes, via DRAGON_COACH.md §7.</p>
+</div>
+
+<h2>Class essentials</h2>
+<div class="card">
+  <ul>
+    <li>Crew weight max 285 kg in lightweight clothing (CR 13.30); NOR may amend except Worlds, Europeans, Gold Cups, Grade I.</li>
+    <li>Displacement 1700 kg with mast (class rules p1). Length 8,9 m (north_speed_guide).</li>
+    <li>8 sails carded per event; most take 4 genoas, 2 mains, 2 spinnakers (north_speed_guide).</li>
+    <li>Mast ram travel class max 50 mm; J max 186 cm; forestay mark 79–81 cm up the mast (petticrows_setup_full_2026).</li>
+    <li>2026: GPS devices permitted (rule 11.11), NOR may prohibit below Grade 1.</li>
+    <li>Spinnaker chute removed after certification → re-swing or ≥4,5 kg corrector ≥300 mm forward of Stn 4.</li>
+  </ul>
+  <p class="src">Source: DRAGON_COACH.md §1 (ida class rules 2026, north_speed_guide, petticrows_setup_full_2026).</p>
+</div>
+
+</div></body></html>

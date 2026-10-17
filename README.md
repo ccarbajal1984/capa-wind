@@ -1,6 +1,6 @@
 # CAPA wind
 
-Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 5 minutes, writes `site/data/live.json`, and keeps a rolling 12-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. The site is public unless the Pages env var `AUTH_ENABLED` is the string `true`.
+Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 5 minutes, writes `site/data/live.json`, and keeps a rolling 12-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. Sign-in is on unless the Pages env var `AUTH_ENABLED` is exactly `false`.
 
 The page is one file, `site/index.html`. It loads `data/live.json` with a relative URL. The Pipeline Twitch player is embedded with `parent=capa-wind.pages.dev` (plus the current hostname when that is different). Webcam snapshots are Conecta Balear Visiona and IB-red.
 
@@ -18,7 +18,7 @@ Add these repository secrets (**Settings → Secrets and variables → Actions**
 | `SITE_PASS` | Shared password for the site |
 | `GH_DISPATCH_TOKEN` | GitHub token that can dispatch Actions (`workflow` scope, or fine-grained Actions read and write). The ticker stores it as the Worker secret `GH_TOKEN`. |
 
-`functions/_middleware.js` (repo root, not inside `site/`) passes every request through unless `AUTH_ENABLED` on the Pages **production** environment is exactly `true`. Wrangler only bundles `./functions` from the directory it is run in. With auth on, it reads `SITE_USER` and `SITE_PASS` from that same environment: if either secret is missing or empty, every request gets **503** and the files are not served. A wrong password gets **401**. Leave the secrets in place; set `AUTH_ENABLED=true` on the Pages project to turn the login back on.
+`functions/_middleware.js` (repo root, not inside `site/`) requires a login for every request, including `site/data/*.json`, unless `AUTH_ENABLED` on the Pages **production** environment is exactly `false`. Wrangler only bundles `./functions` from the directory it is run in. The login form POSTs to `/login` and checks `SITE_USER` (trimmed, case-insensitive) and `SITE_PASS` (trimmed) from that environment. A match sets an HttpOnly, Secure, SameSite=Lax session cookie for 30 days, signed with `SESSION_SECRET` when that env var is set, otherwise with a key derived from `SITE_PASS`. If either credential is missing or empty, every request gets **503** and the files are not served. A wrong password stays on the login page with **401**. `/logout` clears the cookie. Leave the secrets in place; set `AUTH_ENABLED=false` only to open the site.
 
 ## What the Action does
 
@@ -43,7 +43,7 @@ The ticker is deployed only when `main` is pushed with a change under `worker/` 
 
 Create the API token under **My Profile → API Tokens → Create Custom Token**, permissions **Account → Cloudflare Pages → Edit** and **Account → Workers Scripts → Edit**, limited to the account that owns the project.
 
-Open `https://capa-wind.pages.dev`. No login is required while `AUTH_ENABLED` is unset. When it is `true`, sign in with `SITE_USER` and `SITE_PASS`.
+Open `https://capa-wind.pages.dev` and sign in with `SITE_USER` and `SITE_PASS`. The browser keeps that session for 30 days. Set `AUTH_ENABLED=false` on the Pages project to turn the login off.
 
 This repository still stores `live.json` and `history.json`. Make the GitHub repository private if that history should not be public.
 

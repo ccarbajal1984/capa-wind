@@ -36,7 +36,7 @@ a{color:#9cc8ff}
     <h1>Forecast</h1>
     <div class="headmeta" id="gen"></div>
   </div>
-  <nav class="sitenav" aria-label="Site"><a href="./">Live wind</a><a href="forecast.html" aria-current="page">Forecast</a><a href="playbook.html">Wind playbook</a><a href="./#webcams">Webcams</a></nav>
+  <nav class="sitenav" aria-label="Site"><a href="./">Live wind</a><a href="forecast.html" aria-current="page">Forecast</a><a href="playbook.html">Wind playbook</a><a href="tuning.html">Tuning</a><a href="./#webcams">Webcams</a><a href="/logout">Log out</a></nav>
 </header>
 <div class="wrap">
 <div class="muted small" style="margin:2px 0 6px">Puerto Portals race area · kt, ° true (wind FROM), Madrid time</div>
@@ -77,7 +77,7 @@ function render(d){
   ${e?`<div style="margin-top:6px"><b>Expected open-bay wind: ${e.lo}–${e.hi} kt (mid ${e.mid})</b><div class="small muted">${esc(e.text)}</div></div>`:''}</div>
   <div class="card"><h3>Strategy</h3><ul><li><b>Shifts:</b> ${esc(s.text)}</li>${s.history_bias?`<li>${esc(s.history_bias)}</li>`:''}<li>${esc(s.side_text)}</li><li><b>Start:</b> ${esc(s.start)}</li><li><b>Windward mark:</b> ${esc(s.windward_mark)}</li></ul></div></div>`;
   h+=`<div class="grid"><div class="card"><h3>Confidence · ${c.level}</h3><ul>${c.why.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>
-  <div class="card"><h3>Rig · Capa tuning table</h3><table><tr><th>TWS kt</th><th>Rake</th><th>V</th><th>D</th><th>Genoa</th></tr>${d.rig.settings.map(r=>`<tr><td>${r.band}</td><td>${r.rake_cm}</td><td>${r.uppers_V}</td><td>${r.lowers_D}</td><td>${r.genoa}</td></tr>`).join('')}</table><ul class="small">${d.rig.notes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><div class="small muted">${esc(d.rig.source)}</div></div></div>`;
+  <div class="card"><h3>Rig · Capa tuning table</h3><table><tr><th>TWS kt</th><th>Rake</th><th>V</th><th>D</th><th>Genoa</th></tr>${d.rig.settings.map(r=>`<tr><td>${r.band}</td><td>${r.rake_cm}</td><td>${r.uppers_V}</td><td>${r.lowers_D}</td><td>${r.genoa}</td></tr>`).join('')}</table><ul class="small">${d.rig.notes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><div class="small muted">${esc(d.rig.source)}</div><div class="small" style="margin-top:6px"><a href="tuning.html">Tuning &amp; sails</a></div></div></div>`;
   if(a&&a.stats){const st=a.stats,q=o=>o?`${o.median} (q25 ${o.q25}–q75 ${o.q75}, n=${o.n})`:'–';
   h+=`<div class="card"><h3>Historical analogs · ${esc(a.label)}</h3><table><tr><th>Measure</th><th>Value</th></tr>
   <tr><td>AROME Portals 11–16 h mean, kt</td><td>${q(st.arome_spd)}</td></tr><tr><td>SOCIB buoy observed mean, kt</td><td>${q(st.buoy_spd)}</td></tr>
