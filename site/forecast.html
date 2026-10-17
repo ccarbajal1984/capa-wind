@@ -64,10 +64,10 @@ function svgText(parent,x,y,str,attrs){const t=svgEl('text',Object.assign({x,y},
 function raceIdx(h){let a=-1,b=-1;h.forEach((r,i)=>{if(r.time>='11:00'&&r.time<='16:00'){if(a<0)a=i;b=i;}});return [a,b];}
 function segs(h,x,y,key){const out=[];let cur=[];h.forEach((r,i)=>{const v=r[key];if(v==null||!Number.isFinite(+v)){if(cur.length)out.push(cur);cur=[];}else cur.push([x(i),y(+v)]);});if(cur.length)out.push(cur);return out;}
 function drawSpeed(svg,h){
-  const W=svg.clientWidth||360,H=220,L=36,R=10,T=16,B=22;
+  const W=svg.clientWidth||360,H=220,L=36,R=14,T=16,B=22,xPad=18;
   svg.replaceChildren();svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
   const n=h.length;if(n<2)return;
-  const x=i=>L+(i*(W-L-R))/(n-1);
+  const x=i=>L+xPad+(i*(W-L-R-2*xPad))/(n-1);
   const peak=Math.max(10,...h.map(r=>Math.max(r.gst||0,r.spd||0)));
   const mx=Math.ceil(peak/5)*5;
   const y=v=>T+(H-T-B)*(1-v/mx);
@@ -88,24 +88,28 @@ function drawSpeed(svg,h){
 }
 function biasStats(d){const e=d.analogs&&d.analogs.stats&&d.analogs.stats.dir_err_buoy_minus_arome;if(!e||e.n==null||e.median==null)return null;return e;}
 function drawDir(svg,d){
-  const h=d.hourly,W=svg.clientWidth||360,H=280,L=54,R=8,T=20,B=40;
+  const h=d.hourly,W=svg.clientWidth||360,H=280,L=36,R=32,T=20,B=40,xPad=18;
   svg.replaceChildren();svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
   const n=h.length;if(n<2)return;
-  const x=i=>L+(i*(W-L-R))/(n-1);
+  const x=i=>L+xPad+(i*(W-L-R-2*xPad))/(n-1);
   const race=h.filter(r=>r.time>='11:00'&&r.time<='16:00'&&r.dir!=null);
   const mean=circMean(race.map(r=>r.dir));
   if(mean==null){svgText(svg,L,30,'No race-window direction',{fill:'#8FA8C4','font-size':12});return;}
   const rel=dir=>angDiff(dir,mean);
   const err=biasStats(d);
   const showBias=!!(err&&err.q25!=null&&err.q75!=null);
-  let half=45;
-  const rels=[];
+  let span=0;
+  const consider=v=>{if(Number.isFinite(v))span=Math.max(span,Math.abs(v));};
   h.forEach(r=>{
-    if(r.src!=='AROME France'&&r.dir!=null)rels.push(rel(r.dir));
-    if(r.fr_dir!=null)rels.push(rel(r.fr_dir));
-    else if(r.src==='AROME France'&&r.dir!=null)rels.push(rel(r.dir));
+    if(r.dir!=null&&r.src!=='AROME France'){
+      consider(rel(r.dir));
+      if(showBias){consider(rel(r.dir)+err.q25);consider(rel(r.dir)+err.q75);}
+    }
+    if(r.fr_dir!=null)consider(rel(r.fr_dir));
+    else if(r.src==='AROME France'&&r.dir!=null)consider(rel(r.dir));
   });
-  if(rels.some(v=>Math.abs(v)>45))half=90;
+  let half=45;
+  while(half+0.05<span&&half<90)half+=15;
   const plotH=H-T-B,y=v=>T+(half-v)/(2*half)*plotH;
   const clip=svgEl('clipPath',{id:'dirclip'},svgEl('defs',{},svg));
   svgEl('rect',{x:L,y:T,width:W-L-R,height:plotH},clip);
@@ -115,23 +119,16 @@ function drawDir(svg,d){
   if(i0>=0&&i1>i0)svgEl('rect',{id:'racewin-dir',x:x(i0),y:T,width:x(i1)-x(i0),height:plotH,fill:'rgba(255,213,79,.08)'},svg);
   svgText(svg,L+(W-L-R)/2,T+13,'VEER / right shift',{'text-anchor':'middle',fill:'#8ddeaf','font-size':11,'font-weight':700});
   svgText(svg,L+(W-L-R)/2,T+plotH-5,'BACK / left shift',{'text-anchor':'middle',fill:'#F2C14E','font-size':11,'font-weight':700});
-  const labels=[];
   for(let deg=Math.ceil((mean-half)/10)*10;deg<=mean+half+1e-6;deg+=10){
     const a=norm(deg),rv=angDiff(a,mean);if(Math.abs(rv)>half+0.1)continue;
     svgEl('line',{x1:L,x2:W-R,y1:y(rv),y2:y(rv),stroke:'#2A4A70'},svg);
-    labels.push({y:y(rv),text:Math.round(a)+'°',deg:Math.round(a),compass:false});
+    svgText(svg,L-4,y(rv)+3,Math.round(a)+'°',{'text-anchor':'end',fill:'#8FA8C4','font-size':10});
   }
   COMPASS.forEach(([deg,name])=>{
     const rv=angDiff(deg,mean);
     if(Math.abs(rv)>half+0.1)return;
-    let best=null,bd=1e9;
-    labels.forEach(lb=>{if(lb.compassOnly)return;const dy=Math.abs(lb.y-y(rv));if(dy<bd){bd=dy;best=lb;}});
-    if(best&&bd<8){if(!best.compass||bd<(best._bd??99)){best.text=best.deg+'° '+name;best.compass=true;best._bd=bd;}}
-    else labels.push({y:y(rv),text:name,compass:true,compassOnly:true});
+    svgText(svg,W-R+4,y(rv)+3,name,{fill:'#c5d4e6','font-size':10});
   });
-  labels.sort((a,b)=>a.y-b.y);
-  let last=-999;
-  labels.forEach(lb=>{if(lb.y-last<11&&!lb.compass)return;last=lb.y;svgText(svg,L-4,lb.y+3,lb.text,{'text-anchor':'end',fill:lb.compass?'#d5e6f5':'#8FA8C4','font-size':10});});
   svgEl('line',{x1:L,x2:W-R,y1:y(0),y2:y(0),stroke:'#F4FBFF','stroke-width':1.25,'stroke-dasharray':'5 4'},svg);
   svgText(svg,W-R-2,y(0)-4,Math.round(mean)+'° mean',{'text-anchor':'end',fill:'#F4FBFF','font-size':11,'font-weight':700});
   const g=svgEl('g',{'clip-path':'url(#dirclip)'},svg);
@@ -143,7 +140,6 @@ function drawDir(svg,d){
       const up=pts.map(p=>p[0]+','+y(p[1]+err.q75)),dn=pts.slice().reverse().map(p=>p[0]+','+y(p[1]+err.q25));
       svgEl('polygon',{points:up.concat(dn).join(' '),fill:low?'rgba(143,168,196,.16)':'rgba(127,216,255,.16)'},g);
       svgEl('polyline',{points:pts.map(p=>p[0]+','+y(p[1]+err.median)).join(' '),fill:'none',stroke:col,'stroke-width':1.6,'stroke-dasharray':'2 3'},g);
-      svgText(svg,L+4,y(0)+14,(low?'historical buoy bias · low sample':'historical buoy bias'),{fill:col,'font-size':10});
     }
   }
   const fr=[];
