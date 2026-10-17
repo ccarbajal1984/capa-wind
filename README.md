@@ -1,6 +1,6 @@
 # CAPA wind
 
-Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 10 minutes, writes `site/data/live.json`, and keeps a rolling 6-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. The site asks for a shared username and password on every request.
+Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 10 minutes, writes `site/data/live.json`, and keeps a rolling 12-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. The site asks for a shared username and password on every request.
 
 The page is one file, `site/index.html`. It loads `data/live.json` with a relative URL. The Pipeline Twitch player is embedded with `parent=capa-wind.pages.dev` (plus the current hostname when that is different). Webcam snapshots are Conecta Balear Visiona and IB-red.
 

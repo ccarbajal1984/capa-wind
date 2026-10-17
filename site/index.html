@@ -31,10 +31,22 @@ h1{font-size:16px;margin:0}h2{font-size:15px;margin:14px 0 8px}.muted{color:var(
 #map{height:340px;border-radius:14px;border:1px solid var(--line)}
 .leaflet-container{background:#0f2a47}
 .wlab{background:rgba(11,31,58,.88);color:#fff;border:1px solid var(--line);border-radius:8px;padding:2px 6px;font-size:12px;font-weight:600;white-space:nowrap}
-.chartbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px}
+.chartbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
 svg text{fill:var(--muted);font-size:11px}
-.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;margin:6px 4px 0}.legend span{display:inline-flex;align-items:center;gap:5px}
-.legend i{display:inline-block;width:16px;height:3px;border-radius:2px}
+.winbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px}
+.wins{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:2px}
+.wins button{font:600 12px/1 inherit;color:var(--muted);background:transparent;border:0;border-radius:999px;padding:5px 10px;min-height:28px;min-width:36px;cursor:pointer}
+.wins button.on{background:#FFD54F;color:#2a2006}
+.station-chart{height:120px;margin-top:6px;touch-action:pan-y}
+.hero .station-chart{height:220px}
+.combo-chart{height:220px;touch-action:pan-y}
+.station-chart svg,.combo-chart svg{font-family:inherit}
+.legend{display:flex;flex-wrap:wrap;gap:4px;font-size:12px;margin:6px 0 0}
+.legend button{font:600 12px/1 inherit;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:4px 8px;min-height:26px;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.legend button.off{opacity:.38}
+.legend i{display:inline-block;width:16px;height:0;border-top:3px solid;border-radius:2px}
+.legend i.dash{border-top-style:dashed}
+.tip{position:fixed;z-index:80;pointer-events:none;background:#071525;border:1px solid #8fd0ff;color:#EAF2FB;border-radius:8px;padding:5px 7px;font-size:12px;line-height:1.35;max-width:min(280px,calc(100vw - 16px));box-shadow:0 6px 18px rgba(0,0,0,.45)}
 .cams{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .cam{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .cam .media{aspect-ratio:16/9;background:#000;display:block;width:100%}.cam img{width:100%;height:100%;object-fit:cover;display:block}
@@ -50,6 +62,15 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
   <div><h1>Bay of Palma · live wind</h1><div class="muted small">Capa ESP 99 · Puerto Portals · all speeds in knots (kt), directions in ° true (wind FROM)</div></div>
   <div class="upd"><span class="dot" id="dot"></span>Data built <b id="gen">–</b><br><span id="age">loading…</span></div>
 </header>
+<div class="winbar">
+  <span class="muted">History</span>
+  <div class="wins" id="wins" role="group" aria-label="History window">
+    <button type="button" data-h="1" aria-pressed="false">1h</button>
+    <button type="button" data-h="3" class="on" aria-pressed="true">3h</button>
+    <button type="button" data-h="12" aria-pressed="false">12h</button>
+  </div>
+  <span class="muted small" id="winnote"></span>
+</div>
 
 <div id="hero"></div>
 <h2>All stations</h2>
@@ -57,8 +78,8 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
 
 <div class="two">
   <div><h2>Map</h2><div id="map"></div><div class="muted small" style="margin-top:4px">Arrows point where the wind blows TO. ◇ = approximate position.</div></div>
-  <div><h2>Last 3 h · speed (kt)</h2><div class="chartbox"><div id="cSpd"></div><div class="legend" id="lgd"></div></div>
-       <h2>Last 3 h · direction (° from)</h2><div class="chartbox"><div id="cDir"></div></div></div>
+  <div><h2>Mean wind · all stations</h2><div class="chartbox"><div id="cAll" class="combo-chart"></div><div class="legend" id="lgd"></div>
+       <div class="muted small" style="margin-top:6px">Solid line is mean wind (kt). Dashed is gust, drawn on every station and on this chart when one station is selected. The lower strip is direction, ° true, wind FROM. Click a name to hide it.</div></div></div>
 </div>
 
 <h2>Live webcams</h2>
@@ -81,7 +102,9 @@ const compass=d=>C16[Math.round(d/22.5)%16];
 const fmtT=ts=>new Date(ts*1000).toLocaleTimeString('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit'});
 const f1=v=>v==null?'–':(Math.round(v*10)/10).toString();
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let DATA=null,map=null,layer=null;
+let DATA=null,map=null,layer=null,WIN=3,chartSeq=0;
+const hidden=new Set();
+let TIP=null,tipSticky=false;
 
 function arrowSVG(dir,color,size=62){
   if(dir==null) return `<svg class="arrow" viewBox="0 0 62 62"><circle cx="31" cy="31" r="28" fill="none" stroke="#2A4A70" stroke-width="2"/><text x="31" y="35" text-anchor="middle">var</text></svg>`;
@@ -111,6 +134,7 @@ function card(s,hero){
      ${l.gst_day!=null?`<div class="muted small">Max gust today ${f1(l.gst_day)} kt</div>`:''}
      ${l.spd_inst!=null?`<div class="muted small">Instant ${f1(l.spd_inst)} kt ${l.dir_inst!=null?Math.round(l.dir_inst)+'°':''}</div>`:''}</div></div>
      <div class="pills">${na&&s.status==='stale'?'<span class="pill">stale: trend hidden</span>':trendPills(s.trend)}</div>`;
+  body+=`<div class="station-chart" data-chart="station" data-sid="${s.id}"></div>`;
   return `<div class="card ${hero?'hero':''} ${na?'na':''}"><div class="bar" style="background:${s.color}"></div>
    <h3>${esc(s.name)}${hero?'<span class="tag">RACE VENUE</span>':''}</h3>
    <div class="sub">${esc(s.kind)} · updates ${esc(s.cadence)}${s.approx?' · position approx.':''} · <a href="${s.link}" target="_blank" rel="noopener">source</a></div>${body}</div>`;
@@ -121,7 +145,7 @@ function render(){
   const hero=st.find(s=>s.priority);
   document.getElementById('hero').innerHTML=hero?card(hero,true):'';
   document.getElementById('cards').innerHTML=st.filter(s=>!s.priority).map(s=>card(s,false)).join('');
-  drawMap(st); drawCharts(st,D.arome); tick();
+  drawMap(st); drawCharts(); tick();
 }
 function tick(){ if(!DATA) return; const m=Math.round((Date.now()/1000-DATA.generated)/60);
   document.getElementById('age').textContent=`${m<1?'just now':m+' min ago'} · auto-refresh 2 min`;
@@ -139,42 +163,183 @@ function drawMap(st){
   });
   L.circleMarker([39.515,2.565],{radius:5,color:'#fff',weight:1,fillOpacity:0}).addTo(layer).bindPopup('AROME HD forecast point (Portals race area)');
 }
-function lineChart(el,series,{yLabel,yMin,yMax,isDir}){
-  const W=Math.min(el.clientWidth||600,el.parentElement.clientWidth-20)||600,H=200,P={l:isDir?52:32,r:8,t:8,b:22};
-  const now=DATA.generated, t0=now-3*3600, t1=now+3600;
-  const x=t=>P.l+(t-t0)/(t1-t0)*(W-P.l-P.r), y=v=>H-P.b-(v-yMin)/(yMax-yMin)*(H-P.t-P.b);
-  let g='';
-  const step=isDir?(yMax-yMin>180?90:45):(yMax>25?10:5);
-  for(let v=Math.ceil(yMin/step)*step;v<=yMax;v+=step){g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="#2A4A70"/><text x="${P.l-4}" y="${y(v)+4}" text-anchor="end">${isDir?compass(((v%360)+360)%360)+' '+(((v%360)+360)%360):v}</text>`;}
-  for(let t=Math.ceil(t0/3600)*3600;t<=t1;t+=3600){g+=`<line x1="${x(t)}" x2="${x(t)}" y1="${P.t}" y2="${H-P.b}" stroke="#2A4A70" stroke-dasharray="2 3"/><text x="${x(t)}" y="${H-6}" text-anchor="middle">${fmtT(t)}</text>`;}
-  g+=`<line x1="${x(now)}" x2="${x(now)}" y1="${P.t}" y2="${H-P.b}" stroke="#EAF2FB" stroke-opacity=".5"/>`;
-  series.forEach(s=>{const pts=s.pts.filter(p=>p[1]!=null&&p[0]>=t0&&p[0]<=t1);
-    if(!pts.length) return;
-    // break line where gap > 75 min
-    let d='';pts.forEach((p,i)=>{d+=(i&&p[0]-pts[i-1][0]<=4500?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[1]).toFixed(1);});
-    g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.w||2.2}" ${s.dash?`stroke-dasharray="${s.dash}"`:''}/>`;
-    if(pts.length<8) pts.forEach(p=>g+=`<circle cx="${x(p[0])}" cy="${y(p[1])}" r="2.6" fill="${s.color}"/>`);});
-  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${g}</svg>`;
+function lighten(hex,t){
+  const n=parseInt(String(hex).replace('#',''),16);
+  if(!isFinite(n)) return '#EAF2FB';
+  const m=c=>Math.round(c+(255-c)*t);
+  return '#'+[m((n>>16)&255),m((n>>8)&255),m(n&255)].map(v=>v.toString(16).padStart(2,'0')).join('');
 }
-function unwrap(arr){const out=[];let prev=null;arr.forEach(([t,v])=>{if(v==null){out.push([t,null]);return;}
-  if(prev==null){out.push([t,v]);prev=v;return;} let u=v; while(u-prev>180)u-=360; while(u-prev<-180)u+=360; out.push([t,u]);prev=u;});return out;}
-function drawCharts(st,arome){
-  const ok=st.filter(s=>s.status!=='n/a');
-  const sp=ok.map(s=>({color:s.color,w:s.priority?3.4:2,pts:s.series.map(o=>[o.t,o.spd])}));
-  const ar=(arome&&arome.portals)||[];
-  sp.push({color:'#FFFFFF',dash:'5 4',w:1.6,pts:ar.map(o=>[o.t,o.spd])});
-  const allv=sp.flatMap(s=>s.pts.filter(p=>p[0]>=DATA.generated-3*3600&&p[0]<=DATA.generated+3600).map(p=>p[1])).filter(v=>v!=null);
-  lineChart(document.getElementById('cSpd'),sp,{yMin:0,yMax:Math.max(10,Math.ceil((Math.max(...allv,0)+1)/5)*5)});
-  const ref=(st.find(s=>s.priority&&s.last&&s.last.dir!=null)||ok.find(s=>s.last&&s.last.dir!=null));
-  const dr=ok.map(s=>{let u=unwrap(s.series.map(o=>[o.t,o.dir]));return {color:s.color,w:s.priority?3.4:2,pts:u};});
-  dr.push({color:'#FFFFFF',dash:'5 4',w:1.6,pts:unwrap(ar.map(o=>[o.t,o.dir]))});
-  // shift each series by k*360 so it sits near the reference direction
-  const c0=ref?ref.last.dir:180;
-  dr.forEach(s=>{const v=s.pts.filter(p=>p[1]!=null); if(!v.length)return; const m=v[v.length-1][1]; const k=Math.round((c0-m)/360); s.pts=s.pts.map(p=>[p[0],p[1]==null?null:p[1]+k*360]);});
-  const dv=dr.flatMap(s=>s.pts.filter(p=>p[0]>=DATA.generated-3*3600).map(p=>p[1])).filter(v=>v!=null);
-  let lo=Math.min(...dv),hi=Math.max(...dv); if(!isFinite(lo)){lo=0;hi=360;} const pad=Math.max(15,(hi-lo)*.1);
-  lineChart(document.getElementById('cDir'),dr,{yMin:Math.floor((lo-pad)/15)*15,yMax:Math.ceil((hi+pad)/15)*15,isDir:true});
-  document.getElementById('lgd').innerHTML=ok.map(s=>`<span><i style="background:${s.color}"></i>${esc(s.short)}</span>`).join('')+`<span><i style="background:repeating-linear-gradient(90deg,#fff 0 5px,transparent 5px 9px)"></i>AROME HD forecast (Portals)</span>`;
+function yScale(maxVal){
+  const v=Math.max(4, maxVal||0);
+  let step=v<=10?2:v<=20?5:v<=40?10:20;
+  let yMax=Math.ceil(v/step)*step;
+  if(yMax/step>6){step*=2; yMax=Math.ceil(v/step)*step;}
+  return {yMax,step};
+}
+function inWin(o,t0,t1){return o&&o.t>=t0&&o.t<=t1;}
+function renderWindChart(el,opt){
+  if(!el||!DATA) return;
+  const H=el.clientHeight||opt.height||120;
+  const W=Math.max(160, el.clientWidth||320);
+  const showDir=opt.showDir!==false;
+  const dirH=showDir?(H>=180?48:34):0;
+  const P={l:36,r:8,t:H>=180?14:12,b:16};
+  const plotB=H-P.b-dirH;
+  const t0=DATA.generated-WIN*3600, t1=DATA.generated;
+  const x=t=>P.l+(t-t0)/(t1-t0)*(W-P.l-P.r);
+  const series=(opt.series||[]).map(s=>({...s,samples:(s.samples||[]).filter(o=>inWin(o,t0,t1))}));
+  let maxV=0, any=false;
+  series.forEach(s=>s.samples.forEach(o=>{
+    if(o.spd!=null){any=true; if(o.spd>maxV) maxV=o.spd;}
+    if(opt.showGust&&s.gust&&o.gst!=null&&o.gst>maxV) maxV=o.gst;
+  }));
+  const {yMax,step}=yScale(maxV);
+  const y=v=>plotB-(v/yMax)*(plotB-P.t);
+  const GAP=4500;
+  const pathOf=(samples,key)=>{
+    let d='',pen=false,prev=null;
+    samples.forEach(o=>{
+      const v=o[key];
+      if(v==null){pen=false;prev=o;return;}
+      const cont=pen&&prev&&o.t-prev.t<=GAP;
+      d+=(cont?'L':'M')+x(o.t).toFixed(1)+' '+y(v).toFixed(1)+' ';
+      pen=true; prev=o;
+    });
+    return d;
+  };
+  let g=`<rect width="${W}" height="${H}" fill="#0E2744"/>`;
+  for(let v=0;v<=yMax+1e-6;v+=step){
+    const yy=y(v);
+    g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#3E628C" stroke-width="1"/>`;
+    if(v>0) g+=`<text x="${P.l-4}" y="${(yy+3).toFixed(1)}" text-anchor="end" fill="#E7F1FB">${v}</text>`;
+  }
+  g+=`<text x="${P.l-4}" y="10" text-anchor="end" fill="#E7F1FB">kt</text>`;
+  const plotW=W-P.l-P.r;
+  let xs=WIN<=1?15*60:WIN<=3?30*60:2*3600;
+  if(plotW<260) xs*=2;
+  for(let t=Math.ceil(t0/xs)*xs;t<=t1+1;t+=xs){
+    const xx=x(Math.min(t,t1));
+    const anchor=xx<P.l+24?'start':xx>W-P.r-24?'end':'middle';
+    g+=`<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${P.t}" y2="${(showDir?H-P.b:plotB)}" stroke="#3E628C" stroke-dasharray="2 3"/>`;
+    g+=`<text x="${xx.toFixed(1)}" y="${H-4}" text-anchor="${anchor}" fill="#E7F1FB">${fmtT(t)}</text>`;
+  }
+  g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${plotB}" y2="${plotB}" stroke="#9BB6D4"/>`;
+  g+=`<line x1="${P.l}" x2="${P.l}" y1="${P.t}" y2="${plotB}" stroke="#9BB6D4"/>`;
+  if(!any) g+=`<text x="${((P.l+W-P.r)/2).toFixed(1)}" y="${((P.t+plotB)/2).toFixed(1)}" text-anchor="middle" fill="#8FA8C4">No readings in this window</text>`;
+  series.forEach(s=>{
+    if(!(opt.showGust&&s.gust)) return;
+    const segs=[]; let cur=[],prev=null;
+    s.samples.forEach(o=>{
+      const ok=o.spd!=null&&o.gst!=null;
+      if(!ok||(prev&&o.t-prev.t>GAP)){ if(cur.length>1) segs.push(cur); cur=ok?[o]:[]; }
+      else cur.push(o);
+      prev=o;
+    });
+    if(cur.length>1) segs.push(cur);
+    segs.forEach(c=>{
+      const a=c.map(o=>x(o.t).toFixed(1)+' '+y(Math.max(o.spd,o.gst)).toFixed(1)).join(' L');
+      const b=c.slice().reverse().map(o=>x(o.t).toFixed(1)+' '+y(Math.min(o.spd,o.gst)).toFixed(1)).join(' L');
+      g+=`<path d="M${a} L${b} Z" fill="${s.color}" fill-opacity="0.16"/>`;
+    });
+    const gd=pathOf(s.samples,'gst');
+    if(gd) g+=`<path d="${gd}" fill="none" stroke="${lighten(s.color,0.42)}" stroke-width="1.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  });
+  series.forEach(s=>{
+    const d=pathOf(s.samples,'spd');
+    if(!d) return;
+    g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" ${s.dash?'stroke-dasharray="6 4" ':''}stroke-linecap="round" stroke-linejoin="round"/>`;
+    const pts=s.samples.filter(o=>o.spd!=null);
+    if(pts.length&&pts.length<=16) pts.forEach(o=>g+=`<circle cx="${x(o.t).toFixed(1)}" cy="${y(o.spd).toFixed(1)}" r="2.4" fill="${s.color}" stroke="#0B1F3A" stroke-width="0.6"/>`);
+  });
+  if(showDir){
+    const dTop=plotB+3, dBot=H-P.b-1;
+    const yd=deg=>dTop+(deg/360)*(dBot-dTop);
+    g+=`<rect x="${P.l}" y="${dTop}" width="${W-P.l-P.r}" height="${Math.max(1,dBot-dTop)}" fill="#0B1F3A"/>`;
+    const dirTall=(dBot-dTop)>=44;
+    [['N',0],['E',90],['S',180],['W',270]].forEach(([lab,deg])=>{
+      const yy=yd(deg);
+      g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#2A4A70"/>`;
+      if(dirTall||lab==='N'||lab==='S') g+=`<text x="${P.l-4}" y="${(yy+3).toFixed(1)}" text-anchor="end" fill="#8FD0FF" font-size="10">${lab}</text>`;
+    });
+    const cid='d'+(++chartSeq);
+    g+=`<clipPath id="${cid}"><rect x="${P.l}" y="${dTop}" width="${W-P.l-P.r}" height="${Math.max(1,dBot-dTop)}"/></clipPath><g clip-path="url(#${cid})">`;
+    series.forEach(s=>{
+      const pts=s.samples.filter(o=>o.dir!=null);
+      if(!pts.length) return;
+      const marks=pts.length<=40?pts:pts.filter((o,i)=>i===0||i===pts.length-1||i%Math.ceil(pts.length/40)===0);
+      const arrows=marks.length<=18&&series.length<=2;
+      marks.forEach(o=>{
+        const cx=x(o.t), cy=yd(((o.dir%360)+360)%360);
+        if(arrows){
+          const to=(o.dir+180)*Math.PI/180, dx=Math.sin(to), dy=-Math.cos(to);
+          const x2=cx+dx*7, y2=cy+dy*7, px=-dy, py=dx;
+          g+=`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${(cx+dx*3.5).toFixed(1)}" y2="${(cy+dy*3.5).toFixed(1)}" stroke="${s.color}" stroke-width="1.4"/>`;
+          g+=`<path d="M${x2.toFixed(1)} ${y2.toFixed(1)} L${(x2-dx*4+px*2.1).toFixed(1)} ${(y2-dy*4+py*2.1).toFixed(1)} L${(x2-dx*4-px*2.1).toFixed(1)} ${(y2-dy*4-py*2.1).toFixed(1)} Z" fill="${s.color}"/>`;
+        } else g+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="2.1" fill="${s.color}" stroke="#0B1F3A" stroke-width="0.5"/>`;
+      });
+    });
+    g+=`</g>`;
+  }
+  g+=`<line class="xh" x1="0" y1="${P.t}" x2="0" y2="${H-P.b}" stroke="#EAF2FB" stroke-opacity="0" stroke-width="1"/>`;
+  g+=`<rect class="hit" x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:${H}px;display:block" role="img" aria-label="${esc(opt.label||'Wind chart')}">${g}</svg>`;
+  const svg=el.querySelector('svg');
+  const xh=el.querySelector('.xh');
+  const show=ev=>{
+    const rect=svg.getBoundingClientRect();
+    const px=(ev.clientX-rect.left)/rect.width*W;
+    const t=t0+Math.min(1,Math.max(0,(px-P.l)/(W-P.l-P.r)))*(t1-t0);
+    const rows=[];
+    series.forEach(s=>{
+      let best=null,bd=1e18;
+      s.samples.forEach(o=>{ if(o.spd==null) return; const d=Math.abs(o.t-t); if(d<bd){bd=d;best=o;} });
+      const tol=Math.max(20*60,(t1-t0)/8);
+      if(best&&bd<=tol) rows.push({s,best,bd});
+    });
+    if(!rows.length){ if(TIP) TIP.hidden=true; xh.setAttribute('stroke-opacity','0'); return; }
+    rows.sort((a,b)=>a.bd-b.bd);
+    const snap=rows[0].best.t;
+    xh.setAttribute('x1',x(snap)); xh.setAttribute('x2',x(snap)); xh.setAttribute('stroke-opacity','0.55');
+    const line=o=>`${f1(o.spd)} kt · gust ${o.gst==null?'n/a':f1(o.gst)+' kt'} · ${o.dir==null?'–':Math.round(o.dir)+'°'}`;
+    let html=`<b>${fmtT(rows[0].best.t)}</b> Madrid`;
+    if(series.length===1) html+=`<br>${line(rows[0].best)}`;
+    else rows.forEach(r=>{ html+=`<br><span style="color:${r.s.color}">●</span> ${esc(r.s.name)} ${line(r.best)}`; });
+    if(!TIP){ TIP=document.createElement('div'); TIP.className='tip'; document.body.appendChild(TIP); }
+    TIP.innerHTML=html; TIP.hidden=false;
+    const tw=TIP.offsetWidth, th=TIP.offsetHeight;
+    let left=ev.clientX+12, top=ev.clientY-th-12;
+    if(left+tw>window.innerWidth-8) left=Math.max(8, ev.clientX-tw-12);
+    if(top<8) top=Math.min(window.innerHeight-th-8, ev.clientY+14);
+    TIP.style.left=left+'px'; TIP.style.top=top+'px';
+  };
+  svg.addEventListener('pointermove',ev=>{ if(ev.pointerType==='mouse'){ tipSticky=false; show(ev); } });
+  svg.addEventListener('pointerdown',ev=>{ if(ev.pointerType!=='mouse') tipSticky=true; show(ev); });
+  svg.addEventListener('pointerleave',()=>{ if(!tipSticky){ if(TIP) TIP.hidden=true; xh.setAttribute('stroke-opacity','0'); } });
+}
+function drawCharts(){
+  if(!DATA) return;
+  if(TIP) TIP.hidden=true; tipSticky=false;
+  document.querySelectorAll('[data-chart="station"]').forEach(el=>{
+    const s=DATA.stations.find(x=>x.id===el.dataset.sid);
+    if(!s) return;
+    renderWindChart(el,{height:s.priority?220:120,showGust:true,showDir:true,label:s.short+' wind',
+      series:[{id:s.id,name:s.short,color:s.color,samples:s.series||[],gust:true}]});
+  });
+  const shown=DATA.stations.filter(s=>!hidden.has(s.id));
+  const one=shown.length===1;
+  const series=shown.map(s=>({id:s.id,name:s.short,color:s.color,samples:s.series||[],gust:one}));
+  const ar=(DATA.arome&&DATA.arome.portals)||[];
+  if(!hidden.has('AROME')) series.push({id:'AROME',name:'AROME forecast',color:'#FFFFFF',samples:ar,gust:false,dash:true});
+  renderWindChart(document.getElementById('cAll'),{height:220,showGust:one,showDir:true,label:'All stations mean wind',series});
+  const swatch=(color,dash)=>`<i class="${dash?'dash':''}" style="border-top-color:${color}"></i>`;
+  document.getElementById('lgd').innerHTML=DATA.stations.map(s=>`<button type="button" data-id="${s.id}" class="${hidden.has(s.id)?'off':''}" aria-pressed="${!hidden.has(s.id)}">${swatch(s.color,false)}${esc(s.short)}</button>`).join('')
+    +`<button type="button" data-id="AROME" class="${hidden.has('AROME')?'off':''}" aria-pressed="${!hidden.has('AROME')}">${swatch('#fff',true)}AROME</button>`;
+  const t0=DATA.generated-WIN*3600;
+  document.getElementById('winnote').textContent=`${fmtT(t0)}–${fmtT(DATA.generated)} Madrid`;
+  document.querySelectorAll('#wins button').forEach(b=>{
+    const on=Number(b.dataset.h)===WIN;
+    b.classList.toggle('on',on); b.setAttribute('aria-pressed',on?'true':'false');
+  });
 }
 const CAMS=[
  {n:'Pipeline · Can Pastilla beach (live video)',type:'twitch',ch:'pipelinesurfshop',page:'https://www.mallorcapipeline.com/webcam/',alt:'https://www.twitch.tv/pipelinesurfshop'},
@@ -203,5 +368,19 @@ function refreshSnaps(){document.querySelectorAll('img[data-snap]').forEach(i=>{
 async function load(){try{const r=await fetch('data/live.json?t='+Date.now(),{cache:'no-store'});DATA=await r.json();render();}catch(e){document.getElementById('age').textContent='data load failed – retrying';}}
 document.getElementById('rngrow').innerHTML=RANGES.map(r=>`<td><span class="range" style="background:${r[2]}">${r[3]} kt</span></td>`).join('');
 drawCams(); load(); setInterval(load,120000); setInterval(refreshSnaps,60000); setInterval(tick,30000);
-window.addEventListener('resize',()=>DATA&&drawCharts(DATA.stations,DATA.arome));
+let rz;
+window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>DATA&&drawCharts(),120); });
+document.getElementById('wins').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-h]'); if(!b||!DATA) return;
+  WIN=Number(b.dataset.h); drawCharts();
+});
+document.getElementById('lgd').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-id]'); if(!b||!DATA) return;
+  if(hidden.has(b.dataset.id)) hidden.delete(b.dataset.id); else hidden.add(b.dataset.id);
+  drawCharts();
+});
+document.addEventListener('pointerdown',e=>{
+  if(e.target.closest('.station-chart,.combo-chart')) return;
+  tipSticky=false; if(TIP) TIP.hidden=true;
+});
 </script></body></html>

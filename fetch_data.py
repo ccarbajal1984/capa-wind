@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Bay of Palma live wind: fetch real observations from public, keyless sources -> site/data/live.json.
-Run every ~10 min. Keeps a rolling 6 h history (history.json) so single-reading sources
+Run every ~10 min. Keeps a rolling 12 h history (history.json) so single-reading sources
 (Meteoclimatic) also get trends. Never fabricates values: missing/QC-failed -> null."""
 import json, re, os, sys, urllib.request, urllib.parse
 from datetime import datetime, timedelta, timezone
@@ -10,7 +10,7 @@ OUT_DIR = os.path.join(HERE, "site", "data")
 HIST = os.path.join(HERE, "history.json")
 MS2KT, KMH2KT = 1.943844, 1 / 1.852
 UTC = timezone.utc
-KEEP_H = 6
+KEEP_H = 12
 ARCHIVE_DIR = os.environ.get("OBS_ARCHIVE_DIR", "/workspace/dragon-kb/obs-archive")
 
 STATIONS = [
@@ -276,7 +276,7 @@ def main():
     keep_from = now_ts - KEEP_H * 3600
     for sid in [s["id"] for s in STATIONS]:
         hist[sid] = merge(hist.get(sid, []), fresh.get(sid, []), keep_from)
-    json.dump(hist, open(HIST, "w"))
+    json.dump(hist, open(HIST, "w"), separators=(",", ":"))
     try: arome = fetch_arome()
     except Exception as e: arome = None; errors["AROME"] = f"{type(e).__name__}: {e}"[:200]
     if os.path.isdir(ARCHIVE_DIR):
@@ -296,7 +296,7 @@ def main():
         status = "ok" if last and age <= stale_limit[s["id"]] else ("stale" if last else "n/a")
         stations.append({**s, "status": status, "age_min": age, "last": last,
                          "trend": trend(ser, now_ts) if status != "n/a" else None,
-                         "series": [o for o in ser if o["t"] >= now_ts - 3 * 3600 - 600],
+                         "series": [o for o in ser if o["t"] >= now_ts - KEEP_H * 3600 - 600],
                          "error": errors.get(s["id"])})
     out = {"generated": now_ts, "generated_iso": now.isoformat(timespec="seconds"),
            "units": {"speed": "kt", "direction": "degrees true, wind FROM", "time": "unix s (UTC)"},
