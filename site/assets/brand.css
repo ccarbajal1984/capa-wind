@@ -1,13 +1,11 @@
-/* Shared CAPA chrome. Sticky nav, sail mark, Dragon watermark. */
-:root{--amber:#f5c542;--head-h:92px}
+/* Shared CAPA chrome. Sticky nav and the Dragon line-drawing mark. */
+:root{--amber:#f5c542;--head-h:108px}
 header.sitehead{display:block;margin:0;gap:0;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start}
 .sitehead{position:sticky;top:0;z-index:50;background:#0B1F3A;border-bottom:1px solid #2A4A70;overflow:hidden}
-.sitehead .dragon{position:absolute;right:-10px;top:0;width:min(250px,50vw);height:170%;object-fit:cover;object-position:62% 36%;opacity:.12;pointer-events:none;user-select:none}
-.sitehead.home{--head-h:104px}
-.sitehead.home .dragon{width:min(620px,86vw);height:230%;object-position:70% 34%;opacity:.18;right:-18px}
+.sitehead.home{--head-h:120px}
 .sitebar{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:8px 12px 0;display:flex;align-items:center;gap:10px;min-width:0}
-.brand{display:flex;align-items:center;gap:8px;min-width:0;text-decoration:none;color:inherit}
-.brand .mark{width:36px;height:36px;flex:0 0 36px;display:block}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;text-decoration:none;color:inherit}
+.brand .mark{width:auto;height:48px;flex:0 0 auto;display:block}
 .word{display:flex;flex-direction:column;min-width:max-content;line-height:1.05}
 .word .capa{font-weight:800;letter-spacing:.06em;font-size:18px;color:#fff}
 .word .eye{font-size:11px;font-weight:600;color:#b7cbe2;letter-spacing:.01em;white-space:nowrap}
@@ -25,13 +23,9 @@ header.sitehead{display:block;margin:0;gap:0;flex-wrap:nowrap;align-items:stretc
   .sitebar{flex-wrap:wrap;row-gap:2px}
   .brand{flex:0 0 auto}
   .sitehead h1{margin-left:8px;font-size:14px}
-  .headmeta{flex:1 0 100%;margin:0 0 2px 44px;text-align:left}
-  .brand .mark{width:32px;height:32px;flex-basis:32px}
+  .headmeta{flex:1 0 100%;margin:0 0 2px 0;text-align:left}
+  .brand .mark{height:40px}
   .word .capa{font-size:16px}
-  .sitenav{padding:4px 6px 7px}
-  .sitenav a{font-size:13px;padding:7px 9px}
-  .sitehead .dragon,.sitehead.home .dragon{width:min(168px,44vw);opacity:.14;right:-36px}
-}
-@media(min-width:900px){
-  .sitehead.home .dragon{max-width:520px;height:190%}
+  .sitenav{padding:4px 2px 7px;gap:0}
+  .sitenav a{font-size:12px;padding:7px 3px}
 }

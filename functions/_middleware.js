@@ -176,8 +176,8 @@ function loginPage(nextPath, error) {
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0B1F3A;color:#EAF2FB;font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{display:flex;align-items:center;justify-content:center;padding:24px}
 form{width:min(380px,100%);background:#13304F;border:1px solid #2A4A70;border-radius:16px;padding:22px 20px 18px}
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.brand img{width:40px;height:40px}
+.boat{display:block;height:136px;width:auto;margin:2px auto 10px}
+.brand{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:12px;text-align:center}
 .brand b{display:block;font-size:18px;letter-spacing:.06em}
 .brand span{color:#8FA8C4;font-size:12px}
 h1{font-size:18px;margin:0 0 12px}
@@ -187,7 +187,8 @@ button{width:100%;margin-top:16px;font:700 15px/1 inherit;color:#0B1F3A;backgrou
 .err{background:#3a2410;border:1px solid #f5c542;color:#f5c542;border-radius:8px;padding:8px 10px;margin:0 0 8px;font-size:13px}
 </style></head><body>
 <form method="post" action="/login">
-  <div class="brand"><img src="/assets/capa-logo.svg" alt=""><div><b>CAPA</b><span>ESP 99 · Bay of Palma</span></div></div>
+  <img class="boat" src="/assets/capa-logo.svg" alt="" width="100" height="136">
+  <div class="brand"><b>CAPA</b><span>ESP 99 · Bay of Palma</span></div>
   <h1>Log in</h1>
   ${message}
   <input type="hidden" name="next" value="${next}">
