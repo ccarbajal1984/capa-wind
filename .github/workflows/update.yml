@@ -20,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -72,26 +72,44 @@ jobs:
             echo "::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is unset; skipping Cloudflare Pages deploy."
             exit 0
           fi
+          # wrangler pages deploy looks for ./functions in the working directory
+          # (the repo root here), not inside the static directory. functions/_middleware.js
+          # must stay at the repo root or it will not be uploaded.
           npx --yes wrangler pages project create capa-wind --production-branch main || true
-          npx --yes wrangler pages deploy site --project-name=capa-wind --branch=main
+          deploy_pages() {
+            local deploy_out status
+            set +e
+            deploy_out="$(npx --yes wrangler pages deploy site --project-name=capa-wind --branch=main 2>&1)"
+            status=$?
+            set -e
+            printf '%s\n' "$deploy_out"
+            if [ "$status" -ne 0 ]; then
+              exit "$status"
+            fi
+            printf '%s\n' "$deploy_out" | grep -q 'Uploading Functions bundle' || {
+              echo "::error::Pages Functions bundle was not uploaded."
+              exit 1
+            }
+          }
+          deploy_pages
 
           need_secrets=0
           if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
             need_secrets=1
           else
-            listed="$(npx --yes wrangler pages secret list --project-name capa-wind 2>&1 || true)"
+            listed="$(npx --yes wrangler pages secret list --project-name capa-wind --env production 2>&1 || true)"
             printf '%s\n' "$listed"
             printf '%s\n' "$listed" | grep -q 'SITE_USER' || need_secrets=1
             printf '%s\n' "$listed" | grep -q 'SITE_PASS' || need_secrets=1
           fi
           if [ "$need_secrets" -eq 0 ]; then
-            echo "Pages auth secrets already present; skipping secret update."
+            echo "Pages production auth secrets already present; skipping secret update."
             exit 0
           fi
           if [ -z "${SITE_USER}" ] || [ -z "${SITE_PASS}" ]; then
             echo "::notice::GitHub secrets SITE_USER or SITE_PASS are unset. The Pages middleware denies every request until both exist on the project."
             exit 0
           fi
-          echo "$SITE_USER" | npx --yes wrangler pages secret put SITE_USER --project-name capa-wind
-          echo "$SITE_PASS" | npx --yes wrangler pages secret put SITE_PASS --project-name capa-wind
-          npx --yes wrangler pages deploy site --project-name=capa-wind --branch=main
+          echo "$SITE_USER" | npx --yes wrangler pages secret put SITE_USER --project-name capa-wind --env production
+          echo "$SITE_PASS" | npx --yes wrangler pages secret put SITE_PASS --project-name capa-wind --env production
+          deploy_pages

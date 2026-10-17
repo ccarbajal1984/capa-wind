@@ -17,7 +17,7 @@ Add these four repository secrets (**Settings → Secrets and variables → Acti
 | `SITE_USER` | Shared username for the site |
 | `SITE_PASS` | Shared password for the site |
 
-`site/functions/_middleware.js` reads `SITE_USER` and `SITE_PASS` from the Pages environment. If either is missing or empty, every request gets **503** and the files are not served. A wrong password gets **401**.
+`functions/_middleware.js` (repo root, not inside `site/`) reads `SITE_USER` and `SITE_PASS` from the Pages **production** environment. Wrangler only bundles `./functions` from the directory it is run in. If either secret is missing or empty, every request gets **503** and the files are not served. A wrong password gets **401**.
 
 ## What the Action does
 
@@ -35,7 +35,7 @@ Add these four repository secrets (**Settings → Secrets and variables → Acti
 
    Do not connect this Git repository in Cloudflare. Free-plan Git builds are limited; this repo uses Direct Upload.
 
-5. On a manual run, or when a `wrangler pages secret list` shows `SITE_USER` or `SITE_PASS` is not on the project, upload those two from the GitHub secrets and deploy once more so they take effect. A normal 10-minute run does not repeat that when both secrets are already present.
+5. On a manual run, or when `wrangler pages secret list --env production` shows `SITE_USER` or `SITE_PASS` is not on the production environment, upload those two with `--env production` and deploy once more so they take effect. A normal 10-minute run does not repeat that when both production secrets are already present. The deploy log must include `Uploading Functions bundle`.
 
 Create the API token under **My Profile → API Tokens → Create Custom Token**, permission **Account → Cloudflare Pages → Edit**, limited to the account that owns the project.
 
