@@ -1,6 +1,6 @@
-# Samples Bay of Palma wind, commits the rolling history, then Direct Uploads
-# site/ to Cloudflare Pages. Git integration is not used: free-plan Pages
-# builds from Git are limited, and this repo has no GitHub Pages deploy.
+# Samples Bay of Palma wind, commits live.json plus the rolling history.json,
+# then Direct Uploads site/ to Cloudflare Pages. Git integration is not used:
+# free-plan Pages builds from Git are limited, and this repo has no GitHub Pages deploy.
 name: Update wind data
 
 on:
@@ -34,20 +34,21 @@ jobs:
         run: git pull --rebase origin main
 
       - name: Fetch wind data
-        run: python fetch_data.py
+        env:
+          OBS_ARCHIVE_DIR: /nonexistent
+        run: python3 fetch_data.py
 
       - name: Commit rolling history
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- site/data/live.json site/data/history.json
+          git add -- site/data/live.json history.json
           if git diff --cached --quiet; then
             echo "No changes to wind history."
             exit 0
           fi
-          # [skip ci] plus the absence of a push trigger: this commit must not
-          # start another run of this workflow.
+          # [skip ci] plus no push trigger: this commit must not start another run.
           git commit -m "Update wind history [skip ci]"
           for attempt in 1 2 3; do
             if git push origin main; then
@@ -62,10 +63,35 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SITE_USER: ${{ secrets.SITE_USER }}
+          SITE_PASS: ${{ secrets.SITE_PASS }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
           if [ -z "${CLOUDFLARE_API_TOKEN}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID}" ]; then
             echo "::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is unset; skipping Cloudflare Pages deploy."
             exit 0
           fi
+          npx --yes wrangler pages project create capa-wind --production-branch main || true
+          npx --yes wrangler pages deploy site --project-name=capa-wind --branch=main
+
+          need_secrets=0
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            need_secrets=1
+          else
+            listed="$(npx --yes wrangler pages secret list --project-name capa-wind 2>&1 || true)"
+            printf '%s\n' "$listed"
+            printf '%s\n' "$listed" | grep -q 'SITE_USER' || need_secrets=1
+            printf '%s\n' "$listed" | grep -q 'SITE_PASS' || need_secrets=1
+          fi
+          if [ "$need_secrets" -eq 0 ]; then
+            echo "Pages auth secrets already present; skipping secret update."
+            exit 0
+          fi
+          if [ -z "${SITE_USER}" ] || [ -z "${SITE_PASS}" ]; then
+            echo "::notice::GitHub secrets SITE_USER or SITE_PASS are unset. The Pages middleware denies every request until both exist on the project."
+            exit 0
+          fi
+          echo "$SITE_USER" | npx --yes wrangler pages secret put SITE_USER --project-name capa-wind
+          echo "$SITE_PASS" | npx --yes wrangler pages secret put SITE_PASS --project-name capa-wind
           npx --yes wrangler pages deploy site --project-name=capa-wind --branch=main

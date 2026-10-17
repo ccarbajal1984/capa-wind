@@ -1,62 +1,51 @@
 # CAPA wind
 
-Live wind for **CAPA** (Dragon, ESP 99) in the **Bahía de Palma**. A GitHub Action samples the bay every 10 minutes, keeps a rolling history in this repo, and publishes `site/` to Cloudflare Pages with Direct Upload. The site asks for a shared username and password on every request.
+Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 10 minutes, writes `site/data/live.json`, and keeps a rolling 6-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. The site asks for a shared username and password on every request.
 
-`https://capa-wind.pages.dev` is the Pages hostname the Twitch player is allowed to embed on (`parent=capa-wind.pages.dev`).
+The page is one file, `site/index.html`. It loads `data/live.json` with a relative URL. The Pipeline Twitch player is embedded with `parent=capa-wind.pages.dev` (plus the current hostname when that is different). Webcam snapshots are Conecta Balear Visiona and IB-red.
 
-Wind numbers come from the [Open-Meteo](https://open-meteo.com/) grid at 39.55°N, 2.63°E. They are bay conditions, not an onboard anemometer. Change the point at the top of `fetch_data.py` if you want a different mark. The page reads `data/live.json` and `config.json` with relative URLs.
+Stations: Weathercloud Puerto Portals, Windalytics (RCN Palma, CN Cala Gamba, Can Pastilla CMSAP, CN Arenal), SOCIB Bay of Palma buoy, Palma port tide gauge, Dragonera buoy, METAR LEPA and LESB, Meteoclimatic Ciutat Jardí, and the AROME HD forecast from Open-Meteo.
 
-## What runs
+## GitHub Actions secrets
 
-| Path | Role |
+Add these four repository secrets (**Settings → Secrets and variables → Actions**):
+
+| Secret | Value |
 | --- | --- |
-| `fetch_data.py` | Fetches the current wind and appends it to a 7-day history |
-| `site/data/history.json` | Rolling samples committed by the Action |
-| `site/data/live.json` | Current reading and the last 24 hours, loaded by the page |
-| `site/config.json` | Twitch channel. Parents always include `capa-wind.pages.dev` |
-| `site/functions/_middleware.js` | Basic auth using Pages secrets `SITE_USER` and `SITE_PASS` |
-| `.github/workflows/update.yml` | Every 10 minutes and on manual run |
+| `CLOUDFLARE_API_TOKEN` | API token with **Account → Cloudflare Pages → Edit** |
+| `CLOUDFLARE_ACCOUNT_ID` | Account ID from the Workers & Pages overview |
+| `SITE_USER` | Shared username for the site |
+| `SITE_PASS` | Shared password for the site |
 
-The Action has no `push` trigger. Its data commit message includes `[skip ci]`, so a later push trigger would not start another run from the bot commit. There is no GitHub Pages deploy.
+`site/functions/_middleware.js` reads `SITE_USER` and `SITE_PASS` from the Pages environment. If either is missing or empty, every request gets **503** and the files are not served. A wrong password gets **401**.
+
+## What the Action does
+
+`.github/workflows/update.yml` runs every 10 minutes and on **Run workflow**. There is no `push` trigger. Data commits use `[skip ci]`.
+
+1. Pull and rebase `main`, then run `python3 fetch_data.py`.
+2. Commit `site/data/live.json` and `history.json` when they changed.
+3. If `CLOUDFLARE_API_TOKEN` or `CLOUDFLARE_ACCOUNT_ID` is absent, log a notice and skip the deploy. The job still succeeds.
+4. Otherwise create the Pages project if needed, then upload `site/`:
+
+   ```bash
+   npx wrangler pages project create capa-wind --production-branch main || true
+   npx wrangler pages deploy site --project-name=capa-wind --branch=main
+   ```
+
+   Do not connect this Git repository in Cloudflare. Free-plan Git builds are limited; this repo uses Direct Upload.
+
+5. On a manual run, or when a `wrangler pages secret list` shows `SITE_USER` or `SITE_PASS` is not on the project, upload those two from the GitHub secrets and deploy once more so they take effect. A normal 10-minute run does not repeat that when both secrets are already present.
+
+Create the API token under **My Profile → API Tokens → Create Custom Token**, permission **Account → Cloudflare Pages → Edit**, limited to the account that owns the project.
+
+Open `https://capa-wind.pages.dev` and sign in with `SITE_USER` and `SITE_PASS`.
+
+The Pages site is password-protected. This repository still stores `live.json` and `history.json`. Make the GitHub repository private if that history should not be public.
 
 Preview locally (auth is enforced only on Cloudflare):
 
 ```bash
-python3 fetch_data.py
+OBS_ARCHIVE_DIR=/nonexistent python3 fetch_data.py
 python3 -m http.server -d site
 ```
-
-## One-time Cloudflare and GitHub setup
-
-Do this once. Nothing in the repo can create the Cloudflare project; there are no Cloudflare credentials here yet.
-
-1. In the Cloudflare dashboard, **Workers & Pages → Create → Pages → Direct Upload**. Name the project exactly `capa-wind`.
-   Do not connect this Git repository. Cloudflare’s free plan limits Git-integration builds. This repo publishes with Wrangler Direct Upload:
-
-   `npx wrangler pages deploy site --project-name=capa-wind --branch=main`
-
-2. Open the `capa-wind` project → **Settings → Environment variables**. On **Production**, add two **encrypted** secrets:
-   - `SITE_USER` — the shared username
-   - `SITE_PASS` — the shared password
-
-   The middleware reads only those names. If either one is missing or empty, every request gets **503** and the files are not served.
-
-3. Create an API token: **My Profile → API Tokens → Create Token → Create Custom Token**.
-   - Permission: **Account → Cloudflare Pages → Edit**
-   - Account resources: the account that owns `capa-wind`
-
-   Copy the token when Cloudflare shows it.
-
-4. Copy the **Account ID** (Workers & Pages overview, right-hand column).
-
-5. On GitHub, open this repo → **Settings → Secrets and variables → Actions → New repository secret** and add both:
-   - `CLOUDFLARE_API_TOKEN` — the token from step 3
-   - `CLOUDFLARE_ACCOUNT_ID` — the account ID from step 4
-
-6. Run **Actions → Update wind data → Run workflow**, or wait for the 10-minute schedule. The job pulls, rebases, runs `fetch_data.py`, and commits `site/data/` when it changed. It then deploys `site/`. While either secret is absent, that deploy step logs a notice and exits successfully. It does not fail the job.
-
-7. Open `https://capa-wind.pages.dev` and sign in with `SITE_USER` and `SITE_PASS`. The same login covers the page, `data/live.json`, and the rest of the files. The Twitch iframe is loaded from Twitch itself.
-
-The Pages site is password-protected. This repository still stores the wind history. Make the GitHub repository private if that history should not be public.
-
-To point the embed at a different channel, change `twitchChannel` in `site/config.json`. Keep `capa-wind.pages.dev` in `parents`.
