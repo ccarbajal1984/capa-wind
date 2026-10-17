@@ -1,6 +1,6 @@
-// HTTP Basic Auth for every Pages request.
+// HTTP Basic Auth for every Pages request, off unless AUTH_ENABLED is "true".
 // Credentials come only from the Pages environment (SITE_USER, SITE_PASS).
-// If either is missing, respond 503 so the site is never served open.
+// If either is missing while auth is on, respond 503 so the site is never served open.
 
 async function digest(value) {
   const bytes = new TextEncoder().encode(value);
@@ -61,6 +61,9 @@ function text(status, body, extraHeaders) {
 
 export async function onRequest(context) {
   const env = context.env || {};
+  if (env.AUTH_ENABLED !== "true") {
+    return context.next();
+  }
   const user = env.SITE_USER;
   const pass = env.SITE_PASS;
   if (typeof user !== "string" || typeof pass !== "string" || user.length === 0 || pass.length === 0) {
