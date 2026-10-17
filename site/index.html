@@ -51,6 +51,7 @@ svg text{fill:var(--muted);font-size:11px}
 .card .station-chart{min-height:270px}
 .hero .station-chart{min-height:450px}
 #cAll{min-height:240px}#cDirAll{min-height:260px}
+#fcChart{min-height:380px}#fcSkill:empty{display:none}
 .station-chart svg,.combo-chart svg{font-family:inherit;display:block;width:100%;max-width:100%}
 .station-chart svg text,.combo-chart svg text{fill:#E7F1FB;font-size:12px}
 .windpair{display:flex;flex-direction:column;gap:4px;margin-top:6px;min-width:0}
@@ -111,6 +112,12 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
 </div>
 
 <div id="hero"></div>
+<h2 id="hFc">Next 48 h · AROME</h2>
+<div class="chartbox">
+  <div id="fcSkill" class="muted small"></div>
+  <div id="fcChart" class="combo-chart"></div>
+  <div id="fcNote" class="muted small" style="margin-top:6px"></div>
+</div>
 <h2>All stations</h2>
 <div class="grid" id="cards"></div>
 
@@ -136,7 +143,7 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
 <div class="muted small" style="margin-top:6px">Ranges match Capa's tuning card. Trend = latest reading vs ~60 min earlier. On the direction charts, veer = clockwise = right shift (green, above the window mean) and back = anticlockwise = left shift (amber, below it). Readings older than the station's normal cadence are greyed as stale; missing stations show n/a. Nothing on this page is estimated or filled in.</div>
 
 <footer>
-Sources: Weathercloud (Puerto Portals station 0773927031, public page) · SOCIB Bay of Palma buoy (OPeNDAP, QC flags 1–2 only, publishes with up to ~1 h delay) · Puertos del Estado PORTUS (Palma port tide gauge 3851, Dragonera buoy 2820) · Windalytics club stations (RCN Palma, CN Cala Gamba, Can Pastilla CMSAP, CN Arenal; public feed, speeds in knots) · METAR LEPA / LESB via aviationweather.gov · Meteoclimatic ESIBA0700000107007A · AROME HD forecast via Open-Meteo (arome_france_hd). Webcams © their owners (Conecta Balear Visiona, IB-red / IB3, Pipeline Surf Shop on Twitch). Data refresh every 5 min; page re-reads every 2 min.
+Sources: Weathercloud (Puerto Portals station 0773927031, public page) · SOCIB Bay of Palma buoy (OPeNDAP, QC flags 1–2 only, publishes with up to ~1 h delay) · Puertos del Estado PORTUS (Palma port tide gauge 3851, Dragonera buoy 2820) · Windalytics club stations (RCN Palma, CN Cala Gamba, Can Pastilla CMSAP, CN Arenal; public feed, speeds in knots) · METAR LEPA / LESB via aviationweather.gov · Meteoclimatic ESIBA0700000107007A · AROME via Open-Meteo (AROME HD, then AROME France only for hours HD does not return). Webcams © their owners (Conecta Balear Visiona, IB-red / IB3, Pipeline Surf Shop on Twitch). Data refresh every 5 min; page re-reads every 2 min.
 </footer>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -146,6 +153,17 @@ const rng=v=>RANGES.find(r=>v>=r[0]&&v<r[1])||RANGES[4];
 const C16=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
 const compass=d=>C16[Math.round(d/22.5)%16];
 const fmtT=ts=>new Date(ts*1000).toLocaleTimeString('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit'});
+function madridParts(ts){
+  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',hourCycle:'h23',weekday:'short',day:'2-digit',month:'short'}).formatToParts(new Date(ts*1000));
+  const g=k=>{const p=parts.find(x=>x.type===k); return p?p.value:'';};
+  return {h:Number(g('hour')), min:Number(g('minute')), wd:g('weekday'), day:g('day'), mon:g('month')};
+}
+function modelLabel(id){
+  const s=String(id||'');
+  if(s.includes('hd')) return 'AROME HD';
+  if(s.includes('france')) return 'AROME France';
+  return s;
+}
 const f1=v=>v==null?'–':(Math.round(v*10)/10).toString();
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let DATA=null,map=null,layer=null,WIN=3,chartSeq=0;
@@ -318,6 +336,21 @@ function dirWindow(center){
   const hi=lo+180;
   return {lo,hi};
 }
+function dirWindowFit(center, vals){
+  if(center==null||!isFinite(center)) return {lo:0,hi:180};
+  let lo=center-90, hi=center+90;
+  (vals||[]).forEach(v=>{
+    if(!isFinite(v)) return;
+    if(v<lo) lo=v;
+    if(v>hi) hi=v;
+  });
+  lo=Math.floor((lo-8)/30)*30;
+  hi=Math.ceil((hi+8)/30)*30;
+  if(!(hi>lo)) return dirWindow(center);
+  if(hi-lo<180){ lo=Math.round((center-90)/30)*30; hi=lo+180; }
+  if(hi-lo>360){ lo=Math.round((center-180)/30)*30; hi=lo+360; }
+  return {lo,hi};
+}
 function placeSeries(points, center){
   const un=unwrapTo(points, center);
   if(un.length>1){
@@ -380,7 +413,7 @@ function renderPanels(el,opt){
   if(!el||!DATA) return;
   const speedH=opt.speedH||0, dirH=opt.dirH||0;
   const gap=speedH&&dirH?10:0;
-  const top=18, timeH=22;
+  const top=18, timeH=opt.forecast?30:22;
   const H=top+speedH+gap+dirH+timeH;
   const W=Math.max(200, el.clientWidth||320);
   const Pl=74, Pr=10;
@@ -388,11 +421,37 @@ function renderPanels(el,opt){
   const speedTop=top, speedBot=top+speedH;
   const dirTop=speedBot+gap, dirBot=dirTop+dirH;
   const axisBot=dirH?dirBot:speedBot;
-  const t0=DATA.generated-WIN*3600, t1=DATA.generated;
+  const t0=opt.t0!=null?opt.t0:DATA.generated-WIN*3600, t1=opt.t1!=null?opt.t1:DATA.generated;
+  const now=DATA.generated;
+  if(!(t1>t0)) return;
   const X=t=>Pl+(t-t0)/(t1-t0)*plotW;
   const n1=v=>(Math.round(v*10)/10).toFixed(1);
   let xs=WIN<=1?15*60:WIN<=3?30*60:2*3600;
+  if(opt.forecast) xs=plotW<420?12*3600:6*3600;
   if(plotW<280) xs*=2;
+  const nightRects=(y,h)=>{
+    if(!opt.forecast) return '';
+    let d='';
+    for(let t=Math.floor(t0/3600)*3600; t<t1; t+=3600){
+      const x1=X(Math.max(t,t0)), x2=X(Math.min(t+3600,t1));
+      if(x2-x1<=0) continue;
+      const hour=madridParts(Math.min(t1-1, Math.max(t0, t+1800))).h;
+      if(!(hour>=20||hour<7)) continue;
+      d+=`<rect x="${n1(x1)}" y="${n1(y)}" width="${n1(x2-x1)}" height="${n1(h)}" fill="#061018"/>`;
+    }
+    return d;
+  };
+  const dayLines=(y1,y2)=>{
+    if(!opt.forecast) return '';
+    let d='';
+    for(let t=Math.ceil(t0/3600)*3600; t<=t1; t+=3600){
+      const p=madridParts(t);
+      if(p.h!==0||p.min!==0) continue;
+      const xx=X(t);
+      d+=`<line x1="${n1(xx)}" x2="${n1(xx)}" y1="${n1(y1)}" y2="${n1(y2)}" stroke="#8FA8C4" stroke-width="1.25"/>`;
+    }
+    return d;
+  };
   const vlines=(y1,y2)=>{
     let h='';
     for(let t=Math.ceil(t0/xs)*xs;t<=t1+1;t+=xs){
@@ -422,6 +481,7 @@ function renderPanels(el,opt){
       g+=`<text x="${Pl-6}" y="${n1(ty)}" text-anchor="end" fill="#E7F1FB" font-size="12">${v===yMax?v+' kt':v}</text>`;
     }
     if(!any) g+=`<text x="${n1(Pl+plotW/2)}" y="${n1((speedTop+speedBot)/2)}" text-anchor="middle" fill="#8FA8C4" font-size="12">No readings in this window</text>`;
+    g+=nightRects(speedTop, speedH);
     g+=vlines(speedTop, speedBot);
     g+=`<clipPath id="${cid}s"><rect x="${Pl}" y="${speedTop}" width="${plotW}" height="${speedH}"/></clipPath><g clip-path="url(#${cid}s)">`;
     const segsOf=(samples,okFn)=>{
@@ -436,7 +496,7 @@ function renderPanels(el,opt){
       return segs;
     };
     series.forEach(s=>{
-      if(s.dash||!opt.fill) return;
+      if(s.dash||s.gustLine||!opt.fill) return;
       segsOf(s.samples,o=>o.spd!=null&&isFinite(+o.spd)).forEach(c=>{
         if(c.length<2) return;
         const topP=c.map(o=>n1(X(o.t))+' '+n1(Y(+o.spd))).join(' L');
@@ -453,7 +513,15 @@ function renderPanels(el,opt){
         g+=`<path d="M${up} L${dn} Z" fill="${lighten(s.color,0.45)}" fill-opacity="0.28"/>`;
       });
       const gpts=s.samples.filter(o=>o.gst!=null&&isFinite(+o.gst));
-      if(gpts.length&&gpts.length<=80) gpts.forEach(o=>{
+      if(s.gustLine&&gpts.length){
+        let gd='', pen=false, prev=null;
+        gpts.forEach(o=>{
+          const cont=pen&&prev&&o.t-prev.t<=DIR_GAP;
+          gd+=(cont?'L':'M')+n1(X(o.t))+' '+n1(Y(+o.gst))+' ';
+          pen=true; prev=o;
+        });
+        if(gd) g+=`<path d="${gd}" fill="none" stroke="${lighten(s.color,0.25)}" stroke-width="1.6" stroke-dasharray="5 4" stroke-linecap="round"/>`;
+      } else if(gpts.length&&gpts.length<=80) gpts.forEach(o=>{
         g+=`<circle cx="${n1(X(o.t))}" cy="${n1(Y(+o.gst))}" r="2.2" fill="${lighten(s.color,0.5)}" stroke="#0B1F3A" stroke-width="0.6"/>`;
       });
     });
@@ -485,6 +553,10 @@ function renderPanels(el,opt){
     g+=`</g>`;
     g+=`<line x1="${Pl}" x2="${W-Pr}" y1="${n1(speedBot)}" y2="${n1(speedBot)}" stroke="#9BB6D4"/>`;
     g+=`<line x1="${Pl}" x2="${Pl}" y1="${n1(speedTop)}" y2="${n1(speedBot)}" stroke="#9BB6D4"/>`;
+    if(opt.forecast) (opt.marks||[]).forEach(m=>{
+      if(m.t<t0||m.t>t1) return;
+      g+=`<text x="${n1(X(m.t)+4)}" y="${n1(speedTop+14)}" fill="#8FD0FF" font-size="12" font-weight="700" stroke="#0B1F3A" stroke-width="3" paint-order="stroke">${esc(m.text)}</text>`;
+    });
   }
   let dirSeries=[];
   if(dirH){
@@ -497,28 +569,34 @@ function renderPanels(el,opt){
     const latest=[];
     prepared.forEach(p=>{
       const src=p.meanPts.length?p.meanPts:p.faintPts;
-      if(src.length) latest.push(+src[src.length-1].dir);
+      if(!src.length) return;
+      if(opt.dirAll) src.forEach(o=>latest.push(+o.dir));
+      else latest.push(+src[src.length-1].dir);
     });
     const target=circMean(latest.length?latest:[].concat(...prepared.map(p=>p.meanPts.map(o=>+o.dir))));
     const center=target==null?0:target;
-    const win=dirWindow(center);
-    dirSeries=prepared.map(p=>({
+    const placed=prepared.map(p=>({
       ...p,
       faintU:target==null?[]:placeSeries(p.faintPts, center),
       meanU:target==null?[]:placeSeries(p.meanPts, center),
     }));
+    const fitVals=[];
+    if(opt.dirFit) placed.forEach(p=>p.meanU.forEach(o=>{ if(isFinite(o.u)) fitVals.push(o.u); }));
+    const win=opt.dirFit?dirWindowFit(center, fitVals):dirWindow(center);
+    dirSeries=placed;
     const Yd=u=>dirTop+(win.hi-u)/(win.hi-win.lo)*(dirBot-dirTop);
     const clipDir=pts=>{
       for(let i=0;i<pts.length;i++){
         const p=pts[i];
         const outside=p.u<win.lo||p.u>win.hi;
-        const jump=i>0&&Math.abs(p.u-pts[i-1].u)>45;
+        const jump=i>0&&Math.abs(p.u-pts[i-1].u)>(opt.dirJump||45);
         const prevOut=i>0&&(pts[i-1].u<win.lo||pts[i-1].u>win.hi);
         if(i===0||outside||jump||prevOut) p.brk=true;
       }
     };
     dirSeries.forEach(p=>{ clipDir(p.faintU); clipDir(p.meanU); });
     g+=`<rect x="${Pl}" y="${n1(dirTop)}" width="${plotW}" height="${dirH}" fill="#0B1F3A"/>`;
+    g+=nightRects(dirTop, dirH);
     for(let v=win.lo; v<=win.hi+1e-6; v+=10){
       const yy=Yd(v);
       const major=((Math.round(v)%30)+30)%30===0;
@@ -576,7 +654,7 @@ function renderPanels(el,opt){
         });
       }
       const meanW=opt.emphasize?(heroLine?4:1.7):2.75;
-      strokeU(p.meanU, p.s.color, meanW, !!p.s.dash, heroLine||!opt.emphasize?1:0.95);
+      strokeU(p.meanU, p.s.color, meanW, !!(p.s.dirDash||p.s.dash), heroLine||!opt.emphasize?1:0.95);
       if(p.meanU.length&&p.meanU.length<=16) p.meanU.forEach(o=>{
         if(o.u<win.lo||o.u>win.hi) return;
         g+=`<circle cx="${n1(X(o.t))}" cy="${n1(Yd(o.u))}" r="${heroLine?3.4:2.4}" fill="${p.s.color}" stroke="#0B1F3A" stroke-width="0.7"/>`;
@@ -587,10 +665,29 @@ function renderPanels(el,opt){
     g+=`<line x1="${Pl}" x2="${Pl}" y1="${n1(dirTop)}" y2="${n1(dirBot)}" stroke="#9BB6D4"/>`;
   }
   const gridTop=speedH?speedTop:dirTop;
-  for(let t=Math.ceil(t0/xs)*xs;t<=t1+1;t+=xs){
-    const xx=X(Math.min(t,t1));
-    const anchor=xx<Pl+28?'start':xx>W-Pr-28?'end':'middle';
-    g+=`<text x="${n1(xx)}" y="${H-5}" text-anchor="${anchor}" fill="#E7F1FB" font-size="12">${fmtT(t)}</text>`;
+  if(opt.forecast) g+=dayLines(gridTop, axisBot);
+  if(opt.forecast && now>=t0 && now<=t1){
+    const xx=X(now);
+    g+=`<line x1="${n1(xx)}" x2="${n1(xx)}" y1="${n1(gridTop)}" y2="${n1(axisBot)}" stroke="#FFD54F" stroke-width="1.75"/>`;
+    g+=`<text x="${n1(Math.min(W-Pr-28, xx+4))}" y="${n1(gridTop+13)}" fill="#FFD54F" font-size="12" font-weight="700" stroke="#0B1F3A" stroke-width="3" paint-order="stroke">now</text>`;
+  }
+  if(opt.forecast){
+    const stepH=plotW<420?12:6;
+    for(let t=Math.floor(t0/3600)*3600; t<=t1; t+=3600){
+      const p=madridParts(t);
+      if(p.min!==0||p.h%stepH!==0) continue;
+      const xx=X(t);
+      if(xx<Pl-4||xx>W-Pr+4) continue;
+      const anchor=xx<Pl+40?'start':xx>W-Pr-40?'end':'middle';
+      const lab=p.h===0?`${p.wd} ${p.day}`:`${String(p.h).padStart(2,'0')}:00`;
+      g+=`<text x="${n1(xx)}" y="${H-6}" text-anchor="${anchor}" fill="#E7F1FB" font-size="12">${lab}</text>`;
+    }
+  } else {
+    for(let t=Math.ceil(t0/xs)*xs;t<=t1+1;t+=xs){
+      const xx=X(Math.min(t,t1));
+      const anchor=xx<Pl+28?'start':xx>W-Pr-28?'end':'middle';
+      g+=`<text x="${n1(xx)}" y="${H-5}" text-anchor="${anchor}" fill="#E7F1FB" font-size="12">${fmtT(t)}</text>`;
+    }
   }
   g+=`<line class="xh" x1="0" y1="${n1(gridTop)}" x2="0" y2="${n1(axisBot)}" stroke="#EAF2FB" stroke-opacity="0" stroke-width="1"/>`;
   g+=`<rect class="hit" x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
@@ -616,7 +713,7 @@ function renderPanels(el,opt){
     rows.sort((a,b)=>a.bd-b.bd);
     const snap=rows[0].best.t;
     xh.setAttribute('x1',X(snap)); xh.setAttribute('x2',X(snap)); xh.setAttribute('stroke-opacity','0.7');
-    const line=o=>`${o.spd==null?'–':f1(o.spd)} kt · gust ${o.gst==null?'n/a':f1(o.gst)+' kt'} · ${o.dir==null?'–':Math.round(normDeg(o.dir))+'°'}`;
+    const line=o=>`${o.spd==null?'–':f1(o.spd)} kt · gust ${o.gst==null?'n/a':f1(o.gst)+' kt'} · ${o.dir==null?'–':Math.round(normDeg(o.dir))+'°'}${o.model?' · '+modelLabel(o.model):''}`;
     let html=`<b>${fmtT(rows[0].best.t)}</b> Madrid`;
     if(series.length===1) html+=`<br>${line(rows[0].best)}`;
     else rows.forEach(r=>{ html+=`<br><span style="color:${r.s.color}">●</span> ${esc(r.s.name)} ${line(r.best)}`; });
@@ -641,6 +738,84 @@ function safeRender(el,opt){
   if(!el) return;
   try{ renderPanels(el,opt); }
   catch(err){ console.error('chart', opt&&opt.label, err); el.innerHTML='<div class="muted small" style="padding:8px">Chart failed to draw</div>'; }
+}
+function forecastSkillText(){
+  const st=DATA.stations.find(s=>s.priority);
+  const ar=(DATA.arome&&DATA.arome.portals)||[];
+  if(!st) return '';
+  const now=DATA.generated, t0=now-3*3600;
+  const obs=(st.series||[]).filter(o=>o&&o.t>=t0&&o.t<=now&&o.spd!=null&&isFinite(+o.spd));
+  const fc=ar.filter(o=>o&&o.t>=t0&&o.t<=now&&o.spd!=null&&isFinite(+o.spd));
+  const pairs=[];
+  fc.forEach(f=>{
+    const near=obs.filter(o=>Math.abs(o.t-f.t)<=45*60);
+    if(!near.length) return;
+    const spd=near.reduce((s,o)=>s+ +o.spd,0)/near.length;
+    const ds=near.filter(o=>o.dir!=null&&isFinite(+o.dir));
+    let ddir=null;
+    if(ds.length&&f.dir!=null&&isFinite(+f.dir)){
+      const md=circMean(ds.map(o=>+o.dir));
+      if(md!=null) ddir=signedDelta(md, +f.dir);
+    }
+    pairs.push({dspd:+f.spd-spd, ddir});
+  });
+  if(pairs.length<2) return '';
+  const bias=pairs.reduce((s,p)=>s+p.dspd,0)/pairs.length;
+  const mag=Math.abs(bias);
+  const side=bias>0.15?'above':bias<-0.15?'below':'within 0.2 kt of';
+  const speedBit=Math.abs(bias)<=0.15?'speed within 0.2 kt of the observed mean':`speed ${f1(mag)} kt ${side} the observed mean`;
+  const dds=pairs.filter(p=>p.ddir!=null);
+  let dirBit='';
+  if(dds.length>=2){
+    const mean=dds.reduce((s,p)=>s+p.ddir,0)/dds.length;
+    const a=Math.round(mean);
+    dirBit=a===0?', direction steady':`, direction ${Math.abs(a)}° ${a>0?'veered':'backed'}`;
+  }
+  return `Last 3 h at Portals: AROME ${speedBit}${dirBit} (${pairs.length} hourly pairs).`;
+}
+function forecastNote(cov){
+  if(!cov||!cov.hours) return 'No AROME hours in this data file for the next 48 h.';
+  const when=ts=>{const p=madridParts(ts); return `${p.wd} ${p.day} ${String(p.h).padStart(2,'0')}:${String(p.min).padStart(2,'0')}`;};
+  const segs=(cov.segments||[]).map(s=>`${s.label} ${s.hours} h (${when(s.from)}–${when(s.to)} Madrid)`).join('; ');
+  const france=cov.france_hours||0;
+  const tail=france?` AROME France supplies ${france} h that HD did not return.`:' AROME France added no hours; HD already covered every returned hour.';
+  const short=cov.span_h<47.5?` The model run ends at ${when(cov.to)} Madrid (${cov.span_h} h ahead), short of 48 h, so the chart stops there.`:'';
+  return `${segs}.${tail}${short} Gold is the last 6 h observed at Portals. Blue is forecast speed; gust is the dashed line and pale band. Forecast direction is dashed, labelled in degrees and compass. Dark bands are night (20:00–07:00 Madrid). The gold line is now.`;
+}
+function drawForecast(){
+  const el=document.getElementById('fcChart');
+  const skill=document.getElementById('fcSkill');
+  const note=document.getElementById('fcNote');
+  if(!el||!DATA) return;
+  if(skill) skill.textContent=forecastSkillText();
+  const pack=DATA.arome&&DATA.arome.forecast;
+  const hours=(pack&&pack.hours)||[];
+  const cov=pack&&pack.coverage;
+  if(note) note.textContent=forecastNote(cov);
+  const st=DATA.stations.find(s=>s.priority);
+  if(!hours.length||!st){
+    el.innerHTML='<div class="muted small" style="padding:8px">Forecast chart waiting for the next data file.</div>';
+    return;
+  }
+  const now=DATA.generated;
+  const t0=now-6*3600;
+  const t1=Math.min(now+48*3600, hours[hours.length-1].t);
+  const obs=resample10(st.series||[]).filter(o=>o.t>=t0&&o.t<=now+90);
+  const fc=hours.filter(o=>o.t<=t1);
+  const marks=[];
+  (cov&&cov.segments||[]).forEach(seg=>{
+    const t=Math.max(seg.from, now);
+    if(t<=t1) marks.push({t, text:String(seg.label).includes('France')?'France':'HD'});
+  });
+  safeRender(el,{
+    speedH:160, dirH:160, forecast:true, t0, t1, dirAll:true, dirFit:true, dirJump:100,
+    fill:true, gustBand:true, markers:false, shade:false, marks,
+    label:'Puerto Portals observed wind and AROME forecast',
+    series:[
+      {id:'obs', name:'Observed', color:'#FFD54F', samples:obs, gust:false},
+      {id:'fc', name:'AROME', color:'#8FD0FF', samples:fc, gust:true, gustLine:true, dirDash:true},
+    ],
+  });
 }
 function drawCharts(){
   if(!DATA) return;
@@ -677,6 +852,7 @@ function drawCharts(){
   });
   const hs=document.getElementById('hSpeed'); if(hs) hs.textContent=`Last ${WIN} h · speed (kt)`;
   const hd=document.getElementById('hDir'); if(hd) hd.textContent=`Last ${WIN} h · direction (° from)`;
+  drawForecast();
   const html=legendHTML();
   const lgd=document.getElementById('lgd'); if(lgd) lgd.innerHTML=html;
   const lgd2=document.getElementById('lgdDir'); if(lgd2) lgd2.innerHTML=html;

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Bay of Palma live wind: fetch real observations from public, keyless sources -> site/data/live.json.
 Run every ~5 min. Keeps a rolling 12 h history (history.json) so single-reading sources
-(Meteoclimatic) also get trends. Never fabricates values: missing/QC-failed -> null."""
+(Meteoclimatic) also get trends. Never fabricates values: missing/QC-failed -> null.
+The Portals AROME block is HD where Open-Meteo returns it, otherwise AROME France, and stops at the last returned hour."""
 import json, re, os, sys, urllib.request, urllib.parse
 from datetime import datetime, timedelta, timezone
 
@@ -212,19 +213,92 @@ def fetch_meteoclimatic():
     return [{"t": int(t.timestamp()), "spd": None if w < 0 else rnd(w * KMH2KT), "gst": None,
              "gst_day": None if g < 0 else rnd(g * KMH2KT), "dir": None if dr < 0 else dr}]
 
-AROME = ("https://api.open-meteo.com/v1/meteofrance?latitude={lat}&longitude={lon}"
-         "&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m&models=arome_france_hd"
-         "&wind_speed_unit=kn&timezone=UTC&past_days=1&forecast_days=2")
+AROME_URL = ("https://api.open-meteo.com/v1/meteofrance?latitude={lat}&longitude={lon}"
+             "&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m&models={model}"
+             "&wind_speed_unit=kn&timezone=UTC&past_hours={past}&forecast_hours={ahead}")
+AROME_HD = "meteofrance_arome_france_hd"
+AROME_FR = "meteofrance_arome_france"
+AROME_LABEL = {AROME_HD: "AROME HD", AROME_FR: "AROME France"}
 AROME_PTS = {"portals": (39.515, 2.565), "buoy": (39.4929, 2.7004)}
 
-def fetch_arome():
-    res = {}
-    for k, (la, lo) in AROME_PTS.items():
-        d = json.loads(_get(AROME.format(lat=la, lon=lo)))
-        h = d["hourly"]
-        res[k] = [{"t": int(datetime.fromisoformat(t + ":00+00:00").timestamp()), "spd": s, "gst": g, "dir": wd}
-                  for t, s, g, wd in zip(h["time"], h["wind_speed_10m"], h["wind_gusts_10m"], h["wind_direction_10m"])]
-    return res
+def _arome_rows(lat, lon, model, past=24, ahead=48):
+    d = json.loads(_get(AROME_URL.format(lat=lat, lon=lon, model=model, past=past, ahead=ahead)))
+    h = d["hourly"]
+    out = []
+    for t, s, g, wd in zip(h["time"], h["wind_speed_10m"], h["wind_gusts_10m"], h["wind_direction_10m"]):
+        if s is None and g is None and wd is None:
+            continue
+        out.append({"t": int(datetime.fromisoformat(t + ":00+00:00").timestamp()),
+                    "spd": s, "gst": g, "dir": wd, "model": model})
+    return out
+
+def _prefer_hd(hd, fr):
+    """HD wins wherever it has speed or direction. France fills hours HD does not return."""
+    by = {}
+    for row in fr:
+        if row.get("spd") is None and row.get("dir") is None:
+            continue
+        by[row["t"]] = row
+    for row in hd:
+        if row.get("spd") is None and row.get("dir") is None:
+            continue
+        by[row["t"]] = row
+    return [by[t] for t in sorted(by)]
+
+def _model_segments(hours):
+    segs = []
+    for p in hours:
+        if not segs or segs[-1]["model"] != p["model"]:
+            segs.append({"model": p["model"], "label": AROME_LABEL.get(p["model"], p["model"]),
+                         "from": p["t"], "to": p["t"], "hours": 1})
+        else:
+            segs[-1]["to"] = p["t"]
+            segs[-1]["hours"] += 1
+    return segs
+
+def fetch_arome(now_ts):
+    """Portals wind from now through now+48 h. AROME HD first, AROME France only for hours HD lacks.
+    Hours the API does not return are left out. portals/buoy keep the past day so history charts can overlay them."""
+    la, lo = AROME_PTS["portals"]
+    partial = []
+    try:
+        hd = _arome_rows(la, lo, AROME_HD)
+    except Exception as e:
+        hd = []
+        partial.append(f"HD {type(e).__name__}: {e}"[:160])
+    try:
+        fr = _arome_rows(la, lo, AROME_FR)
+    except Exception as e:
+        fr = []
+        partial.append(f"France {type(e).__name__}: {e}"[:160])
+    portals = _prefer_hd(hd, fr)
+    if not portals:
+        raise RuntimeError("; ".join(partial) or "no AROME rows")
+    bla, blo = AROME_PTS["buoy"]
+    try:
+        buoy = _arome_rows(bla, blo, AROME_HD)
+    except Exception as e:
+        buoy = []
+        partial.append(f"buoy {type(e).__name__}: {e}"[:160])
+    hi = now_ts + 48 * 3600
+    hour = now_ts - (now_ts % 3600)
+    hd_times = {p["t"] for p in hd if p.get("spd") is not None or p.get("dir") is not None}
+    forecast = [p for p in portals if hour <= p["t"] <= hi]
+    france_fill = [p for p in fr if hour <= p["t"] <= hi and p["t"] not in hd_times
+                   and (p.get("spd") is not None or p.get("dir") is not None)]
+    coverage = {
+        "place": "Puerto Portals", "lat": la, "lon": lo, "requested_h": 48,
+        "from": forecast[0]["t"] if forecast else None,
+        "to": forecast[-1]["t"] if forecast else None,
+        "hours": len(forecast),
+        "span_h": round((forecast[-1]["t"] - now_ts) / 3600, 1) if forecast else 0,
+        "segments": _model_segments(forecast),
+        "hd_hours": sum(1 for p in forecast if p["model"] == AROME_HD),
+        "france_hours": sum(1 for p in forecast if p["model"] == AROME_FR),
+        "france_fill_hours": len(france_fill),
+    }
+    return {"portals": portals, "buoy": buoy,
+            "forecast": {"hours": forecast, "coverage": coverage, "partial_errors": partial}}
 
 # ---------- helpers ----------
 import math
@@ -277,8 +351,15 @@ def main():
     for sid in [s["id"] for s in STATIONS]:
         hist[sid] = merge(hist.get(sid, []), fresh.get(sid, []), keep_from)
     json.dump(hist, open(HIST, "w"), separators=(",", ":"))
-    try: arome = fetch_arome()
+    try: arome = fetch_arome(now_ts)
     except Exception as e: arome = None; errors["AROME"] = f"{type(e).__name__}: {e}"[:200]
+    if arome and arome.get("forecast"):
+        cov = arome["forecast"]["coverage"]
+        print(f'AROME forecast hours={cov["hours"]} span_h={cov["span_h"]} '
+              f'hd={cov["hd_hours"]} france={cov["france_hours"]} '
+              f'segments={[(s["label"], s["hours"]) for s in cov["segments"]]}')
+        if arome["forecast"].get("partial_errors"):
+            errors["AROME"] = "; ".join(arome["forecast"]["partial_errors"])[:200]
     if os.path.isdir(ARCHIVE_DIR):
       try:
         sys.path.insert(0, ARCHIVE_DIR); import archive
