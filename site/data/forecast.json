@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-17T16:10:30+00:00",
- "fetched_utc": "2026-10-17T16:10:30+00:00",
+ "generated_utc": "2026-10-17T17:00:57+00:00",
+ "fetched_utc": "2026-10-17T17:00:57+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -37,15 +37,15 @@
     "spd_max": 13.4,
     "spd_trend": 6.6,
     "transition": true,
-    "pmsl_change_8_18": -2.4,
+    "pmsl_change_8_18": -2.1,
     "arome_gust_factor": 1.31,
     "front_risk": false,
-    "land_tmax_12_15": 25.1,
+    "land_tmax_12_15": 25.2,
     "sst": 25.1,
-    "dT_land_sea": 0.0,
+    "dT_land_sea": 0.1,
     "offshore_component_09_11_kt": 3.8,
-    "sb_index": null,
-    "sea_breeze_potential": "none (land not warmer than sea)",
+    "sb_index": 37.58,
+    "sea_breeze_potential": "poor",
     "air_minus_sea": -1.9,
     "stability": "near-neutral",
     "cloud_mean_race": 100.0
@@ -60,7 +60,7 @@
    ],
    "interpretation": [
     "Gregal/Llevant: wind with fetch from the east bay, usually steadier; watch for chop building through the day.",
-    "Land-sea contrast: inland max 25.1 °C vs sea 25.1 °C (ΔT +0.0 °C); morning offshore component 3.8 kt → sea-breeze potential none (land not warmer than sea).",
+    "Land-sea contrast: inland max 25.2 °C vs sea 25.1 °C (ΔT +0.1 °C); morning offshore component 3.8 kt → sea-breeze potential poor.",
     "Over the water: air -1.9 °C vs sea → near-neutral.",
     "History (NE-E (Gregal / Llevant), AROME 6-10 kt, 58 days, Oct-Mar since 2022-11): buoy averaged 12.79 kt (q25-q75 10.03-13.55, n=10) when AROME said 7.49 kt (median of all 58 days). LEPA airport averaged 7.9 kt (n=58). Direction 11→15 h at the buoy: veer 83% / back 17% / steady 0% (n=6)."
    ],
@@ -77,7 +77,7 @@
     "level": "low",
     "score": 1,
     "why": [
-     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 0.4 kt, |Δdir| 4°",
+     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 0.4 kt, |Δdir| 3°",
      "transition in the race window",
      "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 2.9 kt, bias -2.1 kt, dir MAE 33.0° (n=66)"
     ]
@@ -325,7 +325,7 @@
      "compass": "E",
      "temp": 24.1,
      "cloud": 100,
-     "pmsl": 1017.5,
+     "pmsl": 1017.8,
      "src": "AROME HD",
      "fr_dir": 91
     },
@@ -337,7 +337,7 @@
      "compass": "E",
      "temp": 24.3,
      "cloud": 100,
-     "pmsl": 1016.8,
+     "pmsl": 1017.0,
      "src": "AROME HD",
      "fr_dir": 82
     },
@@ -349,7 +349,7 @@
      "compass": "ENE",
      "temp": 24.4,
      "cloud": 100,
-     "pmsl": 1016.5,
+     "pmsl": 1016.6,
      "src": "AROME HD",
      "fr_dir": 77
     },
@@ -361,7 +361,7 @@
      "compass": "ENE",
      "temp": 24.2,
      "cloud": 100,
-     "pmsl": 1016.2,
+     "pmsl": 1016.4,
      "src": "AROME HD",
      "fr_dir": 70
     },
@@ -372,8 +372,8 @@
      "dir": 67,
      "compass": "ENE",
      "temp": 23.8,
-     "cloud": 99,
-     "pmsl": 1016.1,
+     "cloud": 100,
+     "pmsl": 1016.4,
      "src": "AROME HD",
      "fr_dir": 68
     },
@@ -385,7 +385,7 @@
      "compass": "ENE",
      "temp": 23.2,
      "cloud": 100,
-     "pmsl": 1016.2,
+     "pmsl": 1016.5,
      "src": "AROME HD",
      "fr_dir": 65
     },
@@ -397,7 +397,7 @@
      "compass": "ENE",
      "temp": 22.6,
      "cloud": 100,
-     "pmsl": 1016.4,
+     "pmsl": 1016.7,
      "src": "AROME HD",
      "fr_dir": 62
     }
@@ -416,7 +416,7 @@
     "morning_dir": 61.0,
     "morning_spd": 13.8
    },
-   "headline": "NE-E (Gregal / Llevant): 22 kt avg from ENE (66°) 11-16 h, oscillating. Favoured: right. Confidence low.",
+   "headline": "NE-E (Gregal / Llevant): 22 kt avg from ENE (66°) 11-16 h, oscillating. Favoured: right. Confidence medium.",
    "flags": {
     "dir_11": 60,
     "dir_16": 66,
@@ -426,12 +426,12 @@
     "spd_max": 27.4,
     "spd_trend": 9.0,
     "transition": false,
-    "pmsl_change_8_18": -1.6,
+    "pmsl_change_8_18": 0.1,
     "arome_gust_factor": 1.32,
     "front_risk": false,
-    "land_tmax_12_15": 21.6,
+    "land_tmax_12_15": 21.9,
     "sst": 24.9,
-    "dT_land_sea": -3.3,
+    "dT_land_sea": -3.0,
     "offshore_component_09_11_kt": 12.6,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
@@ -449,7 +449,7 @@
    ],
    "interpretation": [
     "Gregal/Llevant: wind with fetch from the east bay, usually steadier; watch for chop building through the day.",
-    "Land-sea contrast: inland max 21.6 °C vs sea 24.9 °C (ΔT -3.3 °C); morning offshore component 12.6 kt → sea-breeze potential none (land not warmer than sea).",
+    "Land-sea contrast: inland max 21.9 °C vs sea 24.9 °C (ΔT -3.0 °C); morning offshore component 12.6 kt → sea-breeze potential none (land not warmer than sea).",
     "Over the water: air -2.6 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "History (NE-E (Gregal / Llevant) (all speeds; fewer than 8 buoy days in the 20+ kt band), 114 days, Oct-Mar since 2022-11): buoy averaged 12.63 kt (q25-q75 7.22-13.84, n=17) when AROME said 7.7 kt (median of all 114 days). LEPA airport averaged 8.56 kt (n=114). Direction 11→15 h at the buoy: veer 73% / back 18% / steady 9% (n=11)."
    ],
@@ -463,10 +463,10 @@
     "windward_mark": "Expected drift to the right (history lean, oscillating): approach on the tack that keeps you inside the shift, and tack short of the layline (it moves)."
    },
    "confidence": {
-    "level": "low",
-    "score": 1,
+    "level": "medium",
+    "score": 2,
     "why": [
-     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 3.4 kt, |Δdir| 3°",
+     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 2.0 kt, |Δdir| 3°",
      "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 2.9 kt, bias -2.1 kt, dir MAE 33.0° (n=66)"
     ]
    },
@@ -634,7 +634,7 @@
      "compass": "ENE",
      "temp": 21.3,
      "cloud": 100,
-     "pmsl": 1014.8,
+     "pmsl": 1014.6,
      "src": "AROME HD",
      "fr_dir": 57
     },
@@ -646,7 +646,7 @@
      "compass": "NE",
      "temp": 20.9,
      "cloud": 100,
-     "pmsl": 1015.1,
+     "pmsl": 1015.0,
      "src": "AROME HD",
      "fr_dir": 45
     },
@@ -670,7 +670,7 @@
      "compass": "ENE",
      "temp": 21.8,
      "cloud": 100,
-     "pmsl": 1015.1,
+     "pmsl": 1015.6,
      "src": "AROME HD",
      "fr_dir": 57
     },
@@ -682,7 +682,7 @@
      "compass": "ENE",
      "temp": 22.0,
      "cloud": 100,
-     "pmsl": 1015.4,
+     "pmsl": 1015.5,
      "src": "AROME HD",
      "fr_dir": 59
     },
@@ -706,7 +706,7 @@
      "compass": "ENE",
      "temp": 22.6,
      "cloud": 100,
-     "pmsl": 1014.6,
+     "pmsl": 1014.9,
      "src": "AROME HD",
      "fr_dir": 69
     },
@@ -718,7 +718,7 @@
      "compass": "ENE",
      "temp": 22.6,
      "cloud": 100,
-     "pmsl": 1013.7,
+     "pmsl": 1014.3,
      "src": "AROME HD",
      "fr_dir": 62
     },
@@ -730,7 +730,7 @@
      "compass": "ENE",
      "temp": 22.5,
      "cloud": 100,
-     "pmsl": 1013.5,
+     "pmsl": 1014.1,
      "src": "AROME HD",
      "fr_dir": 63
     },
@@ -742,7 +742,7 @@
      "compass": "ENE",
      "temp": 22.1,
      "cloud": 100,
-     "pmsl": 1013.3,
+     "pmsl": 1014.6,
      "src": "AROME HD",
      "fr_dir": 56
     },
@@ -754,7 +754,7 @@
      "compass": "NE",
      "temp": 21.9,
      "cloud": 100,
-     "pmsl": 1013.2,
+     "pmsl": 1014.7,
      "src": "AROME HD",
      "fr_dir": 54
     },
@@ -766,7 +766,7 @@
      "compass": "NE",
      "temp": 21.6,
      "cloud": 100,
-     "pmsl": 1013.2,
+     "pmsl": 1015.5,
      "src": "AROME HD",
      "fr_dir": 39
     },
@@ -778,7 +778,7 @@
      "compass": "NE",
      "temp": 21.6,
      "cloud": 100,
-     "pmsl": 1014.0,
+     "pmsl": 1016.0,
      "src": "AROME HD",
      "fr_dir": 43
     }
@@ -811,5 +811,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "48|1792422000|1792422000|6.9|68"
+ "arome_sig": "47|1792422000|1792422000|6.9|68"
 }
