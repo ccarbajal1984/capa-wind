@@ -22,10 +22,10 @@ h1{font-size:16px;margin:0}h2{font-size:15px;margin:14px 0 8px}.muted{color:var(
 .spd{font-size:36px;font-weight:700;line-height:1}.spd small{font-size:13px;color:var(--muted);font-weight:500;margin-left:2px}
 .meta{font-size:12px}.meta div{margin:1px 0}
 .arrow{width:46px;height:46px;flex:0 0 46px}
-.pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;padding-left:2px}
-.pill{font-size:12px;font-weight:600;padding:2px 7px;border-radius:999px;background:var(--panel2);color:var(--text)}
+.pills{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:6px;padding-left:2px}
+.pill{flex:0 0 auto;align-self:center;white-space:nowrap;font-size:12px;line-height:1.35;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--panel2);color:var(--text)}
 .pill.up{background:var(--green);color:#06210f}.pill.down{background:var(--red);color:#2a0606}.pill.flat{background:var(--amber);color:#2a2006}
-.pill.veer,.pill.back{background:#2d5a8a}.pill.big{background:var(--amber);color:#2a2006;font-size:12px}
+.pill.veer,.pill.back{background:#2d5a8a}.pill.big{background:var(--amber);color:#2a2006;font-size:12px;line-height:1.35;padding:3px 8px}
 .range{font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;color:#06121f}
 .na{opacity:.55}.na .spd{font-size:26px}
 .hero{border:2px solid #FFD54F}.hero .spd{font-size:56px}.hero .spd small{font-size:14px}
@@ -47,8 +47,11 @@ svg text{fill:var(--muted);font-size:11px}
 .wins button.on{background:#FFD54F;color:#2a2006}
 #smooth{font:600 12px/1 inherit;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 10px;min-height:28px;cursor:pointer}
 #smooth.on{background:#8fd0ff;color:#062033}
-.station-chart,.combo-chart{height:auto;margin-top:0;touch-action:pan-y;min-width:0}
-.station-chart svg,.combo-chart svg{font-family:inherit;display:block;width:100%;height:auto}
+.station-chart,.combo-chart{margin-top:0;touch-action:pan-y;min-width:0;background:#0E2744;border-radius:8px}
+.card .station-chart{min-height:270px}
+.hero .station-chart{min-height:450px}
+#cAll{min-height:240px}#cDirAll{min-height:260px}
+.station-chart svg,.combo-chart svg{font-family:inherit;display:block;width:100%;max-width:100%}
 .station-chart svg text,.combo-chart svg text{fill:#E7F1FB;font-size:12px}
 .windpair{display:flex;flex-direction:column;gap:4px;margin-top:6px;min-width:0}
 .shift{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
@@ -116,16 +119,16 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}
 
 <div class="two">
   <div><h2>Map</h2><div id="map"></div><div class="muted small" style="margin-top:4px">Bay of Palma. Arrows point where the wind blows TO. The number is knots; the name is on the marker. Zoom out for Dragonera. ◇ = approximate position.</div></div>
-  <div><h2>Mean wind · all stations</h2><div class="chartbox"><div id="cAll" class="combo-chart"></div><div class="legend" id="lgd"></div>
+  <div><h2 id="hSpeed">Last 3 h · speed (kt)</h2><div class="chartbox"><div id="cAll" class="combo-chart"></div><div class="legend" id="lgd"></div>
        <div class="muted small" style="margin-top:6px">Each line is a 10-minute mean (kt), drawn from 0. Gust, when one station is selected, is a light band and dots (that bin’s maximum). Station cards keep the raw trace. Click a name to hide it. The same selection applies to the direction chart.</div></div></div>
 </div>
 
-<h2>Direction - all stations</h2>
+<h2 id="hDir">Last 3 h · direction (° from)</h2>
 <div class="chartbox">
   <div id="cDirAll" class="combo-chart"></div>
   <div class="legend" id="lgdDir"></div>
   <div class="dirkey"><span class="veer">veer = clockwise = right shift</span><span class="back">back = anticlockwise = left shift</span></div>
-  <div class="muted small" style="margin-top:4px">10-minute circular means, ° true, wind FROM. The scale is unwrapped, so a shift through north (350° to 010°) is one rising line. The dashed line is the window mean. Green and amber shading appears when a single station is selected.</div>
+  <div class="muted small" style="margin-top:4px">Axis is the current mean ±90°, ° true, wind FROM, so a station is never drawn a full turn away. Puerto Portals is the thick line; the others are thinner, with the raw trace faint behind the 10-minute mean. A jump through north stays one line. veer = clockwise = right shift.</div>
 </div>
 
 <h2>Live webcams</h2>
@@ -161,8 +164,9 @@ function arrowSVG(dir,color,size=62){
 function trendPills(tr){
   if(!tr) return '<span class="pill">trend: need ~1 h of data</span>';
   let h='';const d=tr.dspd;
-  h+= d>0.4?`<span class="pill up">Building +${f1(d)} kt</span>`:d<-0.4?`<span class="pill down">Easing ${f1(d)} kt</span>`:`<span class="pill flat">Steady ${d>0?'+':''}${f1(d)} kt</span>`;
-  if(tr.ddir!=null){const a=tr.ddir;h+= a===0?`<span class="pill">Dir steady</span>`:`<span class="pill ${Math.abs(a)>=20?'big':(a>0?'veer':'back')}">${a>0?'Veering':'Backing'} ${Math.abs(a)}°</span>`;}
+  const win=tr.mins||60;
+  h+= d>0.4?`<span class="pill up">Building +${f1(d)} kt / ${win} min</span>`:d<-0.4?`<span class="pill down">Easing ${f1(d)} kt / ${win} min</span>`:`<span class="pill flat">Steady ${d>0?'+':''}${f1(d)} kt / ${win} min</span>`;
+  if(tr.ddir!=null){const a=tr.ddir;h+= a===0?`<span class="pill">Dir steady / ${win} min</span>`:`<span class="pill ${Math.abs(a)>=20?'big':(a>0?'veer':'back')}">${a>0?'Veering':'Backing'} ${Math.abs(a)}° / ${win} min</span>`;}
   h+=`<span class="pill">vs ${tr.mins} min ago: ${f1(tr.spd0)} kt${tr.dir0!=null?' '+Math.round(tr.dir0)+'°':''}</span>`;
   return h;
 }
@@ -306,25 +310,25 @@ function unwrapTo(points, target){
   });
   return out;
 }
-function dirWindow(center, vals){
-  let lo=center-45, hi=center+45;
-  (vals||[]).forEach(v=>{
-    if(!isFinite(v)) return;
-    if(v-5<lo) lo=v-5;
-    if(v+5>hi) hi=v+5;
-  });
-  lo=Math.floor(lo/10)*10;
-  hi=Math.ceil(hi/10)*10;
-  if(!(hi>lo)) {lo=Math.floor(center/10)*10-40; hi=lo+90;}
-  if(hi-lo<90){
-    const need=90-(hi-lo);
-    lo-=Math.floor(need/2);
-    hi+=need-Math.floor(need/2);
-    lo=Math.floor(lo/10)*10;
-    hi=Math.ceil(hi/10)*10;
-    if(hi-lo<90) hi=lo+90;
-  }
+function dirLab(v){
+  let n=Math.round(normDeg(v));
+  if(n===360) n=0;
+  return String(n).padStart(3,'0')+'° '+compass(n);
+}
+function dirWindow(center){
+  if(center==null||!isFinite(center)) return {lo:0,hi:180};
+  let lo=Math.round((center-90)/30)*30;
+  const hi=lo+180;
   return {lo,hi};
+}
+function placeSeries(points, center){
+  const un=unwrapTo(points, center);
+  if(un.length>1){
+    const mid=un[Math.floor(un.length/2)].u;
+    const k=Math.round((center-mid)/360);
+    if(k) un.forEach(p=>{p.u+=k*360;});
+  }
+  return un;
 }
 function scaleVals(unwrapped){
   if(unwrapped.length<=4) return unwrapped.map(p=>p.u);
@@ -487,41 +491,44 @@ function renderPanels(el,opt){
   }
   let dirSeries=[];
   if(dirH){
+    const inDir=o=>o&&o.dir!=null&&isFinite(+o.dir);
     const prepared=series.map(s=>{
-      const src=opt.rawDir?s.raw:s.samples;
-      const meanSrc=opt.rawDir?dirMean10(s.raw):src.filter(o=>o.dir!=null);
-      return {s, rawPts:src.filter(o=>o.dir!=null&&isFinite(+o.dir)), meanPts:meanSrc.filter(o=>o.dir!=null&&isFinite(+o.dir))};
+      const faintSrc=(opt.faintRaw?(s.faint||[]):(opt.rawDir?s.raw:[])).filter(o=>inWin(o,t0,t1)&&inDir(o));
+      const meanSrc=(opt.rawDir?dirMean10(s.raw):s.samples).filter(inDir);
+      return {s, faintPts:faintSrc, meanPts:meanSrc};
     });
-    const pool=[];
+    const latest=[];
     prepared.forEach(p=>{
-      const use=opt.rawDir?p.rawPts:p.meanPts;
-      use.forEach(o=>pool.push(+o.dir));
+      const src=p.meanPts.length?p.meanPts:p.faintPts;
+      if(src.length) latest.push(+src[src.length-1].dir);
     });
-    const target=circMean(pool);
-    const vals=[];
-    dirSeries=prepared.map(p=>{
-      const rawU=opt.rawDir&&target!=null?unwrapTo(p.rawPts, target):[];
-      const meanU=target!=null?unwrapTo(p.meanPts, target):[];
-      scaleVals(rawU).forEach(v=>vals.push(v));
-      meanU.forEach(o=>vals.push(o.u));
-      return {...p, rawU, meanU};
-    });
+    const target=circMean(latest.length?latest:[].concat(...prepared.map(p=>p.meanPts.map(o=>+o.dir))));
     const center=target==null?0:target;
-    const win=target==null?{lo:0,hi:90}:dirWindow(center, vals);
+    const win=dirWindow(center);
+    dirSeries=prepared.map(p=>({
+      ...p,
+      faintU:target==null?[]:placeSeries(p.faintPts, center),
+      meanU:target==null?[]:placeSeries(p.meanPts, center),
+    }));
     const Yd=u=>dirTop+(win.hi-u)/(win.hi-win.lo)*(dirBot-dirTop);
+    const clipDir=pts=>{
+      for(let i=0;i<pts.length;i++){
+        const p=pts[i];
+        const outside=p.u<win.lo||p.u>win.hi;
+        const jump=i>0&&Math.abs(p.u-pts[i-1].u)>45;
+        const prevOut=i>0&&(pts[i-1].u<win.lo||pts[i-1].u>win.hi);
+        if(i===0||outside||jump||prevOut) p.brk=true;
+      }
+    };
+    dirSeries.forEach(p=>{ clipDir(p.faintU); clipDir(p.meanU); });
     g+=`<rect x="${Pl}" y="${n1(dirTop)}" width="${plotW}" height="${dirH}" fill="#0B1F3A"/>`;
-    const px30=30/(win.hi-win.lo)*dirH;
-    const labelStep=px30>=18?30:60;
     for(let v=win.lo; v<=win.hi+1e-6; v+=10){
       const yy=Yd(v);
-      const major=Math.round(v)%labelStep===0;
+      const major=((Math.round(v)%30)+30)%30===0;
       g+=`<line x1="${Pl}" x2="${W-Pr}" y1="${n1(yy)}" y2="${n1(yy)}" stroke="${major?'#3E628C':'#2A4A70'}" stroke-width="1"/>`;
-      if(major){
-        const lab=String(Math.round(normDeg(v))).padStart(3,'0')+' '+compass(normDeg(v));
-        g+=`<text x="${Pl-6}" y="${n1(yy+4)}" text-anchor="end" fill="#E7F1FB" font-size="12">${lab}</text>`;
-      }
+      if(major) g+=`<text x="${Pl-6}" y="${n1(yy+4)}" text-anchor="end" fill="#E7F1FB" font-size="12">${dirLab(v)}</text>`;
     }
-    const anyDir=dirSeries.some(p=>p.rawU.length||p.meanU.length);
+    const anyDir=dirSeries.some(p=>p.faintU.length||p.meanU.length);
     if(!anyDir) g+=`<text x="${n1(Pl+plotW/2)}" y="${n1((dirTop+dirBot)/2)}" text-anchor="middle" fill="#8FA8C4" font-size="12">No direction in this window</text>`;
     g+=vlines(dirTop, dirBot);
     g+=`<clipPath id="${cid}d"><rect x="${Pl}" y="${dirTop}" width="${plotW}" height="${dirH}"/></clipPath><g clip-path="url(#${cid}d)">`;
@@ -553,25 +560,29 @@ function renderPanels(el,opt){
         }
       });
     }
-    const strokeU=(pts,color,width,dash)=>{
+    const strokeU=(pts,color,width,dash,opacity)=>{
       let d='', pen=false;
       pts.forEach(p=>{
         if(p.brk) pen=false;
         d+=(pen?'L':'M')+n1(X(p.t))+' '+n1(Yd(p.u))+' ';
         pen=true;
       });
-      if(d) g+=`<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}" ${dash?'stroke-dasharray="6 4" ':''}stroke-linecap="round" stroke-linejoin="round"/>`;
+      if(d) g+=`<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}" stroke-opacity="${opacity==null?1:opacity}" ${dash?'stroke-dasharray="6 4" ':''}stroke-linecap="round" stroke-linejoin="round"/>`;
     };
     dirSeries.forEach(p=>{
-      if(opt.rawDir){
-        strokeU(p.rawU, p.s.color, 1.25, false);
-        if(p.rawU.length&&p.rawU.length<=48) p.rawU.forEach(o=>{
-          g+=`<circle cx="${n1(X(o.t))}" cy="${n1(Yd(o.u))}" r="2.2" fill="${p.s.color}" stroke="#0B1F3A" stroke-width="0.5"/>`;
+      const heroLine=!!p.s.priority;
+      if(p.faintU.length){
+        strokeU(p.faintU, p.s.color, heroLine?1.4:1, false, heroLine?0.45:0.28);
+        if(p.faintU.length<=48) p.faintU.forEach(o=>{
+          if(o.u<win.lo||o.u>win.hi) return;
+          g+=`<circle cx="${n1(X(o.t))}" cy="${n1(Yd(o.u))}" r="2" fill="${p.s.color}" fill-opacity="0.7" stroke="#0B1F3A" stroke-width="0.4"/>`;
         });
       }
-      strokeU(p.meanU, p.s.color, 2.75, !!p.s.dash);
+      const meanW=opt.emphasize?(heroLine?4:1.7):2.75;
+      strokeU(p.meanU, p.s.color, meanW, !!p.s.dash, heroLine||!opt.emphasize?1:0.95);
       if(p.meanU.length&&p.meanU.length<=16) p.meanU.forEach(o=>{
-        g+=`<circle cx="${n1(X(o.t))}" cy="${n1(Yd(o.u))}" r="3" fill="${p.s.color}" stroke="#0B1F3A" stroke-width="0.7"/>`;
+        if(o.u<win.lo||o.u>win.hi) return;
+        g+=`<circle cx="${n1(X(o.t))}" cy="${n1(Yd(o.u))}" r="${heroLine?3.4:2.4}" fill="${p.s.color}" stroke="#0B1F3A" stroke-width="0.7"/>`;
       });
     });
     g+=`</g>`;
@@ -586,7 +597,7 @@ function renderPanels(el,opt){
   }
   g+=`<line class="xh" x1="0" y1="${n1(gridTop)}" x2="0" y2="${n1(axisBot)}" stroke="#EAF2FB" stroke-opacity="0" stroke-width="1"/>`;
   g+=`<rect class="hit" x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
-  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(opt.label||'Wind chart')}">${g}</svg>`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:${H}px;display:block" role="img" aria-label="${esc(opt.label||'Wind chart')}">${g}</svg>`;
   const svg=el.querySelector('svg');
   const xh=el.querySelector('.xh');
   const show=ev=>{
@@ -629,6 +640,11 @@ function legendHTML(){
   return DATA.stations.map(s=>`<button type="button" data-id="${s.id}" class="${hidden.has(s.id)?'off':''}" aria-pressed="${!hidden.has(s.id)}">${swatch(s.color,false)}${esc(s.short)}</button>`).join('')
     +`<button type="button" data-id="AROME" class="${hidden.has('AROME')?'off':''}" aria-pressed="${!hidden.has('AROME')}">${swatch('#fff',true)}AROME</button>`;
 }
+function safeRender(el,opt){
+  if(!el) return;
+  try{ renderPanels(el,opt); }
+  catch(err){ console.error('chart', opt&&opt.label, err); el.innerHTML='<div class="muted small" style="padding:8px">Chart failed to draw</div>'; }
+}
 function drawCharts(){
   if(!DATA) return;
   if(TIP) TIP.hidden=true; tipSticky=false;
@@ -636,28 +652,34 @@ function drawCharts(){
     const s=DATA.stations.find(x=>x.id===el.dataset.sid);
     if(!s) return;
     const hero=!!s.priority;
-    renderPanels(el,{
+    safeRender(el,{
       speedH:hero?200:110, dirH:hero?200:110, smooth:SMOOTH,
       fill:true, gustBand:true, markers:true, rawDir:true, shade:true,
       label:s.short+' wind speed and direction',
-      series:[{id:s.id,name:s.short,color:s.color,samples:s.series||[],gust:true}],
+      series:[{id:s.id,name:s.short,color:s.color,samples:s.series||[],gust:true,priority:hero}],
     });
     const sh=el.parentElement&&el.parentElement.querySelector('[data-shift]');
     if(sh) sh.innerHTML=shiftHTML(s);
   });
   const shown=DATA.stations.filter(s=>!hidden.has(s.id));
   const one=shown.length===1;
-  const series=shown.map(s=>({id:s.id,name:s.short,color:s.color,samples:resample10(s.series||[]),gust:one}));
+  const speedSeries=shown.map(s=>({id:s.id,name:s.short,color:s.color,samples:resample10(s.series||[]),gust:one,priority:!!s.priority}));
+  const dirSeries=shown.map(s=>({id:s.id,name:s.short,color:s.color,samples:resample10(s.series||[]),faint:s.series||[],gust:false,priority:!!s.priority}));
   const ar=(DATA.arome&&DATA.arome.portals)||[];
-  if(!hidden.has('AROME')) series.push({id:'AROME',name:'AROME forecast',color:'#FFFFFF',samples:ar,gust:false,dash:true});
-  renderPanels(document.getElementById('cAll'),{
+  if(!hidden.has('AROME')){
+    speedSeries.push({id:'AROME',name:'AROME forecast',color:'#FFFFFF',samples:ar,gust:false,dash:true});
+    dirSeries.push({id:'AROME',name:'AROME forecast',color:'#FFFFFF',samples:ar,faint:[],dash:true});
+  }
+  safeRender(document.getElementById('cAll'),{
     speedH:200, dirH:0, smooth:false, fill:one, gustBand:one, markers:one,
-    label:'All stations mean wind', series,
+    label:'All stations mean wind', series:speedSeries,
   });
-  renderPanels(document.getElementById('cDirAll'),{
-    speedH:0, dirH:220, smooth:false, rawDir:false, shade:one,
-    label:'Direction - all stations', series,
+  safeRender(document.getElementById('cDirAll'),{
+    speedH:0, dirH:220, smooth:false, faintRaw:true, shade:one, emphasize:true,
+    label:'Direction - all stations', series:dirSeries,
   });
+  const hs=document.getElementById('hSpeed'); if(hs) hs.textContent=`Last ${WIN} h · speed (kt)`;
+  const hd=document.getElementById('hDir'); if(hd) hd.textContent=`Last ${WIN} h · direction (° from)`;
   const html=legendHTML();
   const lgd=document.getElementById('lgd'); if(lgd) lgd.innerHTML=html;
   const lgd2=document.getElementById('lgdDir'); if(lgd2) lgd2.innerHTML=html;
