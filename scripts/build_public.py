@@ -230,9 +230,33 @@ def main():
         encoding="utf-8",
     )
     (OUT / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
-    # Pages pretty URLs usually serve /forecast from forecast.html. This rewrite
-    # keeps that URL working even if pretty URLs are off. Team pages are absent.
-    (OUT / "_redirects").write_text("/forecast /forecast.html 200\n/forecast/ /forecast.html 200\n", encoding="utf-8")
+    # Without a top-level 404.html, Pages treats the project as a single-page app
+    # and serves index.html for every missing path. This file makes /tuning and
+    # /playbook return 404. Pretty URLs already serve /forecast from forecast.html.
+    (OUT / "404.html").write_text(
+        """<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Not found · Bay of Palma</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/brand.css">
+</head><body>
+<header class="sitehead">
+  <div class="sitebar">
+    <a class="brand" href="/"><img class="mark" src="/assets/mark.svg" alt="" width="36" height="48"><span class="word"><span class="name">Bay of Palma</span><span class="eye">live wind</span></span></a>
+    <h1>Not found</h1>
+  </div>
+  <nav class="sitenav" aria-label="Site"><a href="/">Live wind</a><a href="/forecast">Forecast</a><a href="/#webcams">Webcams</a></nav>
+</header>
+<main style="max-width:720px;margin:0 auto;padding:28px 16px;font:15px/1.45 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+<p>That page is not on this site.</p>
+<p><a href="/">Back to live wind</a></p>
+</main>
+</body></html>
+""",
+        encoding="utf-8",
+    )
 
     missing = [rel for rel in SKIP if (OUT / rel).exists()]
     if missing:
