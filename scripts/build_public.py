@@ -32,6 +32,13 @@ BRAND = (
     '<span class="eye">live wind</span></span></a>'
 )
 
+# Open-Meteo requires a visible link to the site and to the CC BY 4.0 licence.
+ATTRIB = (
+    'Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a> '
+    '(<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>). '
+    'AROME model: Météo-France. Each station card links to that station\'s source.'
+)
+
 
 def must_replace(text, old, new, label):
     count = text.count(old)
@@ -100,6 +107,12 @@ def build_index(text):
         "const parents=[...new Set(['localhost',location.hostname].filter(Boolean))];",
         "twitch parent",
     )
+    text = must_replace(
+        text,
+        "</footer>",
+        f"<p class=\"attrib\">{ATTRIB}</p>\n</footer>",
+        "index attribution",
+    )
     return text
 
 
@@ -148,6 +161,12 @@ def build_forecast(text):
         "'.'",
         "forecast sources footer",
     )
+    text = must_replace(
+        text,
+        '<div class="card small muted" id="src"></div>\n</div>\n<script>',
+        '<div class="card small muted" id="src"></div>\n</div>\n<footer class="attrib">' + ATTRIB + '</footer>\n<script>',
+        "forecast attribution",
+    )
     return text
 
 
@@ -169,6 +188,11 @@ def build_css(text):
         ".word .capa{font-size:16px}",
         ".word .name{font-size:15px}",
         "css wordmark mobile",
+    )
+    text += (
+        "\nfooter.attrib,p.attrib{margin-top:14px;font-size:13px;line-height:1.45;color:#8FA8C4}"
+        "\nfooter.attrib{max-width:1440px;margin:8px auto 28px;padding:0 12px 20px}"
+        "\nfooter.attrib a,p.attrib a{color:#8fd0ff}\n"
     )
     return text
 
@@ -253,6 +277,7 @@ def main():
 <p>That page is not on this site.</p>
 <p><a href="/">Back to live wind</a></p>
 </main>
+<footer class="attrib">""" + ATTRIB + """</footer>
 </body></html>
 """,
         encoding="utf-8",
@@ -267,6 +292,12 @@ def main():
     hits = scan(OUT)
     if hits:
         raise SystemExit("public HTML/JSON still contains private terms:\n" + "\n".join(hits))
+    for rel in ("index.html", "forecast.html", "404.html"):
+        page = (OUT / rel).read_text(encoding="utf-8")
+        if "https://open-meteo.com/" not in page or "https://creativecommons.org/licenses/by/4.0/" not in page:
+            raise SystemExit(f"public {rel} is missing the Open-Meteo attribution")
+        if "AROME model: Météo-France" not in page:
+            raise SystemExit(f"public {rel} is missing the Météo-France credit")
     print(f"wrote {OUT} (forbidden-term scan clean)")
 
 

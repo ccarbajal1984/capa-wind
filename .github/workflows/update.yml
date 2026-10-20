@@ -224,6 +224,7 @@ jobs:
           # the static directory. Deploy from dist-public so the private login
           # middleware is not uploaded. No custom domain: the free pages.dev hostname.
           # dist-public includes 404.html so missing paths are not served as the dashboard.
+          # Public pages carry the Open-Meteo and Météo-France attribution footer.
           project_usable() {
             local name="$1" out status
             set +e
