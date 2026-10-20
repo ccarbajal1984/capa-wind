@@ -1,5 +1,6 @@
 # Samples Bay of Palma wind, commits live.json, forecast.json, and the rolling
-# history.json, then Direct Uploads site/ to Cloudflare Pages. Git integration is not used:
+# history.json, then Direct Uploads site/ to Cloudflare Pages (private) and
+# dist-public/ to a second Pages project (public, no Functions). Git integration is not used:
 # free-plan Pages builds from Git are limited, and this repo has no GitHub Pages deploy.
 # A Cloudflare Worker cron dispatches this workflow every 5 minutes. The GitHub
 # schedule below is only a backup. Data commits use [skip ci] and do not match
@@ -203,6 +204,69 @@ jobs:
           echo "$SITE_USER" | npx --yes wrangler pages secret put SITE_USER --project-name capa-wind --env production
           echo "$SITE_PASS" | npx --yes wrangler pages secret put SITE_PASS --project-name capa-wind --env production
           deploy_pages
+
+      - name: Deploy public site
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          python3 scripts/build_public.py
+          if [ -z "${CLOUDFLARE_API_TOKEN}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            echo "::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is unset; public site was built but not deployed."
+            exit 0
+          fi
+          if [ -d dist-public/functions ] || find dist-public -name '_middleware.js' -print -quit | grep -q .; then
+            echo "::error::public build contains a Pages Function; refusing to deploy."
+            exit 1
+          fi
+          # wrangler bundles ./functions from the process working directory, not from
+          # the static directory. Deploy from dist-public so the private login
+          # middleware is not uploaded. No custom domain: the free pages.dev hostname.
+          project_usable() {
+            local name="$1" out status
+            set +e
+            out="$(npx --yes wrangler pages project create "$name" --production-branch main 2>&1)"
+            status=$?
+            set -e
+            printf '%s\n' "$out"
+            if [ "$status" -eq 0 ]; then
+              return 0
+            fi
+            set +e
+            npx --yes wrangler pages deployment list --project-name "$name" >/dev/null 2>&1
+            status=$?
+            set -e
+            if [ "$status" -eq 0 ]; then
+              echo "Pages project ${name} already exists on this account."
+              return 0
+            fi
+            return 1
+          }
+          project=""
+          if project_usable palmawind; then
+            project="palmawind"
+          elif project_usable palma-wind; then
+            project="palma-wind"
+            echo "palmawind is not available; using palma-wind."
+          else
+            echo "::warning::Could not use palmawind or palma-wind. The private site and the data commit are unaffected."
+            exit 0
+          fi
+          set +e
+          deploy_out="$(cd dist-public && npx --yes wrangler pages deploy . --project-name="$project" --branch=main --commit-dirty=true 2>&1)"
+          status=$?
+          set -e
+          printf '%s\n' "$deploy_out"
+          if printf '%s\n' "$deploy_out" | grep -q 'Uploading Functions bundle'; then
+            echo "::error::Public deploy uploaded a Functions bundle. Auth middleware must not ship to ${project}."
+            exit 1
+          fi
+          if [ "$status" -ne 0 ]; then
+            echo "::warning::Public Pages deploy failed. The private site and the data commit are unaffected."
+            exit 0
+          fi
+          echo "Public site: https://${project}.pages.dev"
 
       - name: Deploy ticker worker
         if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy_worker == true)

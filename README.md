@@ -1,6 +1,6 @@
 # CAPA wind
 
-Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 5 minutes, writes `site/data/live.json`, and keeps a rolling 12-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. Sign-in is on unless the Pages env var `AUTH_ENABLED` is exactly `false`.
+Live wind for **CAPA** (Dragon, ESP 99) in the Bahía de Palma. `fetch_data.py` reads the public station feeds every 5 minutes, writes `site/data/live.json`, and keeps a rolling 12-hour history in `history.json` at the repo root. GitHub Actions then Direct Uploads `site/` to Cloudflare Pages. Sign-in is on unless the Pages env var `AUTH_ENABLED` is exactly `false`. The same run also publishes a public copy, without login, at `https://palmawind.pages.dev`.
 
 The page is one file, `site/index.html`. It loads `data/live.json` with a relative URL. The Pipeline Twitch player is embedded with `parent=capa-wind.pages.dev` (plus the current hostname when that is different). Webcam snapshots are Conecta Balear Visiona and IB-red.
 
@@ -44,6 +44,12 @@ The ticker is deployed only when `main` is pushed with a change under `worker/` 
 Create the API token under **My Profile → API Tokens → Create Custom Token**, permissions **Account → Cloudflare Pages → Edit** and **Account → Workers Scripts → Edit**, limited to the account that owns the project.
 
 Open `https://capa-wind.pages.dev` and sign in with `SITE_USER` and `SITE_PASS`. The browser keeps that session for 30 days. Set `AUTH_ENABLED=false` on the Pages project to turn the login off.
+
+## Public site
+
+After the private upload, the workflow runs `scripts/build_public.py`. That builds `dist-public/` from `site/` (the pages are not maintained twice) and Direct Uploads it to the Pages project `palmawind`, at `https://palmawind.pages.dev`. If that name is already taken, the fallback project is `palma-wind`. There is no custom domain.
+
+The public site has no login. The upload runs with `dist-public` as the working directory, so `functions/_middleware.js` is not deployed and `SITE_USER` / `SITE_PASS` are not stored on that project. It serves its own `data/live.json` and a `data/forecast.json` with rig settings and start / windward-mark plans removed. Pages included: live wind (stations, charts, the 48 h AROME overlay, webcams) and the forecast weather view (AROME table, speed and direction charts, regime, confidence). Tuning, the wind playbook, the rig table, and links to private decision rules are not in the output. A failed public upload does not undo the data commit or the private deploy. The private site stays at `https://capa-wind.pages.dev`.
 
 This repository still stores `live.json` and `history.json`. Make the GitHub repository private if that history should not be public.
 
