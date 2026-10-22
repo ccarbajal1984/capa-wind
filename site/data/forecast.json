@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-22T12:00:47+00:00",
- "fetched_utc": "2026-10-22T12:00:47+00:00",
+ "generated_utc": "2026-10-22T13:00:47+00:00",
+ "fetched_utc": "2026-10-22T13:00:47+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -398,12 +398,12 @@
     "arome_gust_factor": 1.61,
     "front_risk": true,
     "land_tmax_12_15": 23.1,
-    "sst": 24.1,
-    "dT_land_sea": -1.0,
+    "sst": 24.0,
+    "dT_land_sea": -0.9,
     "offshore_component_09_11_kt": 0.1,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
-    "air_minus_sea": -1.4,
+    "air_minus_sea": -1.3,
     "stability": "near-neutral",
     "cloud_mean_race": 100.0
    },
@@ -417,8 +417,8 @@
    ],
    "interpretation": [
     "Offshore northerly: gusty and shifty near shore, flatter water close in; expect the wind to ease or back late if the gradient weakens (watch AROME trend).",
-    "Land-sea contrast: inland max 23.1 °C vs sea 24.1 °C (ΔT -1.0 °C); morning offshore component 0.1 kt → sea-breeze potential none (land not warmer than sea).",
-    "Over the water: air -1.4 °C vs sea → near-neutral.",
+    "Land-sea contrast: inland max 23.1 °C vs sea 24.0 °C (ΔT -0.9 °C); morning offshore component 0.1 kt → sea-breeze potential none (land not warmer than sea).",
+    "Over the water: air -1.3 °C vs sea → near-neutral.",
     "Front/instability warning: MSL pressure change 08→18 h 2.1 hPa, AROME gust factor 1.61.",
     "History (Northerly (Tramuntana / Mestral), AROME 6-10 kt, 58 days, Oct-Mar since 2022-11): buoy averaged 11.23 kt (q25-q75 9.51-12.29, n=12) when AROME said 7.72 kt (median of all 58 days). LEPA airport averaged 10.35 kt (n=58). Direction 11→15 h at the buoy: veer 50% / back 25% / steady 25% (n=4)."
    ],
@@ -788,5 +788,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1792832400|1792832400|10.1|310"
+ "arome_sig": "45|1792832400|1792832400|10.1|310"
 }
