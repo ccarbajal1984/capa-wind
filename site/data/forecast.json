@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-22T21:00:42+00:00",
- "fetched_utc": "2026-10-22T21:00:42+00:00",
+ "generated_utc": "2026-10-22T22:00:51+00:00",
+ "fetched_utc": "2026-10-22T22:00:51+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -14,364 +14,6 @@
   "pressure": "hPa"
  },
  "days": [
-  {
-   "date": "2026-10-22",
-   "regime": {
-    "code": "LIGHT",
-    "name": "Light / variable",
-    "clim_key": "Light/variable (<4 kt)",
-    "color": "#8FA8C4",
-    "why": "11-16 h mean 3.5 kt from 182°; 07-10 h 2.9 kt from 344°",
-    "mean_spd": 3.5,
-    "mean_dir": 182.4,
-    "morning_dir": 344.2,
-    "morning_spd": 2.9
-   },
-   "headline": "Light / variable: 4 kt avg from S (182°) 11-16 h, TRANSITION day. Favoured: middle. Confidence low.",
-   "flags": {
-    "dir_11": null,
-    "dir_16": 208,
-    "dir_change_race": -30,
-    "max_hourly_step": 17,
-    "spd_min": 1.6,
-    "spd_max": 6.2,
-    "spd_trend": 3.5,
-    "transition": true,
-    "pmsl_change_8_18": -1.1,
-    "arome_gust_factor": 1.44,
-    "front_risk": false,
-    "land_tmax_12_15": 22.9,
-    "sst": 24.3,
-    "dT_land_sea": -1.4,
-    "offshore_component_09_11_kt": 1.1,
-    "sb_index": null,
-    "sea_breeze_potential": "none (land not warmer than sea)",
-    "air_minus_sea": -3.4,
-    "stability": "unstable (air colder than sea)",
-    "cloud_mean_race": 80.0
-   },
-   "evolution": [
-    "11:00 3 kt (g2) NNE 21°",
-    "12:00 2 kt (g6) E 97°",
-    "13:00 2 kt (g4) SSE 148°",
-    "14:00 4 kt (g5) WSW 238°",
-    "15:00 4 kt (g8) SW 221°",
-    "16:00 6 kt (g9) SSW 208°"
-   ],
-   "interpretation": [
-    "Light/variable: expect postponements; any thermal from the S-SW in the afternoon is the likely racing wind.",
-    "Land-sea contrast: inland max 22.9 °C vs sea 24.3 °C (ΔT -1.4 °C); morning offshore component 1.1 kt → sea-breeze potential none (land not warmer than sea).",
-    "Over the water: air -3.4 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
-    "Cloud 80% during racing — heavy cloud weakens or delays the thermal.",
-    "History (Light / variable (all speeds; fewer than 8 buoy days in the 0-6 kt band), 64 days, Oct-Mar since 2022-11): buoy averaged 4.52 kt (q25-q75 4.3-4.87, n=7) when AROME said 3.48 kt (median of all 64 days). LEPA airport averaged 4.05 kt (n=64)."
-   ],
-   "strategy": {
-    "pattern": "transition",
-    "text": "AROME has the wind changing character during racing (direction change -30° 11→16 h, max hourly step 17°). Treat as a transition day: new wind arrives from one side, expect a postponement or a big one-way shift.",
-    "favoured_side": "middle",
-    "side_text": "Favoured side: MIDDLE. Light day: pressure beats shifts; go where there is visible wind, keep the boat moving.",
-    "start": "Transition: delay committing. In the sequence watch the new wind's side (webcams/stations upwind); start at the end nearer it and keep clear air to tack.",
-    "windward_mark": "Don't take a layline early; the mark can swing a long way. Stay between the fleet and the new wind."
-   },
-   "confidence": {
-    "level": "low",
-    "score": 0,
-    "why": [
-     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 0.4 kt, |Δdir| 3°",
-     "transition in the race window",
-     "light wind: direction is unreliable at <4 kt",
-     "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 1.8 kt, bias +0.8 kt, dir MAE 19.0° (n=24)",
-     "few historical buoy analogs (n=7)"
-    ]
-   },
-   "expected_observed": null,
-   "analogs": {
-    "label": "Light / variable (all speeds; fewer than 8 buoy days in the 0-6 kt band)",
-    "stats": {
-     "days": 64,
-     "arome_spd": {
-      "n": 64,
-      "median": 3.48,
-      "q25": 3.11,
-      "q75": 3.7
-     },
-     "buoy_spd": {
-      "n": 7,
-      "median": 4.52,
-      "q25": 4.3,
-      "q75": 4.87
-     },
-     "buoy_max_hourly": {
-      "n": 7,
-      "median": 7.03,
-      "q25": 6.4,
-      "q75": 7.95
-     },
-     "buoy_gust_factor": {
-      "n": 6,
-      "median": 1.12,
-      "q25": 1.1,
-      "q75": 1.13
-     },
-     "buoy_over_arome_ratio": {
-      "n": 7,
-      "median": 0.91,
-      "q25": 0.8,
-      "q75": 1.56
-     },
-     "buoy_over_arome_portals_ratio": {
-      "n": 7,
-      "median": 1.21,
-      "q25": 1.13,
-      "q75": 1.48
-     },
-     "dir_err_buoy_minus_arome": {
-      "n": 6,
-      "median": 72.1,
-      "q25": 61.75,
-      "q75": 85.0
-     },
-     "lepa_spd": {
-      "n": 64,
-      "median": 4.05,
-      "q25": 3.08,
-      "q75": 4.9
-     },
-     "buoy_trend_15_minus_11": null
-    }
-   },
-   "climatology": {
-    "shift": null,
-    "arome_hd_skill": {
-     "n": 24,
-     "bias_kt": 0.8,
-     "mae_kt": 1.8,
-     "dir_bias": 1.0,
-     "dir_mae": 19.0
-    },
-    "diurnal_buoy": {
-     "8": [
-      4.7,
-      33.0
-     ],
-     "9": [
-      4.8,
-      46.0
-     ],
-     "10": [
-      3.9,
-      48.0
-     ],
-     "11": [
-      2.8,
-      52.0
-     ],
-     "12": [
-      2.5,
-      305.0
-     ],
-     "13": [
-      2.6,
-      230.0
-     ],
-     "14": [
-      3.1,
-      218.0
-     ],
-     "15": [
-      4.0,
-      234.0
-     ],
-     "16": [
-      5.3,
-      233.0
-     ],
-     "17": [
-      5.5,
-      220.0
-     ],
-     "18": [
-      5.5,
-      252.0
-     ]
-    }
-   },
-   "rig": {
-    "settings": [
-     {
-      "band": "0-6",
-      "rake_cm": 123.0,
-      "uppers_V": 14,
-      "lowers_D": "loose",
-      "genoa": "V-6M"
-     }
-    ],
-    "notes": [
-     "Runner (burda): Gold Cup notes say mostly ~45-60 % of the scale; ease in lulls/chop, max in the top of the range.",
-     "Rake used at the Gold Cup: 122.5 (max loose), 122.0, 121.5 (windiest days).",
-     "Gold Cup shroud extremes: max tight 20 V / 12 D, max loose 14-15 V / 7-8 D."
-    ],
-    "source": "PLIS_PLAY_TUNING_TABLE.md; DRAGON_COACH.md Gold Cup notes; North Sails Dragon speed guide"
-   },
-   "hourly": [
-    {
-     "time": "08:00",
-     "spd": 3.6,
-     "gst": 6.6,
-     "dir": 22,
-     "compass": "NNE",
-     "temp": 19.5,
-     "cloud": 100,
-     "pmsl": 1024.1,
-     "src": "AROME HD",
-     "fr_dir": 15
-    },
-    {
-     "time": "09:00",
-     "spd": 1.1,
-     "gst": 6.0,
-     "dir": 315,
-     "compass": "NW",
-     "temp": 19.4,
-     "cloud": 100,
-     "pmsl": 1024.2,
-     "src": "AROME HD",
-     "fr_dir": 307
-    },
-    {
-     "time": "10:00",
-     "spd": 2.2,
-     "gst": 3.7,
-     "dir": 218,
-     "compass": "SW",
-     "temp": 19.7,
-     "cloud": 40,
-     "pmsl": 1024.9,
-     "src": "AROME HD",
-     "fr_dir": 192
-    },
-    {
-     "time": "11:00",
-     "spd": 2.7,
-     "gst": 2.5,
-     "dir": 21,
-     "compass": "NNE",
-     "temp": 20.1,
-     "cloud": 99,
-     "pmsl": 1025.1,
-     "src": "AROME HD",
-     "fr_dir": 22
-    },
-    {
-     "time": "12:00",
-     "spd": 1.6,
-     "gst": 6.2,
-     "dir": 97,
-     "compass": "E",
-     "temp": 20.2,
-     "cloud": 100,
-     "pmsl": 1024.8,
-     "src": "AROME HD",
-     "fr_dir": 126
-    },
-    {
-     "time": "13:00",
-     "spd": 1.8,
-     "gst": 4.1,
-     "dir": 148,
-     "compass": "SSE",
-     "temp": 20.5,
-     "cloud": 100,
-     "pmsl": 1024.7,
-     "src": "AROME HD",
-     "fr_dir": 171
-    },
-    {
-     "time": "14:00",
-     "spd": 4.4,
-     "gst": 5.1,
-     "dir": 238,
-     "compass": "WSW",
-     "temp": 21.6,
-     "cloud": 100,
-     "pmsl": 1024.6,
-     "src": "AROME HD",
-     "fr_dir": 236
-    },
-    {
-     "time": "15:00",
-     "spd": 4.4,
-     "gst": 8.0,
-     "dir": 221,
-     "compass": "SW",
-     "temp": 21.5,
-     "cloud": 80,
-     "pmsl": 1023.7,
-     "src": "AROME HD",
-     "fr_dir": 228
-    },
-    {
-     "time": "16:00",
-     "spd": 6.2,
-     "gst": 8.9,
-     "dir": 208,
-     "compass": "SSW",
-     "temp": 21.5,
-     "cloud": 0,
-     "pmsl": 1023.3,
-     "src": "AROME HD",
-     "fr_dir": 207
-    },
-    {
-     "time": "17:00",
-     "spd": 7.1,
-     "gst": 9.3,
-     "dir": 241,
-     "compass": "WSW",
-     "temp": 21.6,
-     "cloud": 6,
-     "pmsl": 1023.1,
-     "src": "AROME HD",
-     "fr_dir": 244
-    },
-    {
-     "time": "18:00",
-     "spd": 5.7,
-     "gst": 9.9,
-     "dir": 252,
-     "compass": "WSW",
-     "temp": 21.5,
-     "cloud": 100,
-     "pmsl": 1023.0,
-     "src": "AROME HD",
-     "fr_dir": 261
-    },
-    {
-     "time": "19:00",
-     "spd": 4.8,
-     "gst": 8.6,
-     "dir": 230,
-     "compass": "SW",
-     "temp": 21.5,
-     "cloud": 100,
-     "pmsl": 1022.8,
-     "src": "AROME HD",
-     "fr_dir": 248
-    },
-    {
-     "time": "20:00",
-     "spd": 4.1,
-     "gst": 7.8,
-     "dir": 245,
-     "compass": "WSW",
-     "temp": 21.3,
-     "cloud": 100,
-     "pmsl": 1023.0,
-     "src": "AROME HD",
-     "fr_dir": 288
-    }
-   ]
-  },
   {
    "date": "2026-10-23",
    "regime": {
@@ -755,6 +397,395 @@
      "fr_dir": 330
     }
    ]
+  },
+  {
+   "date": "2026-10-24",
+   "regime": {
+    "code": "NORTH",
+    "name": "Northerly (Tramuntana / Mestral)",
+    "clim_key": "Northerly (NW-N-NNE, Tramuntana/Mestral)",
+    "color": "#64B5F6",
+    "why": "11-16 h mean 12.0 kt from 310°; 07-10 h 7.5 kt from 309°",
+    "mean_spd": 12.0,
+    "mean_dir": 310.0,
+    "morning_dir": 308.7,
+    "morning_spd": 7.5
+   },
+   "headline": "Northerly (Tramuntana / Mestral): 12 kt avg from NW (310°) 11-16 h, oscillating. Favoured: right. Confidence high.",
+   "flags": {
+    "dir_11": 305,
+    "dir_16": 309,
+    "dir_change_race": 4,
+    "max_hourly_step": 12,
+    "spd_min": 10.7,
+    "spd_max": 13.2,
+    "spd_trend": 2.3,
+    "transition": false,
+    "pmsl_change_8_18": -1.1,
+    "arome_gust_factor": 1.47,
+    "front_risk": false,
+    "land_tmax_12_15": 20.9,
+    "sst": 23.8,
+    "dT_land_sea": -2.9,
+    "offshore_component_09_11_kt": 2.6,
+    "sb_index": null,
+    "sea_breeze_potential": "none (land not warmer than sea)",
+    "air_minus_sea": -3.6,
+    "stability": "unstable (air colder than sea)",
+    "cloud_mean_race": 59.0
+   },
+   "evolution": [
+    "11:00 11 kt (g15) NW 305°",
+    "12:00 12 kt (g17) NW 308°",
+    "13:00 12 kt (g18) NW 310°",
+    "14:00 12 kt (g17) NW 308°",
+    "15:00 13 kt (g20) NW 320°",
+    "16:00 13 kt (g19) NW 309°"
+   ],
+   "interpretation": [
+    "Offshore northerly: gusty and shifty near shore, flatter water close in; expect the wind to ease or back late if the gradient weakens (watch AROME trend).",
+    "Land-sea contrast: inland max 20.9 °C vs sea 23.8 °C (ΔT -2.9 °C); morning offshore component 2.6 kt → sea-breeze potential none (land not warmer than sea).",
+    "Over the water: air -3.6 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
+    "History (Northerly (Tramuntana / Mestral) (all speeds; fewer than 8 buoy days in the 10-15 kt band), 104 days, Oct-Mar since 2022-11): buoy averaged 11.86 kt (q25-q75 9.58-13.36, n=20) when AROME said 8.05 kt (median of all 104 days). LEPA airport averaged 11.05 kt (n=104). Direction 11→15 h at the buoy: veer 50% / back 33% / steady 17% (n=6)."
+   ],
+   "strategy": {
+    "pattern": "oscillating",
+    "text": "AROME is steady (≤15° over the race window). Climatology for this regime at the buoy: shift std 10.1°, peak-to-peak 22.6°, cycle ~58 min. Tack on headers vs the median heading.",
+    "history_bias": "History leans VEER: 50% of analog days veered >5° 11→15 h, 33% backed.",
+    "favoured_side": "right",
+    "side_text": "Favoured side: RIGHT. Offshore wind: puffs come off the Serra/Na Burgesa valleys in streaks; look upwind for dark patches, expect more pressure and bigger shifts nearer the shore. (inference)",
+    "start": "Check line bias with transits several times; in a persistent shift start at the end nearer the new wind, even if it is slightly unfavoured. In oscillations, start where you can tack onto the lifted tack freely.",
+    "windward_mark": "Expected drift to the right (history lean, oscillating): approach on the tack that keeps you inside the shift, and tack short of the layline (it moves)."
+   },
+   "confidence": {
+    "level": "high",
+    "score": 3,
+    "why": [
+     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 1.7 kt, |Δdir| 8°",
+     "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 2.7 kt, bias -0.1 kt, dir MAE 20.0° (n=107)"
+    ]
+   },
+   "expected_observed": {
+    "lo": 14.5,
+    "mid": 15.8,
+    "hi": 20.0,
+    "ratio": {
+     "n": 20,
+     "median": 1.32,
+     "q25": 1.21,
+     "q75": 1.67
+    },
+    "text": "AROME 11-16 h mean 12.0 kt × historical ratio of buoy-observed to AROME-Portals (q25 1.21, median 1.32, q75 1.67, n=20 days). Hourly AROME range 10.7-13.2 kt. This is open-bay (SOCIB buoy) wind; inshore Portals usually reads lighter."
+   },
+   "analogs": {
+    "label": "Northerly (Tramuntana / Mestral) (all speeds; fewer than 8 buoy days in the 10-15 kt band)",
+    "stats": {
+     "days": 104,
+     "arome_spd": {
+      "n": 104,
+      "median": 8.05,
+      "q25": 6.69,
+      "q75": 10.31
+     },
+     "buoy_spd": {
+      "n": 20,
+      "median": 11.86,
+      "q25": 9.58,
+      "q75": 13.36
+     },
+     "buoy_max_hourly": {
+      "n": 20,
+      "median": 14.13,
+      "q25": 13.51,
+      "q75": 17.26
+     },
+     "buoy_gust_factor": {
+      "n": 20,
+      "median": 1.12,
+      "q25": 1.1,
+      "q75": 1.14
+     },
+     "buoy_over_arome_ratio": {
+      "n": 20,
+      "median": 0.95,
+      "q25": 0.89,
+      "q75": 1.2
+     },
+     "buoy_over_arome_portals_ratio": {
+      "n": 20,
+      "median": 1.32,
+      "q25": 1.21,
+      "q75": 1.67
+     },
+     "dir_err_buoy_minus_arome": {
+      "n": 8,
+      "median": -1.5,
+      "q25": -11.83,
+      "q75": 6.85
+     },
+     "lepa_spd": {
+      "n": 104,
+      "median": 11.05,
+      "q25": 8.1,
+      "q75": 14.05
+     },
+     "buoy_trend_15_minus_11": {
+      "n": 6,
+      "median": 6.4,
+      "q25": -26.5,
+      "q75": 46.28
+     },
+     "trend_split_pct": {
+      "veer": 50,
+      "back": 33,
+      "steady": 17
+     }
+    }
+   },
+   "climatology": {
+    "shift": {
+     "std": 10.1,
+     "p2p": 22.6,
+     "period": 58.0,
+     "trend": -7.3
+    },
+    "arome_hd_skill": {
+     "n": 107,
+     "bias_kt": -0.1,
+     "mae_kt": 2.7,
+     "dir_bias": 0.0,
+     "dir_mae": 20.0
+    },
+    "diurnal_buoy": {
+     "8": [
+      11.0,
+      355.0
+     ],
+     "9": [
+      10.5,
+      356.0
+     ],
+     "10": [
+      10.3,
+      354.0
+     ],
+     "11": [
+      11.2,
+      337.0
+     ],
+     "12": [
+      11.9,
+      339.0
+     ],
+     "13": [
+      12.3,
+      334.0
+     ],
+     "14": [
+      12.6,
+      335.0
+     ],
+     "15": [
+      12.4,
+      331.0
+     ],
+     "16": [
+      12.0,
+      324.0
+     ],
+     "17": [
+      11.1,
+      334.0
+     ],
+     "18": [
+      11.2,
+      346.0
+     ]
+    }
+   },
+   "rig": {
+    "settings": [
+     {
+      "band": "10-15",
+      "rake_cm": 122.5,
+      "uppers_V": 18,
+      "lowers_D": 10,
+      "genoa": "V-6M"
+     },
+     {
+      "band": "15-20",
+      "rake_cm": 122.0,
+      "uppers_V": 20,
+      "lowers_D": 12,
+      "genoa": "V-6H"
+     }
+    ],
+    "notes": [
+     "Runner (burda): Gold Cup notes say mostly ~45-60 % of the scale; ease in lulls/chop, max in the top of the range.",
+     "Rake used at the Gold Cup: 122.5 (max loose), 122.0, 121.5 (windiest days).",
+     "Gold Cup shroud extremes: max tight 20 V / 12 D, max loose 14-15 V / 7-8 D.",
+     "Top of range is in North's V-6M/V-6H overlap (14-18 kt): decide on trend and sea state."
+    ],
+    "source": "PLIS_PLAY_TUNING_TABLE.md; DRAGON_COACH.md Gold Cup notes; North Sails Dragon speed guide"
+   },
+   "hourly": [
+    {
+     "time": "08:00",
+     "spd": 7.6,
+     "gst": 12.8,
+     "dir": 302,
+     "compass": "WNW",
+     "temp": 19.5,
+     "cloud": 16,
+     "pmsl": 1025.7,
+     "src": "AROME HD",
+     "fr_dir": 290
+    },
+    {
+     "time": "09:00",
+     "spd": 6.0,
+     "gst": 12.2,
+     "dir": 308,
+     "compass": "NW",
+     "temp": 19.2,
+     "cloud": 100,
+     "pmsl": 1026.1,
+     "src": "AROME HD",
+     "fr_dir": 292
+    },
+    {
+     "time": "10:00",
+     "spd": 7.8,
+     "gst": 12.4,
+     "dir": 314,
+     "compass": "NW",
+     "temp": 19.3,
+     "cloud": 100,
+     "pmsl": 1026.6,
+     "src": "AROME HD",
+     "fr_dir": 304
+    },
+    {
+     "time": "11:00",
+     "spd": 10.7,
+     "gst": 15.2,
+     "dir": 305,
+     "compass": "NW",
+     "temp": 19.7,
+     "cloud": 100,
+     "pmsl": 1026.4,
+     "src": "AROME HD",
+     "fr_dir": 296
+    },
+    {
+     "time": "12:00",
+     "spd": 11.8,
+     "gst": 16.7,
+     "dir": 308,
+     "compass": "NW",
+     "temp": 20.0,
+     "cloud": 7,
+     "pmsl": 1026.2,
+     "src": "AROME HD",
+     "fr_dir": 301
+    },
+    {
+     "time": "13:00",
+     "spd": 11.7,
+     "gst": 17.7,
+     "dir": 310,
+     "compass": "NW",
+     "temp": 20.2,
+     "cloud": 82,
+     "pmsl": 1026.2,
+     "src": "AROME HD",
+     "fr_dir": 302
+    },
+    {
+     "time": "14:00",
+     "spd": 11.6,
+     "gst": 17.1,
+     "dir": 308,
+     "compass": "NW",
+     "temp": 20.2,
+     "cloud": 97,
+     "pmsl": 1025.6,
+     "src": "AROME HD",
+     "fr_dir": 298
+    },
+    {
+     "time": "15:00",
+     "spd": 13.2,
+     "gst": 20.4,
+     "dir": 320,
+     "compass": "NW",
+     "temp": 20.4,
+     "cloud": 65,
+     "pmsl": 1025.1,
+     "src": "AROME HD",
+     "fr_dir": 314
+    },
+    {
+     "time": "16:00",
+     "spd": 13.0,
+     "gst": 19.0,
+     "dir": 309,
+     "compass": "NW",
+     "temp": 20.6,
+     "cloud": 3,
+     "pmsl": 1024.7,
+     "src": "AROME HD",
+     "fr_dir": 303
+    },
+    {
+     "time": "17:00",
+     "spd": 11.0,
+     "gst": 18.7,
+     "dir": 306,
+     "compass": "NW",
+     "temp": 20.3,
+     "cloud": 97,
+     "pmsl": 1024.8,
+     "src": "AROME HD",
+     "fr_dir": 297
+    },
+    {
+     "time": "18:00",
+     "spd": 9.8,
+     "gst": 16.3,
+     "dir": 295,
+     "compass": "WNW",
+     "temp": 20.0,
+     "cloud": 100,
+     "pmsl": 1024.6,
+     "src": "AROME HD",
+     "fr_dir": 288
+    },
+    {
+     "time": "19:00",
+     "spd": 7.4,
+     "gst": 14.8,
+     "dir": 293,
+     "compass": "WNW",
+     "temp": 19.6,
+     "cloud": 100,
+     "pmsl": 1024.7,
+     "src": "AROME HD",
+     "fr_dir": 287
+    },
+    {
+     "time": "20:00",
+     "spd": 7.9,
+     "gst": 11.7,
+     "dir": 287,
+     "compass": "WNW",
+     "temp": 19.3,
+     "cloud": 100,
+     "pmsl": 1025.1,
+     "src": "AROME HD",
+     "fr_dir": 281
+    }
+   ]
   }
  ],
  "sources": [
@@ -783,5 +814,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1792864800|1792864800|7.9|287"
+ "arome_sig": "45|1792864800|1792864800|7.9|287"
 }
