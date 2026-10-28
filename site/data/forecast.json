@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-28T18:55:53+00:00",
- "fetched_utc": "2026-10-28T18:55:53+00:00",
+ "generated_utc": "2026-10-28T19:01:00+00:00",
+ "fetched_utc": "2026-10-28T19:01:00+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -430,12 +430,12 @@
     "pmsl_change_8_18": -1.7,
     "arome_gust_factor": 1.46,
     "front_risk": false,
-    "land_tmax_12_15": 23.5,
+    "land_tmax_12_15": 23.7,
     "sst": 23.5,
-    "dT_land_sea": 0.0,
+    "dT_land_sea": 0.2,
     "offshore_component_09_11_kt": 1.0,
-    "sb_index": null,
-    "sea_breeze_potential": "none (land not warmer than sea)",
+    "sb_index": 1.28,
+    "sea_breeze_potential": "poor",
     "air_minus_sea": -1.6,
     "stability": "near-neutral",
     "cloud_mean_race": 4.0
@@ -450,7 +450,7 @@
    ],
    "interpretation": [
     "Ponent over the land: watch the Calvià headland shadows; AROME historically biased +0.9 kt here (HD, buoy point).",
-    "Land-sea contrast: inland max 23.5 °C vs sea 23.5 °C (ΔT +0.0 °C); morning offshore component 1.0 kt → sea-breeze potential none (land not warmer than sea).",
+    "Land-sea contrast: inland max 23.7 °C vs sea 23.5 °C (ΔT +0.2 °C); morning offshore component 1.0 kt → sea-breeze potential poor.",
     "Over the water: air -1.6 °C vs sea → near-neutral.",
     "History (W-WNW (Ponent), AROME 6-10 kt, 52 days, Oct-Mar since 2022-11): buoy averaged 9.85 kt (q25-q75 8.95-12.42, n=9) when AROME said 7.8 kt (median of all 52 days). LEPA airport averaged 8.79 kt (n=52). Direction 11→15 h at the buoy: veer 40% / back 60% / steady 0% (n=5)."
    ],
@@ -820,5 +820,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "48|1793379600|1793379600|6.1|59"
+ "arome_sig": "45|1793372400|1793372400|1.7|159"
 }
