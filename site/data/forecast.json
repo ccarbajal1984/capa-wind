@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-31T12:00:57+00:00",
- "fetched_utc": "2026-10-31T12:00:57+00:00",
+ "generated_utc": "2026-10-31T13:01:08+00:00",
+ "fetched_utc": "2026-10-31T13:01:08+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -430,12 +430,12 @@
     "arome_gust_factor": 1.51,
     "front_risk": true,
     "land_tmax_12_15": 21.6,
-    "sst": 23.4,
-    "dT_land_sea": -1.8,
+    "sst": 23.5,
+    "dT_land_sea": -1.9,
     "offshore_component_09_11_kt": 1.0,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
-    "air_minus_sea": -3.0,
+    "air_minus_sea": -3.1,
     "stability": "unstable (air colder than sea)",
     "cloud_mean_race": 4.0
    },
@@ -449,8 +449,8 @@
    ],
    "interpretation": [
     "Ponent over the land: watch the Calvià headland shadows; AROME historically biased +0.9 kt here (HD, buoy point).",
-    "Land-sea contrast: inland max 21.6 °C vs sea 23.4 °C (ΔT -1.8 °C); morning offshore component 1.0 kt → sea-breeze potential none (land not warmer than sea).",
-    "Over the water: air -3.0 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
+    "Land-sea contrast: inland max 21.6 °C vs sea 23.5 °C (ΔT -1.9 °C); morning offshore component 1.0 kt → sea-breeze potential none (land not warmer than sea).",
+    "Over the water: air -3.1 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "Front/instability warning: MSL pressure change 08→18 h -3.0 hPa, AROME gust factor 1.51.",
     "History (W-WNW (Ponent), AROME 6-10 kt, 52 days, Oct-Mar since 2022-11): buoy averaged 9.85 kt (q25-q75 8.95-12.42, n=9) when AROME said 7.8 kt (median of all 52 days). LEPA airport averaged 8.79 kt (n=52). Direction 11→15 h at the buoy: veer 40% / back 60% / steady 0% (n=5)."
    ],
@@ -820,5 +820,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1793610000|1793610000|10.1|30"
+ "arome_sig": "45|1793610000|1793610000|10.1|30"
 }
