@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-31T13:26:08+00:00",
- "fetched_utc": "2026-10-31T13:26:08+00:00",
+ "generated_utc": "2026-10-31T13:30:53+00:00",
+ "fetched_utc": "2026-10-31T13:30:53+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -40,9 +40,9 @@
     "pmsl_change_8_18": 0.4,
     "arome_gust_factor": 1.46,
     "front_risk": false,
-    "land_tmax_12_15": 21.4,
+    "land_tmax_12_15": 21.3,
     "sst": 23.6,
-    "dT_land_sea": -2.2,
+    "dT_land_sea": -2.3,
     "offshore_component_09_11_kt": 9.4,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
@@ -60,7 +60,7 @@
    ],
    "interpretation": [
     "Gregal/Llevant: wind with fetch from the east bay, usually steadier; watch for chop building through the day.",
-    "Land-sea contrast: inland max 21.4 °C vs sea 23.6 °C (ΔT -2.2 °C); morning offshore component 9.4 kt → sea-breeze potential none (land not warmer than sea).",
+    "Land-sea contrast: inland max 21.3 °C vs sea 23.6 °C (ΔT -2.3 °C); morning offshore component 9.4 kt → sea-breeze potential none (land not warmer than sea).",
     "Over the water: air -2.9 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "History (NE-E (Gregal / Llevant) (all speeds; fewer than 8 buoy days in the 10-15 kt band), 114 days, Oct-Mar since 2022-11): buoy averaged 12.63 kt (q25-q75 7.22-13.84, n=17) when AROME said 7.7 kt (median of all 114 days). LEPA airport averaged 8.56 kt (n=114). Direction 11→15 h at the buoy: veer 73% / back 18% / steady 9% (n=11)."
    ],
@@ -429,9 +429,9 @@
     "pmsl_change_8_18": -2.8,
     "arome_gust_factor": 1.48,
     "front_risk": false,
-    "land_tmax_12_15": 21.6,
+    "land_tmax_12_15": 21.7,
     "sst": 23.5,
-    "dT_land_sea": -1.9,
+    "dT_land_sea": -1.8,
     "offshore_component_09_11_kt": 0.2,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
@@ -449,7 +449,7 @@
    ],
    "interpretation": [
     "Ponent over the land: watch the Calvià headland shadows; AROME historically biased +0.9 kt here (HD, buoy point).",
-    "Land-sea contrast: inland max 21.6 °C vs sea 23.5 °C (ΔT -1.9 °C); morning offshore component 0.2 kt → sea-breeze potential none (land not warmer than sea).",
+    "Land-sea contrast: inland max 21.7 °C vs sea 23.5 °C (ΔT -1.8 °C); morning offshore component 0.2 kt → sea-breeze potential none (land not warmer than sea).",
     "Over the water: air -3.1 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "History (W-WNW (Ponent), AROME 6-10 kt, 52 days, Oct-Mar since 2022-11): buoy averaged 9.85 kt (q25-q75 8.95-12.42, n=9) when AROME said 7.8 kt (median of all 52 days). LEPA airport averaged 8.79 kt (n=52). Direction 11→15 h at the buoy: veer 40% / back 60% / steady 0% (n=5)."
    ],
@@ -818,5 +818,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "48|1793620800|1793620800|5.5|42"
+ "arome_sig": "48|1793620800|1793620800|5.9|41"
 }
