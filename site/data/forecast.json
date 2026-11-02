@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-02T15:25:56+00:00",
- "fetched_utc": "2026-11-02T15:25:56+00:00",
+ "generated_utc": "2026-11-02T15:51:46+00:00",
+ "fetched_utc": "2026-11-02T15:51:46+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -40,9 +40,9 @@
     "pmsl_change_8_18": -2.0,
     "arome_gust_factor": 1.94,
     "front_risk": true,
-    "land_tmax_12_15": 19.1,
+    "land_tmax_12_15": 18.9,
     "sst": 23.2,
-    "dT_land_sea": -4.1,
+    "dT_land_sea": -4.3,
     "offshore_component_09_11_kt": 8.7,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
@@ -60,7 +60,7 @@
    ],
    "interpretation": [
     "Gregal/Llevant: wind with fetch from the east bay, usually steadier; watch for chop building through the day.",
-    "Land-sea contrast: inland max 19.1 °C vs sea 23.2 °C (ΔT -4.1 °C); morning offshore component 8.7 kt → sea-breeze potential none (land not warmer than sea).",
+    "Land-sea contrast: inland max 18.9 °C vs sea 23.2 °C (ΔT -4.3 °C); morning offshore component 8.7 kt → sea-breeze potential none (land not warmer than sea).",
     "Over the water: air -4.5 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "Front/instability warning: MSL pressure change 08→18 h -2.0 hPa, AROME gust factor 1.94.",
     "History (NE-E (Gregal / Llevant) (all speeds; fewer than 8 buoy days in the 0-6 kt band), 114 days, Oct-Mar since 2022-11): buoy averaged 12.63 kt (q25-q75 7.22-13.84, n=17) when AROME said 7.7 kt (median of all 114 days). LEPA airport averaged 8.56 kt (n=114). Direction 11→15 h at the buoy: veer 73% / back 18% / steady 9% (n=11)."
@@ -431,9 +431,9 @@
     "pmsl_change_8_18": -2.6,
     "arome_gust_factor": 2.36,
     "front_risk": true,
-    "land_tmax_12_15": 16.2,
+    "land_tmax_12_15": 17.1,
     "sst": 22.9,
-    "dT_land_sea": -6.7,
+    "dT_land_sea": -5.8,
     "offshore_component_09_11_kt": 8.1,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
@@ -451,7 +451,7 @@
    ],
    "interpretation": [
     "Gregal/Llevant: wind with fetch from the east bay, usually steadier; watch for chop building through the day.",
-    "Land-sea contrast: inland max 16.2 °C vs sea 22.9 °C (ΔT -6.7 °C); morning offshore component 8.1 kt → sea-breeze potential none (land not warmer than sea).",
+    "Land-sea contrast: inland max 17.1 °C vs sea 22.9 °C (ΔT -5.8 °C); morning offshore component 8.1 kt → sea-breeze potential none (land not warmer than sea).",
     "Over the water: air -5.9 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "Front/instability warning: MSL pressure change 08→18 h -2.6 hPa, AROME gust factor 2.36.",
     "History (NE-E (Gregal / Llevant), AROME 6-10 kt, 58 days, Oct-Mar since 2022-11): buoy averaged 12.79 kt (q25-q75 10.03-13.55, n=10) when AROME said 7.49 kt (median of all 58 days). LEPA airport averaged 7.9 kt (n=58). Direction 11→15 h at the buoy: veer 83% / back 17% / steady 0% (n=6)."
@@ -822,5 +822,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1793793600|1793793600|6.4|65"
+ "arome_sig": "46|1793793600|1793793600|7.3|65"
 }
