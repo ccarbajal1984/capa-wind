@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-06T16:00:56+00:00",
- "fetched_utc": "2026-11-06T16:00:56+00:00",
+ "generated_utc": "2026-11-06T16:06:10+00:00",
+ "fetched_utc": "2026-11-06T16:06:10+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -805,5 +805,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "45|1794139200|1794139200|4.4|111"
+ "arome_sig": "48|1794150000|1794150000|8.7|132"
 }
