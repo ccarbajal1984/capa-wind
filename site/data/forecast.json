@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-07T12:01:09+00:00",
- "fetched_utc": "2026-11-07T12:01:09+00:00",
+ "generated_utc": "2026-11-07T13:01:02+00:00",
+ "fetched_utc": "2026-11-07T13:01:02+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -401,12 +401,12 @@
     "arome_gust_factor": 1.63,
     "front_risk": true,
     "land_tmax_12_15": 21.3,
-    "sst": 22.2,
-    "dT_land_sea": -0.9,
+    "sst": 22.3,
+    "dT_land_sea": -1.0,
     "offshore_component_09_11_kt": 6.6,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
-    "air_minus_sea": -2.2,
+    "air_minus_sea": -2.4,
     "stability": "unstable (air colder than sea)",
     "cloud_mean_race": 91.0
    },
@@ -420,8 +420,8 @@
    ],
    "interpretation": [
     "Light/variable: expect postponements; any thermal from the S-SW in the afternoon is the likely racing wind.",
-    "Land-sea contrast: inland max 21.3 °C vs sea 22.2 °C (ΔT -0.9 °C); morning offshore component 6.6 kt → sea-breeze potential none (land not warmer than sea).",
-    "Over the water: air -2.2 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
+    "Land-sea contrast: inland max 21.3 °C vs sea 22.3 °C (ΔT -1.0 °C); morning offshore component 6.6 kt → sea-breeze potential none (land not warmer than sea).",
+    "Over the water: air -2.4 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "Front/instability warning: MSL pressure change 08→18 h -1.7 hPa, AROME gust factor 1.63.",
     "Cloud 91% during racing — heavy cloud weakens or delays the thermal.",
     "History (Light / variable (all speeds; fewer than 8 buoy days in the 0-6 kt band), 64 days, Oct-Mar since 2022-11): buoy averaged 4.52 kt (q25-q75 4.3-4.87, n=7) when AROME said 3.48 kt (median of all 64 days). LEPA airport averaged 4.05 kt (n=64)."
@@ -761,5 +761,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1794214800|1794214800|11.7|50"
+ "arome_sig": "45|1794214800|1794214800|11.7|50"
 }
