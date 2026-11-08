@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-08T12:01:08+00:00",
- "fetched_utc": "2026-11-08T12:01:08+00:00",
+ "generated_utc": "2026-11-08T13:01:00+00:00",
+ "fetched_utc": "2026-11-08T13:01:00+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -41,12 +41,12 @@
     "arome_gust_factor": 1.44,
     "front_risk": false,
     "land_tmax_12_15": 21.3,
-    "sst": 22.3,
-    "dT_land_sea": -1.0,
+    "sst": 22.2,
+    "dT_land_sea": -0.9,
     "offshore_component_09_11_kt": 7.5,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
-    "air_minus_sea": -2.4,
+    "air_minus_sea": -2.2,
     "stability": "unstable (air colder than sea)",
     "cloud_mean_race": 100.0
    },
@@ -60,8 +60,8 @@
    ],
    "interpretation": [
     "Gregal/Llevant: wind with fetch from the east bay, usually steadier; watch for chop building through the day.",
-    "Land-sea contrast: inland max 21.3 °C vs sea 22.3 °C (ΔT -1.0 °C); morning offshore component 7.5 kt → sea-breeze potential none (land not warmer than sea).",
-    "Over the water: air -2.4 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
+    "Land-sea contrast: inland max 21.3 °C vs sea 22.2 °C (ΔT -0.9 °C); morning offshore component 7.5 kt → sea-breeze potential none (land not warmer than sea).",
+    "Over the water: air -2.2 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "History (NE-E (Gregal / Llevant) (all speeds; fewer than 8 buoy days in the 0-6 kt band), 114 days, Oct-Mar since 2022-11): buoy averaged 12.63 kt (q25-q75 7.22-13.84, n=17) when AROME said 7.7 kt (median of all 114 days). LEPA airport averaged 8.56 kt (n=114). Direction 11→15 h at the buoy: veer 73% / back 18% / steady 9% (n=11)."
    ],
    "strategy": {
@@ -819,5 +819,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1794301200|1794301200|17.7|271"
+ "arome_sig": "45|1794301200|1794301200|17.7|271"
 }
