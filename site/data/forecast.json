@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-10T01:16:14+00:00",
- "fetched_utc": "2026-11-10T01:16:14+00:00",
+ "generated_utc": "2026-11-10T02:01:05+00:00",
+ "fetched_utc": "2026-11-10T02:01:05+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -40,9 +40,9 @@
     "pmsl_change_8_18": -1.4,
     "arome_gust_factor": 1.48,
     "front_risk": false,
-    "land_tmax_12_15": 23.7,
+    "land_tmax_12_15": 23.6,
     "sst": 22.1,
-    "dT_land_sea": 1.6,
+    "dT_land_sea": 1.5,
     "offshore_component_09_11_kt": 0.0,
     "sb_index": 0.0,
     "sea_breeze_potential": "marginal",
@@ -60,7 +60,7 @@
    ],
    "interpretation": [
     "Synoptic southerly: onshore, steady direction (AROME dir MAE 8° historically), AROME historically over-forecasts by ~2 kt at the buoy.",
-    "Land-sea contrast: inland max 23.7 °C vs sea 22.1 °C (ΔT +1.6 °C); morning offshore component 0.0 kt → sea-breeze potential marginal.",
+    "Land-sea contrast: inland max 23.6 °C vs sea 22.1 °C (ΔT +1.5 °C); morning offshore component 0.0 kt → sea-breeze potential marginal.",
     "Over the water: air +0.0 °C vs sea → near-neutral.",
     "History (Synoptic S-SE-SW (Xaloc / Migjorn / Llebeig) (all speeds; fewer than 8 buoy days in the 10-15 kt band), 112 days, Oct-Mar since 2022-11): buoy averaged 10.23 kt (q25-q75 5.55-13.97, n=19) when AROME said 7.79 kt (median of all 112 days). LEPA airport averaged 9.22 kt (n=112). Direction 11→15 h at the buoy: veer 60% / back 30% / steady 10% (n=10)."
    ],
@@ -806,5 +806,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "48|1794441600|1794441600|17.3|179"
+ "arome_sig": "47|1794441600|1794441600|17.3|179"
 }
