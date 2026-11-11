@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-11T15:01:18+00:00",
- "fetched_utc": "2026-11-11T15:01:18+00:00",
+ "generated_utc": "2026-11-11T15:56:22+00:00",
+ "fetched_utc": "2026-11-11T15:56:22+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -21,24 +21,24 @@
     "name": "Sea breeze (Embat, S-SW)",
     "clim_key": "Sea breeze (Embat, S-SW)",
     "color": "#4CAF7D",
-    "why": "11-16 h mean 9.5 kt from 211°; 07-10 h 3.2 kt from 281°",
-    "mean_spd": 9.5,
-    "mean_dir": 211.1,
+    "why": "11-16 h mean 9.6 kt from 213°; 07-10 h 3.2 kt from 281°",
+    "mean_spd": 9.6,
+    "mean_dir": 212.7,
     "morning_dir": 281.0,
     "morning_spd": 3.2
    },
-   "headline": "Sea breeze (Embat, S-SW): 10 kt avg from SSW (211°) 11-16 h, TRANSITION day. Favoured: middle. Confidence low.",
+   "headline": "Sea breeze (Embat, S-SW): 10 kt avg from SSW (213°) 11-16 h, TRANSITION day. Favoured: middle. Confidence low.",
    "flags": {
     "dir_11": null,
-    "dir_16": 213,
-    "dir_change_race": -14,
-    "max_hourly_step": 9,
+    "dir_16": 223,
+    "dir_change_race": -4,
+    "max_hourly_step": 11,
     "spd_min": 1.4,
-    "spd_max": 12.6,
-    "spd_trend": 9.7,
+    "spd_max": 13.0,
+    "spd_trend": 8.8,
     "transition": true,
     "pmsl_change_8_18": -5.8,
-    "arome_gust_factor": 1.35,
+    "arome_gust_factor": 1.34,
     "front_risk": true,
     "land_tmax_12_15": 23.4,
     "sst": 22.1,
@@ -53,22 +53,22 @@
    "evolution": [
     "11:00 1 kt (g5) S 172°",
     "12:00 8 kt (g11) SW 227°",
-    "13:00 12 kt (g15) SW 218°",
-    "14:00 11 kt (g16) SW 217°",
-    "15:00 13 kt (g16) SW 217°",
-    "16:00 11 kt (g16) SSW 213°"
+    "13:00 12 kt (g15) SW 216°",
+    "14:00 13 kt (g16) SW 215°",
+    "15:00 13 kt (g16) SW 220°",
+    "16:00 10 kt (g16) SW 223°"
    ],
    "interpretation": [
     "Sea-breeze day per AROME: morning W land breeze, then S-SW filling. Climatology (buoy, winter): calm patch ~11 h, ~215° from 12 h, peak ~8.5 kt at 14 h.",
     "Land-sea contrast: inland max 23.4 °C vs sea 22.1 °C (ΔT +1.3 °C); morning offshore component 1.2 kt → sea-breeze potential poor.",
     "Over the water: air -0.6 °C vs sea → near-neutral.",
-    "Front/instability warning: MSL pressure change 08→18 h -5.8 hPa, AROME gust factor 1.35.",
+    "Front/instability warning: MSL pressure change 08→18 h -5.8 hPa, AROME gust factor 1.34.",
     "Cloud 100% during racing — heavy cloud weakens or delays the thermal.",
     "History (Sea breeze (Embat, S-SW), AROME 6-10 kt, 81 days, Oct-Mar since 2022-11): buoy averaged 7.79 kt (q25-q75 6.43-10.49, n=19) when AROME said 7.38 kt (median of all 81 days). LEPA airport averaged 8.2 kt (n=81). Direction 11→15 h at the buoy: veer 50% / back 38% / steady 12% (n=8)."
    ],
    "strategy": {
     "pattern": "transition",
-    "text": "AROME has the wind changing character during racing (direction change -14° 11→16 h, max hourly step 9°). Treat as a transition day: new wind arrives from one side, expect a postponement or a big one-way shift.",
+    "text": "AROME has the wind changing character during racing (direction change -4° 11→16 h, max hourly step 11°). Treat as a transition day: new wind arrives from one side, expect a postponement or a big one-way shift.",
     "history_bias": "History has no clear lean: veer 50% / back 38% / steady 12%.",
     "favoured_side": "middle",
     "side_text": "Favoured side: MIDDLE. Embat fills from the SW across the bay; the Portals/Illetes shore is to the right (north/west) of a SW beat. (inference, verify on the water)",
@@ -79,23 +79,23 @@
     "level": "low",
     "score": 1,
     "why": [
-     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 0.9 kt, |Δdir| 5°",
+     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 1.0 kt, |Δdir| 6°",
      "transition in the race window",
      "front/instability flags (pressure change ≥3 hPa or AROME gust factor ≥1.6)",
      "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 2.1 kt, bias -0.7 kt, dir MAE 20.0° (n=230)"
     ]
    },
    "expected_observed": {
-    "lo": 8.9,
-    "mid": 10.7,
-    "hi": 12.8,
+    "lo": 9.0,
+    "mid": 10.8,
+    "hi": 13.0,
     "ratio": {
      "n": 19,
      "median": 1.13,
      "q25": 0.94,
      "q75": 1.35
     },
-    "text": "AROME 11-16 h mean 9.5 kt × historical ratio of buoy-observed to AROME-Portals (q25 0.94, median 1.13, q75 1.35, n=19 days). Hourly AROME range 1.4-12.6 kt. This is open-bay (SOCIB buoy) wind; inshore Portals usually reads lighter."
+    "text": "AROME 11-16 h mean 9.6 kt × historical ratio of buoy-observed to AROME-Portals (q25 0.94, median 1.13, q75 1.35, n=19 days). Hourly AROME range 1.4-13.0 kt. This is open-bay (SOCIB buoy) wind; inshore Portals usually reads lighter."
    },
    "analogs": {
     "label": "Sea breeze (Embat, S-SW), AROME 6-10 kt",
@@ -310,9 +310,9 @@
     },
     {
      "time": "13:00",
-     "spd": 11.9,
+     "spd": 11.8,
      "gst": 15.4,
-     "dir": 218,
+     "dir": 216,
      "compass": "SW",
      "temp": 21.6,
      "cloud": 100,
@@ -322,9 +322,9 @@
     },
     {
      "time": "14:00",
-     "spd": 11.4,
+     "spd": 12.6,
      "gst": 16.3,
-     "dir": 217,
+     "dir": 215,
      "compass": "SW",
      "temp": 21.5,
      "cloud": 100,
@@ -334,9 +334,9 @@
     },
     {
      "time": "15:00",
-     "spd": 12.6,
+     "spd": 13.0,
      "gst": 15.9,
-     "dir": 217,
+     "dir": 220,
      "compass": "SW",
      "temp": 21.5,
      "cloud": 100,
@@ -346,10 +346,10 @@
     },
     {
      "time": "16:00",
-     "spd": 11.1,
+     "spd": 10.2,
      "gst": 15.9,
-     "dir": 213,
-     "compass": "SSW",
+     "dir": 223,
+     "compass": "SW",
      "temp": 21.3,
      "cloud": 100,
      "pmsl": 1006.0,
@@ -358,10 +358,10 @@
     },
     {
      "time": "17:00",
-     "spd": 8.5,
+     "spd": 8.4,
      "gst": 13.8,
-     "dir": 210,
-     "compass": "SSW",
+     "dir": 218,
+     "compass": "SW",
      "temp": 21.2,
      "cloud": 100,
      "pmsl": 1005.2,
@@ -370,9 +370,9 @@
     },
     {
      "time": "18:00",
-     "spd": 6.8,
+     "spd": 6.4,
      "gst": 10.9,
-     "dir": 207,
+     "dir": 203,
      "compass": "SSW",
      "temp": 21.2,
      "cloud": 100,
@@ -382,10 +382,10 @@
     },
     {
      "time": "19:00",
-     "spd": 6.6,
+     "spd": 6.1,
      "gst": 8.7,
-     "dir": 182,
-     "compass": "S",
+     "dir": 162,
+     "compass": "SSE",
      "temp": 21.3,
      "cloud": 100,
      "pmsl": 1004.5,
@@ -394,9 +394,9 @@
     },
     {
      "time": "20:00",
-     "spd": 4.7,
+     "spd": 5.3,
      "gst": 8.4,
-     "dir": 142,
+     "dir": 141,
      "compass": "SE",
      "temp": 21.4,
      "cloud": 100,
@@ -413,24 +413,24 @@
     "name": "W-WNW (Ponent)",
     "clim_key": "W-WNW (Ponent)",
     "color": "#E57373",
-    "why": "11-16 h mean 28.2 kt from 270°; 07-10 h 20.5 kt from 250°",
-    "mean_spd": 28.2,
-    "mean_dir": 270.2,
+    "why": "11-16 h mean 28.9 kt from 269°; 07-10 h 21.6 kt from 250°",
+    "mean_spd": 28.9,
+    "mean_dir": 268.7,
     "morning_dir": 250.3,
-    "morning_spd": 20.5
+    "morning_spd": 21.6
    },
-   "headline": "W-WNW (Ponent): 28 kt avg from W (270°) 11-16 h, oscillating. Favoured: right. Confidence medium.",
+   "headline": "W-WNW (Ponent): 29 kt avg from W (269°) 11-16 h, oscillating. Favoured: right. Confidence medium.",
    "flags": {
-    "dir_11": 266,
-    "dir_16": 272,
+    "dir_11": 264,
+    "dir_16": 270,
     "dir_change_race": 6,
-    "max_hourly_step": 6,
-    "spd_min": 27.0,
-    "spd_max": 29.0,
-    "spd_trend": -0.7,
+    "max_hourly_step": 3,
+    "spd_min": 28.0,
+    "spd_max": 29.8,
+    "spd_trend": -0.3,
     "transition": false,
     "pmsl_change_8_18": 6.1,
-    "arome_gust_factor": 1.45,
+    "arome_gust_factor": 1.41,
     "front_risk": true,
     "land_tmax_12_15": 23.3,
     "sst": 21.8,
@@ -443,18 +443,18 @@
     "cloud_mean_race": 0.0
    },
    "evolution": [
-    "11:00 28 kt (g40) W 266°",
-    "12:00 28 kt (g42) W 272°",
-    "13:00 29 kt (g41) W 270°",
-    "14:00 28 kt (g41) W 270°",
-    "15:00 29 kt (g41) W 271°",
-    "16:00 27 kt (g41) W 272°"
+    "11:00 28 kt (g40) W 264°",
+    "12:00 30 kt (g42) W 267°",
+    "13:00 30 kt (g41) W 270°",
+    "14:00 29 kt (g41) W 271°",
+    "15:00 28 kt (g41) W 270°",
+    "16:00 28 kt (g41) W 270°"
    ],
    "interpretation": [
     "Ponent over the land: watch the Calvià headland shadows; AROME historically biased +0.9 kt here (HD, buoy point).",
     "Land-sea contrast: inland max 23.3 °C vs sea 21.8 °C (ΔT +1.5 °C); morning offshore component 0.0 kt → sea-breeze potential marginal.",
     "Over the water: air -0.0 °C vs sea → near-neutral.",
-    "Front/instability warning: MSL pressure change 08→18 h 6.1 hPa, AROME gust factor 1.45.",
+    "Front/instability warning: MSL pressure change 08→18 h 6.1 hPa, AROME gust factor 1.41.",
     "History (W-WNW (Ponent) (all speeds; fewer than 8 buoy days in the 20+ kt band), 139 days, Oct-Mar since 2022-11): buoy averaged 12.55 kt (q25-q75 9.15-17.02, n=22) when AROME said 10.52 kt (median of all 139 days). LEPA airport averaged 11.9 kt (n=139). Direction 11→15 h at the buoy: veer 57% / back 36% / steady 7% (n=14)."
    ],
    "strategy": {
@@ -470,22 +470,22 @@
     "level": "medium",
     "score": 2,
     "why": [
-     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 2.2 kt, |Δdir| 3°",
+     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 2.9 kt, |Δdir| 2°",
      "front/instability flags (pressure change ≥3 hPa or AROME gust factor ≥1.6)",
      "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 2.3 kt, bias +0.9 kt, dir MAE 18.0° (n=113)"
     ]
    },
    "expected_observed": {
-    "lo": 30.2,
-    "mid": 36.4,
-    "hi": 37.2,
+    "lo": 30.9,
+    "mid": 37.3,
+    "hi": 38.1,
     "ratio": {
      "n": 22,
      "median": 1.29,
      "q25": 1.07,
      "q75": 1.32
     },
-    "text": "AROME 11-16 h mean 28.2 kt × historical ratio of buoy-observed to AROME-Portals (q25 1.07, median 1.29, q75 1.32, n=22 days). Hourly AROME range 27.0-29.0 kt. This is open-bay (SOCIB buoy) wind; inshore Portals usually reads lighter."
+    "text": "AROME 11-16 h mean 28.9 kt × historical ratio of buoy-observed to AROME-Portals (q25 1.07, median 1.29, q75 1.32, n=22 days). Hourly AROME range 28.0-29.8 kt. This is open-bay (SOCIB buoy) wind; inshore Portals usually reads lighter."
    },
    "analogs": {
     "label": "W-WNW (Ponent) (all speeds; fewer than 8 buoy days in the 20+ kt band)",
@@ -633,9 +633,9 @@
    "hourly": [
     {
      "time": "08:00",
-     "spd": 18.1,
+     "spd": 20.6,
      "gst": 26.8,
-     "dir": 253,
+     "dir": 251,
      "compass": "WSW",
      "temp": 21.7,
      "cloud": 4,
@@ -645,9 +645,9 @@
     },
     {
      "time": "09:00",
-     "spd": 24.5,
+     "spd": 25.1,
      "gst": 35.0,
-     "dir": 252,
+     "dir": 248,
      "compass": "WSW",
      "temp": 22.6,
      "cloud": 0,
@@ -657,10 +657,10 @@
     },
     {
      "time": "10:00",
-     "spd": 27.3,
+     "spd": 27.2,
      "gst": 39.3,
-     "dir": 259,
-     "compass": "W",
+     "dir": 258,
+     "compass": "WSW",
      "temp": 22.3,
      "cloud": 1,
      "pmsl": 996.2,
@@ -669,9 +669,9 @@
     },
     {
      "time": "11:00",
-     "spd": 27.7,
+     "spd": 28.3,
      "gst": 39.8,
-     "dir": 266,
+     "dir": 264,
      "compass": "W",
      "temp": 22.3,
      "cloud": 0,
@@ -681,9 +681,9 @@
     },
     {
      "time": "12:00",
-     "spd": 28.4,
+     "spd": 29.8,
      "gst": 42.0,
-     "dir": 272,
+     "dir": 267,
      "compass": "W",
      "temp": 22.1,
      "cloud": 0,
@@ -693,7 +693,7 @@
     },
     {
      "time": "13:00",
-     "spd": 29.0,
+     "spd": 29.7,
      "gst": 41.2,
      "dir": 270,
      "compass": "W",
@@ -705,9 +705,9 @@
     },
     {
      "time": "14:00",
-     "spd": 28.4,
+     "spd": 29.4,
      "gst": 41.0,
-     "dir": 270,
+     "dir": 271,
      "compass": "W",
      "temp": 21.5,
      "cloud": 0,
@@ -717,9 +717,9 @@
     },
     {
      "time": "15:00",
-     "spd": 28.6,
+     "spd": 28.4,
      "gst": 40.8,
-     "dir": 271,
+     "dir": 270,
      "compass": "W",
      "temp": 21.5,
      "cloud": 1,
@@ -729,9 +729,9 @@
     },
     {
      "time": "16:00",
-     "spd": 27.0,
+     "spd": 28.0,
      "gst": 40.6,
-     "dir": 272,
+     "dir": 270,
      "compass": "W",
      "temp": 21.5,
      "cloud": 0,
@@ -741,9 +741,9 @@
     },
     {
      "time": "17:00",
-     "spd": 25.7,
+     "spd": 26.6,
      "gst": 38.5,
-     "dir": 272,
+     "dir": 271,
      "compass": "W",
      "temp": 21.5,
      "cloud": 0,
@@ -753,9 +753,9 @@
     },
     {
      "time": "18:00",
-     "spd": 25.3,
+     "spd": 26.2,
      "gst": 36.9,
-     "dir": 272,
+     "dir": 269,
      "compass": "W",
      "temp": 21.6,
      "cloud": 0,
@@ -765,7 +765,7 @@
     },
     {
      "time": "19:00",
-     "spd": 27.8,
+     "spd": 26.6,
      "gst": 40.0,
      "dir": 269,
      "compass": "W",
@@ -777,9 +777,9 @@
     },
     {
      "time": "20:00",
-     "spd": 26.7,
+     "spd": 27.8,
      "gst": 42.0,
-     "dir": 266,
+     "dir": 268,
      "compass": "W",
      "temp": 21.8,
      "cloud": 0,
@@ -816,5 +816,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1794571200|1794571200|17.6|277"
+ "arome_sig": "48|1794578400|1794578400|17.0|274"
 }
