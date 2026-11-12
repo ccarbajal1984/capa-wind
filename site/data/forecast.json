@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-12T19:01:08+00:00",
- "fetched_utc": "2026-11-12T19:01:08+00:00",
+ "generated_utc": "2026-11-12T20:01:34+00:00",
+ "fetched_utc": "2026-11-12T20:01:34+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -355,7 +355,7 @@
      "compass": "W",
      "temp": 21.7,
      "cloud": 0,
-     "pmsl": 999.1,
+     "pmsl": 998.9,
      "src": "AROME HD",
      "fr_dir": 267
     },
@@ -379,7 +379,7 @@
      "compass": "W",
      "temp": 22.2,
      "cloud": 0,
-     "pmsl": 1000.8,
+     "pmsl": 1000.5,
      "src": "AROME HD",
      "fr_dir": 265
     },
@@ -391,7 +391,7 @@
      "compass": "W",
      "temp": 22.2,
      "cloud": 0,
-     "pmsl": 1001.5,
+     "pmsl": 1001.3,
      "src": "AROME HD",
      "fr_dir": 261
     }
@@ -420,7 +420,7 @@
     "spd_max": 19.6,
     "spd_trend": -2.0,
     "transition": false,
-    "pmsl_change_8_18": 4.5,
+    "pmsl_change_8_18": 4.6,
     "arome_gust_factor": 1.43,
     "front_risk": true,
     "land_tmax_12_15": 22.1,
@@ -445,7 +445,7 @@
     "Ponent over the land: watch the Calvià headland shadows; AROME historically biased +0.9 kt here (HD, buoy point).",
     "Land-sea contrast: inland max 22.1 °C vs sea 20.7 °C (ΔT +1.4 °C); morning offshore component 0.0 kt → sea-breeze potential poor.",
     "Over the water: air +0.2 °C vs sea → near-neutral.",
-    "Front/instability warning: MSL pressure change 08→18 h 4.5 hPa, AROME gust factor 1.43.",
+    "Front/instability warning: MSL pressure change 08→18 h 4.6 hPa, AROME gust factor 1.43.",
     "History (W-WNW (Ponent) (all speeds; fewer than 8 buoy days in the 15-20 kt band), 139 days, Oct-Mar since 2022-11): buoy averaged 12.55 kt (q25-q75 9.15-17.02, n=22) when AROME said 10.52 kt (median of all 139 days). LEPA airport averaged 11.9 kt (n=139). Direction 11→15 h at the buoy: veer 57% / back 36% / steady 7% (n=14)."
    ],
    "strategy": {
@@ -661,7 +661,7 @@
      "compass": "W",
      "temp": 20.9,
      "cloud": 0,
-     "pmsl": 1007.8,
+     "pmsl": 1007.9,
      "src": "AROME HD",
      "fr_dir": 272
     },
@@ -673,7 +673,7 @@
      "compass": "W",
      "temp": 21.0,
      "cloud": 0,
-     "pmsl": 1008.6,
+     "pmsl": 1008.5,
      "src": "AROME HD",
      "fr_dir": 273
     },
@@ -709,7 +709,7 @@
      "compass": "W",
      "temp": 20.9,
      "cloud": 0,
-     "pmsl": 1008.8,
+     "pmsl": 1008.9,
      "src": "AROME HD",
      "fr_dir": 268
     },
@@ -757,7 +757,7 @@
      "compass": "W",
      "temp": 20.9,
      "cloud": 0,
-     "pmsl": 1011.0,
+     "pmsl": 1011.1,
      "src": "AROME HD",
      "fr_dir": 271
     },
@@ -814,5 +814,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "48|1794679200|1794679200|11.6|243"
+ "arome_sig": "47|1794679200|1794679200|11.6|243"
 }
