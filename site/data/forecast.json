@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-13T19:01:26+00:00",
- "fetched_utc": "2026-11-13T19:01:26+00:00",
+ "generated_utc": "2026-11-13T20:01:01+00:00",
+ "fetched_utc": "2026-11-13T20:01:01+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -361,7 +361,7 @@
      "dir": 269,
      "compass": "W",
      "temp": 20.6,
-     "cloud": 3,
+     "cloud": 6,
      "pmsl": 1010.4,
      "src": "AROME HD",
      "fr_dir": 265
@@ -398,7 +398,7 @@
      "compass": "WSW",
      "temp": 20.8,
      "cloud": 0,
-     "pmsl": 1011.9,
+     "pmsl": 1012.0,
      "src": "AROME HD",
      "fr_dir": 255
     }
@@ -427,7 +427,7 @@
     "spd_max": 16.6,
     "spd_trend": 0.0,
     "transition": false,
-    "pmsl_change_8_18": 1.1,
+    "pmsl_change_8_18": 1.0,
     "arome_gust_factor": 1.43,
     "front_risk": false,
     "land_tmax_12_15": 21.7,
@@ -438,7 +438,7 @@
     "sea_breeze_potential": "poor",
     "air_minus_sea": -0.4,
     "stability": "near-neutral",
-    "cloud_mean_race": 5.0
+    "cloud_mean_race": 4.0
    },
    "evolution": [
     "11:00 14 kt (g20) W 259°",
@@ -634,8 +634,8 @@
      "dir": 270,
      "compass": "W",
      "temp": 20.2,
-     "cloud": 0,
-     "pmsl": 1014.9,
+     "cloud": 1,
+     "pmsl": 1015.0,
      "src": "AROME HD",
      "fr_dir": 269
     },
@@ -646,7 +646,7 @@
      "dir": 263,
      "compass": "W",
      "temp": 20.3,
-     "cloud": 5,
+     "cloud": 14,
      "pmsl": 1015.7,
      "src": "AROME HD",
      "fr_dir": 262
@@ -658,7 +658,7 @@
      "dir": 259,
      "compass": "W",
      "temp": 20.4,
-     "cloud": 46,
+     "cloud": 38,
      "pmsl": 1015.8,
      "src": "AROME HD",
      "fr_dir": 256
@@ -670,7 +670,7 @@
      "dir": 259,
      "compass": "W",
      "temp": 20.4,
-     "cloud": 21,
+     "cloud": 23,
      "pmsl": 1016.2,
      "src": "AROME HD",
      "fr_dir": 256
@@ -683,7 +683,7 @@
      "compass": "WSW",
      "temp": 20.5,
      "cloud": 3,
-     "pmsl": 1016.4,
+     "pmsl": 1016.3,
      "src": "AROME HD",
      "fr_dir": 256
     },
@@ -706,8 +706,8 @@
      "dir": 261,
      "compass": "W",
      "temp": 20.5,
-     "cloud": 3,
-     "pmsl": 1015.5,
+     "cloud": 0,
+     "pmsl": 1015.4,
      "src": "AROME HD",
      "fr_dir": 258
     },
@@ -731,7 +731,7 @@
      "compass": "WSW",
      "temp": 20.7,
      "cloud": 0,
-     "pmsl": 1015.4,
+     "pmsl": 1015.3,
      "src": "AROME HD",
      "fr_dir": 256
     },
@@ -778,7 +778,7 @@
      "dir": 239,
      "compass": "WSW",
      "temp": 20.8,
-     "cloud": 1,
+     "cloud": 0,
      "pmsl": 1017.1,
      "src": "AROME HD",
      "fr_dir": 243
@@ -812,5 +812,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "48|1794765600|1794765600|9.5|242"
+ "arome_sig": "47|1794765600|1794765600|9.5|242"
 }
