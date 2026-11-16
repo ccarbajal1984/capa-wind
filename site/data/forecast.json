@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-16T11:21:09+00:00",
- "fetched_utc": "2026-11-16T11:21:09+00:00",
+ "generated_utc": "2026-11-16T12:07:07+00:00",
+ "fetched_utc": "2026-11-16T12:07:07+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -41,12 +41,12 @@
     "arome_gust_factor": 1.33,
     "front_risk": false,
     "land_tmax_12_15": 21.5,
-    "sst": 20.3,
-    "dT_land_sea": 1.2,
+    "sst": 20.4,
+    "dT_land_sea": 1.1,
     "offshore_component_09_11_kt": 0.0,
     "sb_index": 0.0,
     "sea_breeze_potential": "poor",
-    "air_minus_sea": 0.0,
+    "air_minus_sea": -0.1,
     "stability": "near-neutral",
     "cloud_mean_race": 54.0
    },
@@ -60,8 +60,8 @@
    ],
    "interpretation": [
     "Sea-breeze day per AROME: morning WNW land breeze, then S-SW filling. Climatology (buoy, winter): calm patch ~11 h, ~215° from 12 h, peak ~8.5 kt at 14 h.",
-    "Land-sea contrast: inland max 21.5 °C vs sea 20.3 °C (ΔT +1.2 °C); morning offshore component 0.0 kt → sea-breeze potential poor.",
-    "Over the water: air +0.0 °C vs sea → near-neutral.",
+    "Land-sea contrast: inland max 21.5 °C vs sea 20.4 °C (ΔT +1.1 °C); morning offshore component 0.0 kt → sea-breeze potential poor.",
+    "Over the water: air -0.1 °C vs sea → near-neutral.",
     "Cloud 54% during racing.",
     "History (Sea breeze (Embat, S-SW), AROME 6-10 kt, 81 days, Oct-Mar since 2022-11): buoy averaged 7.79 kt (q25-q75 6.43-10.49, n=19) when AROME said 7.38 kt (median of all 81 days). LEPA airport averaged 8.2 kt (n=81). Direction 11→15 h at the buoy: veer 50% / back 38% / steady 12% (n=8)."
    ],
@@ -818,5 +818,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "44|1794981600|1794981600|21.9|260"
+ "arome_sig": "43|1794981600|1794981600|21.5|261"
 }
