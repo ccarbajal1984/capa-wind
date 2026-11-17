@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-16T23:06:58+00:00",
- "fetched_utc": "2026-11-16T23:06:58+00:00",
+ "generated_utc": "2026-11-17T00:06:24+00:00",
+ "fetched_utc": "2026-11-17T00:06:24+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -37,12 +37,12 @@
     "spd_max": 22.0,
     "spd_trend": -6.4,
     "transition": false,
-    "pmsl_change_8_18": -2.6,
+    "pmsl_change_8_18": -2.3,
     "arome_gust_factor": 1.47,
     "front_risk": false,
-    "land_tmax_12_15": 22.8,
+    "land_tmax_12_15": 22.7,
     "sst": 20.2,
-    "dT_land_sea": 2.6,
+    "dT_land_sea": 2.5,
     "offshore_component_09_11_kt": 0.0,
     "sb_index": 0.0,
     "sea_breeze_potential": "marginal",
@@ -60,7 +60,7 @@
    ],
    "interpretation": [
     "Ponent over the land: watch the Calvià headland shadows; AROME historically biased +0.9 kt here (HD, buoy point).",
-    "Land-sea contrast: inland max 22.8 °C vs sea 20.2 °C (ΔT +2.6 °C); morning offshore component 0.0 kt → sea-breeze potential marginal.",
+    "Land-sea contrast: inland max 22.7 °C vs sea 20.2 °C (ΔT +2.5 °C); morning offshore component 0.0 kt → sea-breeze potential marginal.",
     "Over the water: air +1.1 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
     "History (W-WNW (Ponent) (all speeds; fewer than 8 buoy days in the 15-20 kt band), 139 days, Oct-Mar since 2022-11): buoy averaged 12.55 kt (q25-q75 9.15-17.02, n=22) when AROME said 10.52 kt (median of all 139 days). LEPA airport averaged 11.9 kt (n=139). Direction 11→15 h at the buoy: veer 57% / back 36% / steady 7% (n=14)."
    ],
@@ -77,7 +77,7 @@
     "level": "high",
     "score": 3,
     "why": [
-     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 1.6 kt, |Δdir| 2°",
+     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 0.3 kt, |Δdir| 2°",
      "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 2.3 kt, bias +0.9 kt, dir MAE 18.0° (n=113)"
     ]
    },
@@ -251,8 +251,8 @@
      "dir": 249,
      "compass": "WSW",
      "temp": 20.3,
-     "cloud": 0,
-     "pmsl": 1014.1,
+     "cloud": 1,
+     "pmsl": 1013.7,
      "src": "AROME HD",
      "fr_dir": 252
     },
@@ -263,10 +263,10 @@
      "dir": 250,
      "compass": "WSW",
      "temp": 20.8,
-     "cloud": 48,
+     "cloud": 0,
      "pmsl": 1014.0,
      "src": "AROME HD",
-     "fr_dir": 252
+     "fr_dir": 253
     },
     {
      "time": "10:00",
@@ -276,9 +276,9 @@
      "compass": "WSW",
      "temp": 21.0,
      "cloud": 100,
-     "pmsl": 1013.9,
+     "pmsl": 1013.8,
      "src": "AROME HD",
-     "fr_dir": 253
+     "fr_dir": 251
     },
     {
      "time": "11:00",
@@ -290,7 +290,7 @@
      "cloud": 100,
      "pmsl": 1013.5,
      "src": "AROME HD",
-     "fr_dir": 255
+     "fr_dir": 253
     },
     {
      "time": "12:00",
@@ -300,9 +300,9 @@
      "compass": "WSW",
      "temp": 21.2,
      "cloud": 100,
-     "pmsl": 1013.2,
+     "pmsl": 1013.1,
      "src": "AROME HD",
-     "fr_dir": 252
+     "fr_dir": 250
     },
     {
      "time": "13:00",
@@ -312,7 +312,7 @@
      "compass": "WSW",
      "temp": 21.4,
      "cloud": 100,
-     "pmsl": 1012.3,
+     "pmsl": 1012.2,
      "src": "AROME HD",
      "fr_dir": 250
     },
@@ -324,7 +324,7 @@
      "compass": "WSW",
      "temp": 21.3,
      "cloud": 100,
-     "pmsl": 1011.7,
+     "pmsl": 1011.8,
      "src": "AROME HD",
      "fr_dir": 252
     },
@@ -336,9 +336,9 @@
      "compass": "WSW",
      "temp": 21.4,
      "cloud": 100,
-     "pmsl": 1011.3,
+     "pmsl": 1011.2,
      "src": "AROME HD",
-     "fr_dir": 252
+     "fr_dir": 258
     },
     {
      "time": "16:00",
@@ -360,9 +360,9 @@
      "compass": "W",
      "temp": 21.7,
      "cloud": 100,
-     "pmsl": 1011.4,
+     "pmsl": 1011.3,
      "src": "AROME HD",
-     "fr_dir": 255
+     "fr_dir": 263
     },
     {
      "time": "18:00",
@@ -372,9 +372,9 @@
      "compass": "W",
      "temp": 21.8,
      "cloud": 100,
-     "pmsl": 1011.5,
+     "pmsl": 1011.4,
      "src": "AROME HD",
-     "fr_dir": 255
+     "fr_dir": 261
     },
     {
      "time": "19:00",
@@ -386,7 +386,7 @@
      "cloud": 100,
      "pmsl": 1011.4,
      "src": "AROME HD",
-     "fr_dir": 251
+     "fr_dir": 256
     },
     {
      "time": "20:00",
@@ -395,8 +395,8 @@
      "dir": 250,
      "compass": "WSW",
      "temp": 21.3,
-     "cloud": 99,
-     "pmsl": 1011.4,
+     "cloud": 100,
+     "pmsl": 1011.3,
      "src": "AROME HD",
      "fr_dir": 253
     }
@@ -428,15 +428,15 @@
     "pmsl_change_8_18": -1.8,
     "arome_gust_factor": 1.56,
     "front_risk": false,
-    "land_tmax_12_15": 24.5,
+    "land_tmax_12_15": 24.3,
     "sst": 19.6,
-    "dT_land_sea": 4.9,
+    "dT_land_sea": 4.7,
     "offshore_component_09_11_kt": 0.0,
     "sb_index": 0.0,
     "sea_breeze_potential": "good",
     "air_minus_sea": 2.6,
     "stability": "stable (air warmer than sea)",
-    "cloud_mean_race": 23.0
+    "cloud_mean_race": 33.0
    },
    "evolution": [
     "11:00 22 kt (g32) W 261°",
@@ -448,7 +448,7 @@
    ],
    "interpretation": [
     "Synoptic southerly: onshore, steady direction (AROME dir MAE 8° historically), AROME historically over-forecasts by ~2 kt at the buoy.",
-    "Land-sea contrast: inland max 24.5 °C vs sea 19.6 °C (ΔT +4.9 °C); morning offshore component 0.0 kt → sea-breeze potential good.",
+    "Land-sea contrast: inland max 24.3 °C vs sea 19.6 °C (ΔT +4.7 °C); morning offshore component 0.0 kt → sea-breeze potential good.",
     "Over the water: air +2.6 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
     "History (Synoptic S-SE-SW (Xaloc / Migjorn / Llebeig) (all speeds; fewer than 8 buoy days in the 15-20 kt band), 112 days, Oct-Mar since 2022-11): buoy averaged 10.23 kt (q25-q75 5.55-13.97, n=19) when AROME said 7.79 kt (median of all 112 days). LEPA airport averaged 9.22 kt (n=112). Direction 11→15 h at the buoy: veer 60% / back 30% / steady 10% (n=10)."
    ],
@@ -465,7 +465,7 @@
     "level": "medium",
     "score": 2,
     "why": [
-     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 1.7 kt, |Δdir| 9°",
+     "AROME HD vs AROME France 11-16 h: mean |Δspeed| 0.6 kt, |Δdir| 4°",
      "AROME HD historical error in this regime at the buoy (Oct-Mar 11-16 h): MAE 2.9 kt, bias +2.0 kt, dir MAE 8.0° (n=64)"
     ]
    },
@@ -639,10 +639,10 @@
      "dir": 267,
      "compass": "W",
      "temp": 21.4,
-     "cloud": 96,
-     "pmsl": 1011.8,
+     "cloud": 0,
+     "pmsl": 1011.9,
      "src": "AROME HD",
-     "fr_dir": 268
+     "fr_dir": 267
     },
     {
      "time": "09:00",
@@ -651,10 +651,10 @@
      "dir": 263,
      "compass": "W",
      "temp": 21.7,
-     "cloud": 99,
-     "pmsl": 1011.9,
+     "cloud": 0,
+     "pmsl": 1012.0,
      "src": "AROME HD",
-     "fr_dir": 257
+     "fr_dir": 264
     },
     {
      "time": "10:00",
@@ -663,10 +663,10 @@
      "dir": 262,
      "compass": "W",
      "temp": 22.0,
-     "cloud": 94,
+     "cloud": 0,
      "pmsl": 1011.9,
      "src": "AROME HD",
-     "fr_dir": 252
+     "fr_dir": 263
     },
     {
      "time": "11:00",
@@ -675,10 +675,10 @@
      "dir": 261,
      "compass": "W",
      "temp": 22.1,
-     "cloud": 2,
-     "pmsl": 1011.7,
+     "cloud": 6,
+     "pmsl": 1011.9,
      "src": "AROME HD",
-     "fr_dir": 257
+     "fr_dir": 262
     },
     {
      "time": "12:00",
@@ -687,10 +687,10 @@
      "dir": 249,
      "compass": "WSW",
      "temp": 22.3,
-     "cloud": 23,
-     "pmsl": 1011.5,
+     "cloud": 1,
+     "pmsl": 1011.7,
      "src": "AROME HD",
-     "fr_dir": 238
+     "fr_dir": 252
     },
     {
      "time": "13:00",
@@ -699,10 +699,10 @@
      "dir": 249,
      "compass": "WSW",
      "temp": 22.3,
-     "cloud": 3,
+     "cloud": 100,
      "pmsl": 1010.8,
      "src": "AROME HD",
-     "fr_dir": 244
+     "fr_dir": 251
     },
     {
      "time": "14:00",
@@ -714,7 +714,7 @@
      "cloud": 0,
      "pmsl": 1010.2,
      "src": "AROME HD",
-     "fr_dir": 245
+     "fr_dir": 241
     },
     {
      "time": "15:00",
@@ -723,10 +723,10 @@
      "dir": 242,
      "compass": "WSW",
      "temp": 22.3,
-     "cloud": 11,
-     "pmsl": 1009.8,
+     "cloud": 91,
+     "pmsl": 1010.1,
      "src": "AROME HD",
-     "fr_dir": 252
+     "fr_dir": 248
     },
     {
      "time": "16:00",
@@ -735,10 +735,10 @@
      "dir": 240,
      "compass": "WSW",
      "temp": 21.9,
-     "cloud": 100,
+     "cloud": 0,
      "pmsl": 1009.9,
      "src": "AROME HD",
-     "fr_dir": 254
+     "fr_dir": 245
     },
     {
      "time": "17:00",
@@ -747,8 +747,8 @@
      "dir": 248,
      "compass": "WSW",
      "temp": 21.6,
-     "cloud": 7,
-     "pmsl": 1009.9,
+     "cloud": 98,
+     "pmsl": 1010.0,
      "src": "AROME HD",
      "fr_dir": 256
     },
@@ -760,9 +760,9 @@
      "compass": "WSW",
      "temp": 21.5,
      "cloud": 100,
-     "pmsl": 1010.0,
+     "pmsl": 1010.1,
      "src": "AROME HD",
-     "fr_dir": 256
+     "fr_dir": 260
     },
     {
      "time": "19:00",
@@ -771,10 +771,10 @@
      "dir": 248,
      "compass": "WSW",
      "temp": 21.4,
-     "cloud": 99,
+     "cloud": 87,
      "pmsl": 1010.2,
      "src": "AROME HD",
-     "fr_dir": 257
+     "fr_dir": 261
     },
     {
      "time": "20:00",
@@ -783,10 +783,10 @@
      "dir": 243,
      "compass": "WSW",
      "temp": 21.4,
-     "cloud": null,
-     "pmsl": null,
+     "cloud": 7,
+     "pmsl": 1010.1,
      "src": "AROME HD",
-     "fr_dir": null
+     "fr_dir": 262
     }
    ]
   }
@@ -817,5 +817,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "47|1795035600|1795035600|13.0|248"
+ "arome_sig": "46|1795035600|1795035600|13.0|248"
 }
