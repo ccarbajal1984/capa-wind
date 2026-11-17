@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-17T12:01:16+00:00",
- "fetched_utc": "2026-11-17T12:01:16+00:00",
+ "generated_utc": "2026-11-17T13:01:44+00:00",
+ "fetched_utc": "2026-11-17T13:01:44+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -429,12 +429,12 @@
     "arome_gust_factor": 1.52,
     "front_risk": false,
     "land_tmax_12_15": 24.4,
-    "sst": 19.6,
-    "dT_land_sea": 4.8,
+    "sst": 19.7,
+    "dT_land_sea": 4.7,
     "offshore_component_09_11_kt": 0.0,
     "sb_index": 0.0,
     "sea_breeze_potential": "good",
-    "air_minus_sea": 2.4,
+    "air_minus_sea": 2.3,
     "stability": "stable (air warmer than sea)",
     "cloud_mean_race": 28.0
    },
@@ -448,8 +448,8 @@
    ],
    "interpretation": [
     "Synoptic southerly: onshore, steady direction (AROME dir MAE 8° historically), AROME historically over-forecasts by ~2 kt at the buoy.",
-    "Land-sea contrast: inland max 24.4 °C vs sea 19.6 °C (ΔT +4.8 °C); morning offshore component 0.0 kt → sea-breeze potential good.",
-    "Over the water: air +2.4 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
+    "Land-sea contrast: inland max 24.4 °C vs sea 19.7 °C (ΔT +4.7 °C); morning offshore component 0.0 kt → sea-breeze potential good.",
+    "Over the water: air +2.3 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
     "History (Synoptic S-SE-SW (Xaloc / Migjorn / Llebeig) (all speeds; fewer than 8 buoy days in the 15-20 kt band), 112 days, Oct-Mar since 2022-11): buoy averaged 10.23 kt (q25-q75 5.55-13.97, n=19) when AROME said 7.79 kt (median of all 112 days). LEPA airport averaged 9.22 kt (n=112). Direction 11→15 h at the buoy: veer 60% / back 30% / steady 10% (n=10)."
    ],
    "strategy": {
@@ -817,5 +817,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1795078800|1795078800|25.5|273"
+ "arome_sig": "45|1795078800|1795078800|25.5|273"
 }
