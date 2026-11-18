@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-18T12:01:53+00:00",
- "fetched_utc": "2026-11-18T12:01:53+00:00",
+ "generated_utc": "2026-11-18T13:01:47+00:00",
+ "fetched_utc": "2026-11-18T13:01:47+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -41,12 +41,12 @@
     "arome_gust_factor": 1.45,
     "front_risk": false,
     "land_tmax_12_15": 24.4,
-    "sst": 19.7,
-    "dT_land_sea": 4.7,
+    "sst": 19.6,
+    "dT_land_sea": 4.8,
     "offshore_component_09_11_kt": 0.0,
     "sb_index": 0.0,
     "sea_breeze_potential": "good",
-    "air_minus_sea": 2.0,
+    "air_minus_sea": 2.1,
     "stability": "stable (air warmer than sea)",
     "cloud_mean_race": 36.0
    },
@@ -60,8 +60,8 @@
    ],
    "interpretation": [
     "Synoptic southerly: onshore, steady direction (AROME dir MAE 8° historically), AROME historically over-forecasts by ~2 kt at the buoy.",
-    "Land-sea contrast: inland max 24.4 °C vs sea 19.7 °C (ΔT +4.7 °C); morning offshore component 0.0 kt → sea-breeze potential good.",
-    "Over the water: air +2.0 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
+    "Land-sea contrast: inland max 24.4 °C vs sea 19.6 °C (ΔT +4.8 °C); morning offshore component 0.0 kt → sea-breeze potential good.",
+    "Over the water: air +2.1 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
     "History (Synoptic S-SE-SW (Xaloc / Migjorn / Llebeig) (all speeds; fewer than 8 buoy days in the 15-20 kt band), 112 days, Oct-Mar since 2022-11): buoy averaged 10.23 kt (q25-q75 5.55-13.97, n=19) when AROME said 7.79 kt (median of all 112 days). LEPA airport averaged 9.22 kt (n=112). Direction 11→15 h at the buoy: veer 60% / back 30% / steady 10% (n=10)."
    ],
    "strategy": {
@@ -422,12 +422,12 @@
     "arome_gust_factor": 2.14,
     "front_risk": true,
     "land_tmax_12_15": 20.7,
-    "sst": 19.6,
-    "dT_land_sea": 1.1,
+    "sst": 19.5,
+    "dT_land_sea": 1.2,
     "offshore_component_09_11_kt": 0.0,
     "sb_index": 0.0,
     "sea_breeze_potential": "poor",
-    "air_minus_sea": 1.1,
+    "air_minus_sea": 1.2,
     "stability": "stable (air warmer than sea)",
     "cloud_mean_race": 38.0
    },
@@ -441,8 +441,8 @@
    ],
    "interpretation": [
     "Offshore northerly: gusty and shifty near shore, flatter water close in; expect the wind to ease or back late if the gradient weakens (watch AROME trend).",
-    "Land-sea contrast: inland max 20.7 °C vs sea 19.6 °C (ΔT +1.1 °C); morning offshore component 0.0 kt → sea-breeze potential poor.",
-    "Over the water: air +1.1 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
+    "Land-sea contrast: inland max 20.7 °C vs sea 19.5 °C (ΔT +1.2 °C); morning offshore component 0.0 kt → sea-breeze potential poor.",
+    "Over the water: air +1.2 °C vs sea → stable (air warmer than sea). Expect smoother but layered wind; gusts weaker than AROME may show.",
     "Front/instability warning: MSL pressure change 08→18 h 6.3 hPa, AROME gust factor 2.14.",
     "History (Northerly (Tramuntana / Mestral) (all speeds; fewer than 8 buoy days in the 10-15 kt band), 104 days, Oct-Mar since 2022-11): buoy averaged 11.86 kt (q25-q75 9.58-13.36, n=20) when AROME said 8.05 kt (median of all 104 days). LEPA airport averaged 11.05 kt (n=104). Direction 11→15 h at the buoy: veer 50% / back 33% / steady 17% (n=6)."
    ],
@@ -806,5 +806,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1795165200|1795165200|6.0|283"
+ "arome_sig": "45|1795165200|1795165200|6.0|283"
 }
