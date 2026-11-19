@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-19T15:56:44+00:00",
- "fetched_utc": "2026-11-19T15:56:44+00:00",
+ "generated_utc": "2026-11-19T16:02:06+00:00",
+ "fetched_utc": "2026-11-19T16:02:06+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -48,7 +48,7 @@
     "sea_breeze_potential": "poor",
     "air_minus_sea": 0.9,
     "stability": "near-neutral",
-    "cloud_mean_race": 17.0
+    "cloud_mean_race": 18.0
    },
    "evolution": [
     "11:00 14 kt (g32) NW 313°",
@@ -325,7 +325,7 @@
      "dir": 309,
      "compass": "NW",
      "temp": 20.6,
-     "cloud": 0,
+     "cloud": 5,
      "pmsl": 1011.0,
      "src": "AROME HD",
      "fr_dir": 304
@@ -337,7 +337,7 @@
      "dir": 297,
      "compass": "WNW",
      "temp": 20.7,
-     "cloud": 1,
+     "cloud": 0,
      "pmsl": 1011.3,
      "src": "AROME HD",
      "fr_dir": 291
@@ -634,7 +634,7 @@
      "dir": 288,
      "compass": "WNW",
      "temp": 18.3,
-     "cloud": 10,
+     "cloud": 2,
      "pmsl": 1020.3,
      "src": "AROME HD",
      "fr_dir": 287
@@ -766,7 +766,7 @@
      "dir": 293,
      "compass": "WNW",
      "temp": 18.5,
-     "cloud": 100,
+     "cloud": 90,
      "pmsl": 1022.7,
      "src": "AROME HD",
      "fr_dir": 285
@@ -778,7 +778,7 @@
      "dir": 285,
      "compass": "WNW",
      "temp": 18.0,
-     "cloud": 98,
+     "cloud": 56,
      "pmsl": 1023.1,
      "src": "AROME HD",
      "fr_dir": 270
@@ -812,5 +812,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "48|1795269600|1795269600|4.1|185"
+ "arome_sig": "48|1795273200|1795273200|6.8|193"
 }
