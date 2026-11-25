@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-25T12:01:32+00:00",
- "fetched_utc": "2026-11-25T12:01:32+00:00",
+ "generated_utc": "2026-11-25T13:01:58+00:00",
+ "fetched_utc": "2026-11-25T13:01:58+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -422,12 +422,12 @@
     "arome_gust_factor": 1.67,
     "front_risk": true,
     "land_tmax_12_15": 16.3,
-    "sst": 18.6,
-    "dT_land_sea": -2.3,
+    "sst": 18.4,
+    "dT_land_sea": -2.1,
     "offshore_component_09_11_kt": 5.0,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
-    "air_minus_sea": -2.4,
+    "air_minus_sea": -2.2,
     "stability": "unstable (air colder than sea)",
     "cloud_mean_race": 27.0
    },
@@ -441,8 +441,8 @@
    ],
    "interpretation": [
     "Offshore northerly: gusty and shifty near shore, flatter water close in; expect the wind to ease or back late if the gradient weakens (watch AROME trend).",
-    "Land-sea contrast: inland max 16.3 °C vs sea 18.6 °C (ΔT -2.3 °C); morning offshore component 5.0 kt → sea-breeze potential none (land not warmer than sea).",
-    "Over the water: air -2.4 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
+    "Land-sea contrast: inland max 16.3 °C vs sea 18.4 °C (ΔT -2.1 °C); morning offshore component 5.0 kt → sea-breeze potential none (land not warmer than sea).",
+    "Over the water: air -2.2 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "Front/instability warning: MSL pressure change 08→18 h 0.2 hPa, AROME gust factor 1.67.",
     "History (Northerly (Tramuntana / Mestral) (all speeds; fewer than 8 buoy days in the 10-15 kt band), 104 days, Oct-Mar since 2022-11): buoy averaged 11.86 kt (q25-q75 9.58-13.36, n=20) when AROME said 8.05 kt (median of all 104 days). LEPA airport averaged 11.05 kt (n=104). Direction 11→15 h at the buoy: veer 50% / back 33% / steady 17% (n=6)."
    ],
@@ -813,5 +813,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1795770000|1795770000|5.2|48"
+ "arome_sig": "45|1795770000|1795770000|5.2|48"
 }
