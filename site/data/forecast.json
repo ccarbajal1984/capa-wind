@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-27T12:01:36+00:00",
- "fetched_utc": "2026-11-27T12:01:36+00:00",
+ "generated_utc": "2026-11-27T13:01:39+00:00",
+ "fetched_utc": "2026-11-27T13:01:39+00:00",
  "point": {
   "lat": 39.515,
   "lon": 2.565,
@@ -430,12 +430,12 @@
     "arome_gust_factor": 1.38,
     "front_risk": false,
     "land_tmax_12_15": 18.0,
-    "sst": 18.4,
-    "dT_land_sea": -0.4,
+    "sst": 18.5,
+    "dT_land_sea": -0.5,
     "offshore_component_09_11_kt": 1.0,
     "sb_index": null,
     "sea_breeze_potential": "none (land not warmer than sea)",
-    "air_minus_sea": -2.1,
+    "air_minus_sea": -2.2,
     "stability": "unstable (air colder than sea)",
     "cloud_mean_race": 0.0
    },
@@ -449,8 +449,8 @@
    ],
    "interpretation": [
     "Sea-breeze day per AROME: morning ENE land breeze, then S-SW filling. Climatology (buoy, winter): calm patch ~11 h, ~215° from 12 h, peak ~8.5 kt at 14 h.",
-    "Land-sea contrast: inland max 18.0 °C vs sea 18.4 °C (ΔT -0.4 °C); morning offshore component 1.0 kt → sea-breeze potential none (land not warmer than sea).",
-    "Over the water: air -2.1 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
+    "Land-sea contrast: inland max 18.0 °C vs sea 18.5 °C (ΔT -0.5 °C); morning offshore component 1.0 kt → sea-breeze potential none (land not warmer than sea).",
+    "Over the water: air -2.2 °C vs sea → unstable (air colder than sea). Expect puffs and lulls bigger than AROME gusts suggest.",
     "Cloud 0% during racing.",
     "History (Sea breeze (Embat, S-SW), AROME 0-6 kt, 77 days, Oct-Mar since 2022-11): buoy averaged 6.07 kt (q25-q75 5.67-6.95, n=18) when AROME said 5.12 kt (median of all 77 days). LEPA airport averaged 5.5 kt (n=77). Direction 11→15 h at the buoy: veer 100% / back 0% / steady 0% (n=2)."
    ],
@@ -820,5 +820,5 @@
    "url": "https://github.com/ccarbajal1984/capa-wind/blob/main/docs/KNOWLEDGE.md"
   }
  ],
- "arome_sig": "46|1795942800|1795942800|6.1|53"
+ "arome_sig": "45|1795942800|1795942800|6.1|53"
 }
